@@ -28,7 +28,6 @@ function initInviteGate() {
 
     function unlock() {
         document.body.classList.remove("locked");
-        localStorage.setItem(ACCESS_KEY, "1");
     }
 
     function checkCode() {
@@ -41,11 +40,7 @@ function initInviteGate() {
         input.select();
     }
 
-    if (localStorage.getItem(ACCESS_KEY) === "1") {
-        unlock();
-        return;
-    }
-
+  
     input.focus();
     button.addEventListener("click", checkCode);
     input.addEventListener("keydown", event => {
