@@ -75,6 +75,8 @@ const questions = [
     { id: "b21", type: "blank", title: "Session 相对于 Cookie 安全性更高，因为它把关键数据保存在 ____ 端。", answer: "服务器", alt: ["服务器端", "server"], explain: "Session 数据在服务器端，客户端只保存 sessionId。" },
     { id: "b22", type: "blank", title: "MVC 模式将程序分为模型、视图和 ____。", answer: "控制器", alt: ["Controller", "controller"], explain: "C 是 Controller。" },
     { id: "b23", type: "blank", title: "Servlet 三大作用域对象分别是 request、application 和 ____。", answer: "session", explain: "三大域对象：request、session、application。" },
+    { id: "b24", type: "blank", title: "____ 是一个核心标签库，它包含了实现 Web 应用中通用操作的标签。", answer: "Core", alt: ["core"], explain: "JSTL 的 Core 标签库是核心标签库。" },
+    { id: "b25", type: "blank", title: "用户第一次访问 JSP 页面时，JSP 会被翻译成 Servlet 源文件，再编译为后缀名为 ____ 的文件。", answer: ".class", alt: ["class"], explain: "JSP 最终会被编译为 .class 字节码文件。" },
 
     { id: "q1", type: "short", title: "简述 JSP 的执行过程。", answer: "第一次请求 JSP 时，服务器先将 JSP 翻译成 Servlet 源文件，再编译成 class 文件，由 Servlet 容器加载执行，最后把结果响应给浏览器。再次访问且 JSP 未修改时，通常直接执行已编译的 Servlet。", explain: "关键词：翻译、编译、加载、执行、响应。" },
     { id: "q2", type: "short", title: "简述 GET 和 POST 的区别。", answer: "GET 常用于查询，参数显示在 URL 中，长度有限，安全性较低；POST 常用于提交数据，参数放在请求体中，数据量较大，安全性相对更高，不直接显示在地址栏。", explain: "从用途、参数位置、数据量、安全性四点答。" },
@@ -105,163 +107,131 @@ const reviews = [
 
 const codeTemplates = [
     {
-        title: "RegisterServlet 参数非空校验标准答案",
-        source: "截图真题无参考答案：AI 根据题目要求整理",
-        code: `// RegisterServlet：接收 username、age、email，非空校验后使用请求转发
-public class RegisterServlet extends HttpServlet {
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        // 1. 设置请求和响应编码，解决中文乱码
-        request.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
+        title: "设计题 1：JSP 页面使用 JDBC 访问 MySQL",
+        source: "来自 17417608442940(1).docx 与 jw2(1).docx，按标准答案整理",
+        question: "在 JSP 页面使用 JDBC 访问数据库。要求：简述 Web 程序应用 JDBC 的步骤；编写使用 JDBC 连接 MySQL 数据库代码，数据库名 test，用户名 root，密码 root。jw2 文件中还给了增加、修改、删除示例。",
+        steps: [
+            "在 Web 项目中创建 JSP 页面，例如 WebContent/jdbc.jsp。",
+            "确认项目已加入 MySQL JDBC 驱动包，例如 mysql-connector-java.jar。",
+            "把下面代码整段复制到 jdbc.jsp 中。",
+            "如果只考连接数据库，保留连接代码即可；如果考增删改，按题目放开对应 SQL。"
+        ],
+        files: [
+            {
+                label: "复制到 WebContent/jdbc.jsp",
+                lang: "jsp",
+                code: `<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.DriverManager" %>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.Statement" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>JDBC访问数据库</title>
+</head>
+<body>
+<%
+    // 1. 加载 MySQL 数据库驱动
+    Class.forName("com.mysql.jdbc.Driver");
 
-        // 2. 获取前端 JSP 表单提交的三个参数
-        String username = request.getParameter("username");
-        String age = request.getParameter("age");
-        String email = request.getParameter("email");
+    // 2. 准备连接信息：数据库名 test，用户名 root，密码 root
+    String url = "jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8";
+    String username = "root";
+    String password = "root";
 
-        // 3. 非空校验：任意一个为空，都转发回注册页并提示错误
-        if (isEmpty(username) || isEmpty(age) || isEmpty(email)) {
-            request.setAttribute("error", "用户名、年龄和邮箱不能为空");
-            request.getRequestDispatcher("/register.jsp").forward(request, response);
-            return;
-        }
+    // 3. 获取数据库连接
+    Connection conn = DriverManager.getConnection(url, username, password);
 
-        // 4. 校验通过后，把用户数据保存到 request 域
-        request.setAttribute("username", username);
-        request.setAttribute("age", age);
-        request.setAttribute("email", email);
+    // 4. 创建 Statement 对象
+    Statement st = conn.createStatement();
 
-        // 5. 使用请求转发跳转成功页，题目要求不能使用重定向
-        request.getRequestDispatcher("/success.jsp").forward(request, response);
-    }
+    // 5. 执行 SQL。考试若只要求连接，可删除下面三行增删改示例
+    st.executeUpdate("insert into user values('5','2202','nv')");
+    // st.executeUpdate("update user set name='2306' where name='2202'");
+    // st.executeUpdate("delete from user where name='2302'");
 
-    // 判断字符串是否为空
-    private boolean isEmpty(String value) {
-        return value == null || value.trim().length() == 0;
-    }
-}`
+    out.println("数据库操作成功");
+
+    // 6. 关闭资源
+    st.close();
+    conn.close();
+%>
+</body>
+</html>`
+            }
+        ]
     },
     {
-        title: "ChineseServlet 输出中文标准答案",
-        source: "题库设计题：按标准答案格式整理",
-        code: `// ChineseServlet：向浏览器输出中文内容
-public class ChineseServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        // 设置响应内容类型和字符编码，防止中文乱码
-        response.setContentType("text/html;charset=UTF-8");
+        title: "设计题 2：JavaBean 的 User 类与 main 测试",
+        source: "来自 17417608442940(1).docx，按标准答案整理",
+        question: "在 it.cast 包下创建 JavaBean 类 User，属性为 uname 与 upassword，分别存储用户名和用户密码，并添加 getXXX 与 setXXX 方法。在 main 中创建 User 对象 test，设置 uname 为 haosql，upassword 为 123，最后输出属性值。",
+        steps: [
+            "在 src 下新建包 it.cast。",
+            "在 it.cast 包中新建 User.java。",
+            "把下面代码整段复制到 User.java。",
+            "运行 main 方法即可在控制台看到 haosql 和 123。"
+        ],
+        files: [
+            {
+                label: "复制到 src/it/cast/User.java",
+                lang: "java",
+                code: `package it.cast;
 
-        // 获取字符输出流，向浏览器输出中文
-        PrintWriter out = response.getWriter();
-        out.println("欢迎学习程序设计课程");
-        out.close();
-    }
-}`
-    },
-    {
-        title: "两个 Servlet 转发求和标准答案",
-        source: "题库设计题：按标准答案格式整理",
-        code: `// Servlet1：接收 first 和 second 参数，计算和后保存到 request 域
-public class Servlet1 extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        // 获取请求参数并转换为 int 类型
-        int first = Integer.parseInt(request.getParameter("first"));
-        int second = Integer.parseInt(request.getParameter("second"));
-
-        // 把计算结果保存到请求作用域
-        request.setAttribute("sum", first + second);
-
-        // 请求转发给 url 为 /output 的 Servlet2
-        request.getRequestDispatcher("/output").forward(request, response);
-    }
-}
-
-// Servlet2：取出 request 域中的 sum 并输出到浏览器
-public class Servlet2 extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        // 设置响应编码，解决中文乱码
-        response.setContentType("text/html;charset=UTF-8");
-
-        // 输出 Servlet1 计算出的结果
-        PrintWriter out = response.getWriter();
-        out.println("计算结果为：" + request.getAttribute("sum"));
-        out.close();
-    }
-}`
-    },
-    {
-        title: "JDBC 增删改标准答案",
-        source: "来自 jw2(1).docx：已规范化并补充注释",
-        code: `// 1. 加载 MySQL 数据库驱动
-Class.forName("com.mysql.jdbc.Driver");
-
-// 2. 准备数据库连接信息
-String url = "jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8";
-String username = "root";
-String password = "root";
-
-// 3. 获取数据库连接
-Connection conn = DriverManager.getConnection(url, username, password);
-
-// 4. 创建 Statement 对象，用于执行 SQL
-Statement st = conn.createStatement();
-
-// 5. 执行增加操作
-st.executeUpdate("insert into user values('5','2202','nv')");
-
-// 执行修改操作
-// st.executeUpdate("update user set name='2306' where name='2202'");
-
-// 执行删除操作
-// st.executeUpdate("delete from user where name='2302'");
-
-// 6. 关闭资源，先关闭 Statement，再关闭 Connection
-st.close();
-conn.close();`
-    },
-    {
-        title: "JavaBean User 类标准答案",
-        source: "来自题库/JW2 文件：已按 JavaBean 规范整理",
-        code: `// User 类：标准 JavaBean，属性私有，并提供 getter/setter 方法
+// 标准 JavaBean：属性私有，提供 public 的 getter 和 setter 方法
 public class User {
-    // 用户名
     private String uname;
-
-    // 用户密码
     private String upassword;
 
-    // 获取用户名
     public String getUname() {
         return uname;
     }
 
-    // 设置用户名
     public void setUname(String uname) {
         this.uname = uname;
     }
 
-    // 获取用户密码
     public String getUpassword() {
         return upassword;
     }
 
-    // 设置用户密码
     public void setUpassword(String upassword) {
         this.upassword = upassword;
     }
+
+    public static void main(String[] args) {
+        // 创建 User 的实例对象，对象名为 test
+        User test = new User();
+
+        // 使用 setter 方法设置属性值
+        test.setUname("haosql");
+        test.setUpassword("123");
+
+        // 使用 getter 方法输出属性值
+        System.out.println(test.getUname());
+        System.out.println(test.getUpassword());
+    }
 }`
+            }
+        ]
     },
     {
-        title: "JSP 使用 JavaBean 接收用户信息标准答案",
-        source: "题库设计题：按标准答案格式整理",
-        code: `// User.java：用于封装用户信息
+        title: "设计题 3：使用 JavaBean 实现用户信息录入",
+        source: "来自 17417608442940(1).docx，按标准答案整理",
+        question: "User 类为标准 JavaBean，设计程序实现用户信息姓名、性别、年龄录入。要求：直接生成 User 对象；使用 jsp:setProperty 接收参数；使用 jsp:getProperty 获取 JavaBean 对象属性。",
+        steps: [
+            "在 src 下新建包 cn.itcast。",
+            "在 cn.itcast 包中新建 User.java。",
+            "在 WebContent 下新建 add.jsp 和 info.jsp。",
+            "先访问 add.jsp 填表，提交后由 info.jsp 自动封装并显示。"
+        ],
+        files: [
+            {
+                label: "复制到 src/cn/itcast/User.java",
+                lang: "java",
+                code: `package cn.itcast;
+
+// 用户信息 JavaBean
 public class User {
     private String name;
     private String sex;
@@ -290,29 +260,449 @@ public class User {
     public void setAge(int age) {
         this.age = age;
     }
-}
-
-<!-- add.jsp：提交用户信息 -->
-<form action="info.jsp" method="post">
-    姓名：<input type="text" name="name"><br>
-    性别：<input type="text" name="sex"><br>
-    年龄：<input type="text" name="age"><br>
-    <input type="submit" value="提交">
-</form>
-
-<!-- info.jsp：使用 JavaBean 接收并显示参数 -->
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+}`
+            },
+            {
+                label: "复制到 WebContent/add.jsp",
+                lang: "jsp",
+                code: `<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息录入</title>
+</head>
+<body>
+    <form action="info.jsp" method="post">
+        姓名：<input type="text" name="name"><br>
+        性别：<input type="text" name="sex"><br>
+        年龄：<input type="text" name="age"><br>
+        <input type="submit" value="提交">
+    </form>
+</body>
+</html>`
+            },
+            {
+                label: "复制到 WebContent/info.jsp",
+                lang: "jsp",
+                code: `<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <% request.setCharacterEncoding("UTF-8"); %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息显示</title>
+</head>
+<body>
+    <!-- 直接生成 User 对象 -->
+    <jsp:useBean id="user" class="cn.itcast.User" scope="page" />
 
-<!-- 创建 User 对象 -->
-<jsp:useBean id="user" class="cn.itcast.User" scope="page" />
+    <!-- property="*" 表示自动接收同名表单参数 -->
+    <jsp:setProperty name="user" property="*" />
 
-<!-- property="*" 表示自动接收同名请求参数 -->
-<jsp:setProperty name="user" property="*" />
+    姓名：<jsp:getProperty name="user" property="name" /><br>
+    性别：<jsp:getProperty name="user" property="sex" /><br>
+    年龄：<jsp:getProperty name="user" property="age" /><br>
+</body>
+</html>`
+            }
+        ]
+    },
+    {
+        title: "设计题 4：ChineseServlet 输出中文",
+        source: "来自 17417608442940(1).docx，按标准答案整理",
+        question: "设计一个向页面输出中文的 ChineseServlet。要求：创建 ChineseServlet 类，继承 HttpServlet 并重写 doGet；在 doGet 中使用 response.setContentType 将浏览器编码改为 utf-8；使用 response 获取输出流，输出“欢迎学习程序设计课程”。",
+        steps: [
+            "在 src 下新建包 cn.itcast。",
+            "在 cn.itcast 包中新建 ChineseServlet.java。",
+            "将下面 Java 代码复制到 ChineseServlet.java。",
+            "在 WEB-INF/web.xml 中配置访问路径 /chinese。",
+            "启动 Tomcat 后访问 /项目名/chinese。"
+        ],
+        files: [
+            {
+                label: "复制到 src/cn/itcast/ChineseServlet.java",
+                lang: "java",
+                code: `package cn.itcast;
 
-姓名：<jsp:getProperty name="user" property="name" /><br>
-性别：<jsp:getProperty name="user" property="sex" /><br>
-年龄：<jsp:getProperty name="user" property="age" /><br>`
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class ChineseServlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // 设置响应内容类型和字符编码，防止中文乱码
+        response.setContentType("text/html;charset=UTF-8");
+
+        // 获取字符输出流，向浏览器输出中文
+        PrintWriter out = response.getWriter();
+        out.println("欢迎学习程序设计课程");
+        out.close();
+    }
+}`
+            },
+            {
+                label: "追加到 WebContent/WEB-INF/web.xml",
+                lang: "xml",
+                code: `<servlet>
+    <servlet-name>ChineseServlet</servlet-name>
+    <servlet-class>cn.itcast.ChineseServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>ChineseServlet</servlet-name>
+    <url-pattern>/chinese</url-pattern>
+</servlet-mapping>`
+            }
+        ]
+    },
+    {
+        title: "设计题 5：两个 Servlet 请求转发求和",
+        source: "来自 17417608442940(1).docx，按标准答案整理",
+        question: "编写两段 Servlet 代码。Servlet1 读取请求参数 first 和 second，转换为 int 后相加，把和存放在 request 作用域 sum 内，然后请求转发给 Servlet2。Servlet2 的 url 为 /output，向客户输出 Servlet1 计算的结果。",
+        steps: [
+            "在 src 下新建包 cn.itcast。",
+            "在 cn.itcast 包中新建 Servlet1.java 和 Servlet2.java。",
+            "复制对应代码到两个 Java 文件。",
+            "在 WEB-INF/web.xml 中配置 /servlet1 和 /output。",
+            "访问 /项目名/servlet1?first=3&second=5 测试。"
+        ],
+        files: [
+            {
+                label: "复制到 src/cn/itcast/Servlet1.java",
+                lang: "java",
+                code: `package cn.itcast;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class Servlet1 extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // 获取请求参数并转换为 int 类型
+        int first = Integer.parseInt(request.getParameter("first"));
+        int second = Integer.parseInt(request.getParameter("second"));
+
+        // 将和保存到 request 作用域
+        request.setAttribute("sum", first + second);
+
+        // 请求转发到 Servlet2，不能使用重定向
+        request.getRequestDispatcher("/output").forward(request, response);
+    }
+}`
+            },
+            {
+                label: "复制到 src/cn/itcast/Servlet2.java",
+                lang: "java",
+                code: `package cn.itcast;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class Servlet2 extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
+        // 取出 Servlet1 存入 request 域中的 sum
+        Object sum = request.getAttribute("sum");
+        out.println("计算结果为：" + sum);
+        out.close();
+    }
+}`
+            },
+            {
+                label: "追加到 WebContent/WEB-INF/web.xml",
+                lang: "xml",
+                code: `<servlet>
+    <servlet-name>Servlet1</servlet-name>
+    <servlet-class>cn.itcast.Servlet1</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>Servlet1</servlet-name>
+    <url-pattern>/servlet1</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>Servlet2</servlet-name>
+    <servlet-class>cn.itcast.Servlet2</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>Servlet2</servlet-name>
+    <url-pattern>/output</url-pattern>
+</servlet-mapping>`
+            }
+        ]
+    },
+    {
+        title: "设计题 6：RegisterServlet 参数非空校验",
+        source: "来自截图真题；无原参考答案，AI 按题目要求整理为标准答案",
+        question: "编写 RegisterServlet，接收前端 JSP 表单提交的 username、age、email 三个参数，完成参数非空校验；校验通过后将用户数据存入 request 域，请求转发至 success.jsp；校验失败转发至 register.jsp 并提示错误信息。要求继承 HttpServlet，重写 doPost，设置 UTF-8，使用请求转发，不能使用重定向，代码添加注释。",
+        steps: [
+            "在 src 下新建包 cn.itcast。",
+            "在 cn.itcast 包中新建 RegisterServlet.java。",
+            "在 WebContent 下新建 register.jsp 和 success.jsp。",
+            "在 WEB-INF/web.xml 中配置 RegisterServlet 的访问路径 /register。",
+            "先访问 register.jsp，提交后由 RegisterServlet 校验并转发。"
+        ],
+        files: [
+            {
+                label: "复制到 src/cn/itcast/RegisterServlet.java",
+                lang: "java",
+                code: `package cn.itcast;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class RegisterServlet extends HttpServlet {
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // 设置全局编码格式为 UTF-8，解决中文乱码
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+
+        // 获取前端 JSP 表单提交的三个参数
+        String username = request.getParameter("username");
+        String age = request.getParameter("age");
+        String email = request.getParameter("email");
+
+        // 参数非空校验：任意一个为空，都转发回注册页
+        if (isEmpty(username) || isEmpty(age) || isEmpty(email)) {
+            request.setAttribute("error", "用户名、年龄和邮箱不能为空");
+            request.getRequestDispatcher("/register.jsp").forward(request, response);
+            return;
+        }
+
+        // 校验通过后，将用户数据存入 request 域
+        request.setAttribute("username", username);
+        request.setAttribute("age", age);
+        request.setAttribute("email", email);
+
+        // 使用请求转发跳转成功页，题目要求不可使用重定向
+        request.getRequestDispatcher("/success.jsp").forward(request, response);
+    }
+
+    // 判断字符串是否为空
+    private boolean isEmpty(String value) {
+        return value == null || value.trim().length() == 0;
+    }
+}`
+            },
+            {
+                label: "复制到 WebContent/register.jsp",
+                lang: "jsp",
+                code: `<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+</head>
+<body>
+    <form action="register" method="post">
+        用户名：<input type="text" name="username"><br>
+        年龄：<input type="text" name="age"><br>
+        邮箱：<input type="text" name="email"><br>
+        <input type="submit" value="注册">
+    </form>
+    <span style="color:red">\${requestScope.error}</span>
+</body>
+</html>`
+            },
+            {
+                label: "复制到 WebContent/success.jsp",
+                lang: "jsp",
+                code: `<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>注册成功</title>
+</head>
+<body>
+    注册成功<br>
+    用户名：\${requestScope.username}<br>
+    年龄：\${requestScope.age}<br>
+    邮箱：\${requestScope.email}<br>
+</body>
+</html>`
+            },
+            {
+                label: "追加到 WebContent/WEB-INF/web.xml",
+                lang: "xml",
+                code: `<servlet>
+    <servlet-name>RegisterServlet</servlet-name>
+    <servlet-class>cn.itcast.RegisterServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>RegisterServlet</servlet-name>
+    <url-pattern>/register</url-pattern>
+</servlet-mapping>`
+            }
+        ]
+    },
+    {
+        title: "补充：jw2 JavaBean 示例与 JSP 表单显示",
+        source: "来自 jw2(1).docx，按可直接复制运行格式整理",
+        question: "jw2 文件中给出 User JavaBean、Book JavaBean、add.jsp 和 info.jsp：User 用于演示 getter/setter；Book 通过表单提交图书名称、价格、作者，info.jsp 使用 jsp:useBean、jsp:setProperty 和 jsp:getProperty 显示图书信息。",
+        steps: [
+            "在 src 下新建包 cn.itcast。",
+            "在 cn.itcast 包中新建 User.java 和 Book.java。",
+            "在 WebContent 下新建 add.jsp 和 info.jsp。",
+            "访问 add.jsp，提交后在 info.jsp 查看图书信息。"
+        ],
+        files: [
+            {
+                label: "复制到 src/cn/itcast/User.java",
+                lang: "java",
+                code: `package cn.itcast;
+
+public class User {
+    private int id;
+    private String name;
+    private String password;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+}`
+            },
+            {
+                label: "复制到 src/cn/itcast/Book.java",
+                lang: "java",
+                code: `package cn.itcast;
+
+public class Book {
+    private String bookName;
+    private double price;
+    private String author;
+
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+}`
+            },
+            {
+                label: "复制到 WebContent/add.jsp",
+                lang: "jsp",
+                code: `<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>添加图书信息</title>
+</head>
+<body>
+    <form action="info.jsp" method="post">
+        <table align="center" width="400" height="200" border="1">
+            <tr>
+                <td align="center" colspan="2" height="40"><b>添加图书信息</b></td>
+            </tr>
+            <tr>
+                <td align="center">名称：<input type="text" name="bookName"></td>
+            </tr>
+            <tr>
+                <td align="center">价格：<input type="text" name="price"></td>
+            </tr>
+            <tr>
+                <td align="center">作者：<input type="text" name="author"></td>
+            </tr>
+            <tr>
+                <td align="center" colspan="2"><input type="submit" value="添加"></td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>`
+            },
+            {
+                label: "复制到 WebContent/info.jsp",
+                lang: "jsp",
+                code: `<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<% request.setCharacterEncoding("UTF-8"); %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>图书信息</title>
+</head>
+<body>
+    <jsp:useBean id="book" class="cn.itcast.Book" scope="page" />
+    <jsp:setProperty name="book" property="*" />
+
+    <table align="center" width="400">
+        <tr>
+            <td align="center">名称：<jsp:getProperty name="book" property="bookName" /></td>
+        </tr>
+        <tr>
+            <td align="center">价格：<jsp:getProperty name="book" property="price" /></td>
+        </tr>
+        <tr>
+            <td align="center">作者：<jsp:getProperty name="book" property="author" /></td>
+        </tr>
+    </table>
+</body>
+</html>`
+            }
+        ]
     }
 ];
 
@@ -325,9 +715,45 @@ const typeNames = {
 
 const state = {
     filter: "all",
+    search: "",
     answered: JSON.parse(localStorage.getItem("jw_answered") || "{}"),
     wrong: JSON.parse(localStorage.getItem("jw_wrong") || "[]")
 };
+
+const INVITE_CODE = "050317";
+const ACCESS_KEY = "effort_site_invite_ok";
+
+function initInviteGate() {
+    const input = document.getElementById("inviteInput");
+    const button = document.getElementById("inviteBtn");
+    const error = document.getElementById("inviteError");
+
+    function unlock() {
+        document.body.classList.remove("locked");
+        localStorage.setItem(ACCESS_KEY, "1");
+    }
+
+    function checkCode() {
+        if (input.value.trim() === INVITE_CODE) {
+            error.textContent = "";
+            unlock();
+            return;
+        }
+        error.textContent = "邀请码不对，再检查一下。";
+        input.select();
+    }
+
+    if (localStorage.getItem(ACCESS_KEY) === "1") {
+        unlock();
+        return;
+    }
+
+    input.focus();
+    button.addEventListener("click", checkCode);
+    input.addEventListener("keydown", event => {
+        if (event.key === "Enter") checkCode();
+    });
+}
 
 function normalize(value) {
     return String(value || "").replace(/\s+/g, "").toLowerCase();
@@ -356,13 +782,29 @@ function updateStats() {
         `判断 ${counts.judge || 0}`,
         `填空 ${counts.blank || 0}`,
         `简答 ${counts.short || 0}`,
-        `代码 ${codeTemplates.length}`
+        `设计 ${codeTemplates.length}`
     ].map(text => `<span class="stat-pill">${text}</span>`).join("");
 }
 
 function filteredQuestions() {
-    if (state.filter === "all") return questions;
-    return questions.filter(q => q.type === state.filter);
+    let list = questions;
+    if (state.filter !== "all") {
+        list = list.filter(q => q.type === state.filter);
+    }
+
+    const keyword = normalize(state.search);
+    if (!keyword) return list;
+
+    return list.filter(q => {
+        const haystack = [
+            q.title,
+            q.answer,
+            q.explain,
+            ...(q.options || []),
+            ...(q.alt || [])
+        ].join(" ");
+        return normalize(haystack).includes(keyword);
+    });
 }
 
 function renderQuestions(list, targetId) {
@@ -423,6 +865,24 @@ function escapeHtml(str) {
         "\"": "&quot;",
         "'": "&#039;"
     }[ch]));
+}
+
+function highlightCode(code) {
+    const tokenPattern = /(\/\/[^\n]*|<!--[\s\S]*?-->|"(?:\\.|[^"\\])*"|@\w+|\b(?:package|import|public|private|protected|class|extends|static|void|int|double|boolean|String|return|if|else|new|throws|try|catch|finally|while|for)\b)/g;
+    let html = "";
+    let lastIndex = 0;
+    for (const match of code.matchAll(tokenPattern)) {
+        const token = match[0];
+        html += escapeHtml(code.slice(lastIndex, match.index));
+        let cls = "tok-keyword";
+        if (token.startsWith("//") || token.startsWith("<!--")) cls = "tok-comment";
+        else if (token.startsWith("\"")) cls = "tok-string";
+        else if (token.startsWith("@")) cls = "tok-annotation";
+        html += `<span class="${cls}">${escapeHtml(token)}</span>`;
+        lastIndex = match.index + token.length;
+    }
+    html += escapeHtml(code.slice(lastIndex));
+    return html;
 }
 
 function getQuestion(id) {
@@ -514,9 +974,31 @@ function renderCode() {
                     <h3>${escapeHtml(item.title)}</h3>
                     <span class="source-tag">${escapeHtml(item.source)}</span>
                 </div>
-                <button class="copy-btn" data-code="${i}">复制</button>
             </header>
-            <pre><code>${escapeHtml(item.code)}</code></pre>
+            <div class="design-body">
+                <section class="design-section">
+                    <h4>题目</h4>
+                    <p>${escapeHtml(item.question)}</p>
+                </section>
+                <section class="design-section">
+                    <h4>操作流程</h4>
+                    <ol>${item.steps.map(step => `<li>${escapeHtml(step)}</li>`).join("")}</ol>
+                </section>
+                <section class="design-section">
+                    <h4>标准答案代码</h4>
+                    <div class="file-blocks">
+                        ${item.files.map((file, fileIndex) => `
+                            <div class="file-block">
+                                <div class="file-head">
+                                    <span>${escapeHtml(file.label)}</span>
+                                    <button class="copy-btn" data-task="${i}" data-file="${fileIndex}">复制这段</button>
+                                </div>
+                                <pre class="code-pre" data-lang="${escapeHtml(file.lang)}"><code>${highlightCode(file.code)}</code></pre>
+                            </div>
+                        `).join("")}
+                    </div>
+                </section>
+            </div>
         </article>
     `).join("");
 }
@@ -542,6 +1024,10 @@ function initNav() {
 
     document.getElementById("randomBtn").addEventListener("click", () => {
         const list = filteredQuestions();
+        if (!list.length) {
+            renderQuestions([], "questionList");
+            return;
+        }
         const q = list[Math.floor(Math.random() * list.length)];
         renderQuestions([q], "questionList");
     });
@@ -555,6 +1041,11 @@ function initNav() {
         renderWrong();
     });
 
+    document.getElementById("searchInput").addEventListener("input", event => {
+        state.search = event.target.value;
+        renderPractice();
+    });
+
     document.getElementById("clearWrongBtn").addEventListener("click", () => {
         state.wrong = [];
         saveState();
@@ -566,10 +1057,11 @@ function initCopy() {
     document.addEventListener("click", async event => {
         const btn = event.target.closest(".copy-btn");
         if (!btn) return;
-        const code = codeTemplates[Number(btn.dataset.code)].code;
+        const task = codeTemplates[Number(btn.dataset.task)];
+        const code = task.files[Number(btn.dataset.file)].code;
         await navigator.clipboard.writeText(code);
         btn.textContent = "已复制";
-        setTimeout(() => btn.textContent = "复制", 1200);
+        setTimeout(() => btn.textContent = "复制这段", 1200);
     });
 }
 
@@ -610,6 +1102,7 @@ function initImageModal() {
     }, { passive: false });
 }
 
+initInviteGate();
 initNav();
 bindQuestionEvents();
 initCopy();
