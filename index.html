@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>努力抱佛脚</title>
     <link rel="icon" href="data:,">
-    <link rel="stylesheet" href="styles.css?v=20260617-2335">
+    <link rel="stylesheet" href="css/style.css?v=20260617-modular">
 </head>
-<body class="locked">
+<body class="locked" data-page="home">
     <section id="accessGate" class="access-gate">
         <div class="access-card">
             <p class="access-kicker">努力抱佛脚</p>
             <h1>请输入邀请码</h1>
-            <p>通过验证后进入 JavaWeb 刷题网站。</p>
+            <p>通过验证后进入刷题网站。</p>
             <label class="access-input">
                 <span>邀请码</span>
                 <input id="inviteInput" type="password" inputmode="numeric" autocomplete="off" placeholder="请输入邀请码">
@@ -22,124 +22,37 @@
         </div>
     </section>
 
-    <header class="topbar">
-        <div>
-            <h1>努力抱佛脚</h1>
-            <p>JavaWeb 期末刷题，后续预留计算机组成原理和大数据原理与应用</p>
-        </div>
-        <div class="score-box">
-            <span id="scoreText">0 / 0</span>
-            <small>已掌握</small>
-        </div>
-    </header>
+    <main class="home-shell">
+        <header class="home-hero">
+            <p class="eyebrow">努力抱佛脚</p>
+            <h1>选择科目开始刷题</h1>
+            <p>题库数据独立存放，刷题逻辑共用一套。加题只改 JSON，改功能只改 quiz-engine.js。</p>
+        </header>
 
-    <main class="layout">
-        <aside class="sidebar">
-            <button class="nav-btn active" data-view="practice">JavaWeb 刷题</button>
-            <button class="nav-btn" data-view="computer">计算机组成原理</button>
-            <button class="nav-btn" data-view="bigdata">大数据原理与应用</button>
-            <div class="nav-divider"></div>
-            <button class="nav-btn" data-view="wrong">错题</button>
-            <button class="nav-btn" data-view="review">背诵</button>
-            <button class="nav-btn" data-view="code">设计题</button>
-            <button class="nav-btn" data-view="source">原图</button>
-        </aside>
-
-        <section class="content">
-            <div id="statsBar" class="stats-bar"></div>
-
-            <section id="practiceView" class="view active">
-                <div class="toolbar">
-                    <div class="filter-panel">
-                        <div class="filters">
-                            <button class="chip active" data-type="all">全部</button>
-                            <button class="chip" data-type="single">选择</button>
-                            <button class="chip" data-type="judge">判断</button>
-                            <button class="chip" data-type="blank">填空</button>
-                            <button class="chip" data-type="short">简答</button>
-                        </div>
-                        <label class="search-box">
-                            <span>检索</span>
-                            <input id="searchInput" type="search" placeholder="输入关键词，如 Session、JDBC、Tomcat">
-                        </label>
-                    </div>
-                    <div class="actions">
-                        <button id="randomBtn" class="icon-btn" title="随机一题">⟳</button>
-                        <button id="resetBtn" class="icon-btn" title="清空进度">⌫</button>
-                    </div>
-                </div>
-                <div id="questionList" class="question-list"></div>
-            </section>
-
-            <section id="wrongView" class="view">
-                <div class="section-head">
-                    <h2>错题本</h2>
-                    <button id="clearWrongBtn" class="secondary">清空错题</button>
-                </div>
-                <div id="wrongList" class="question-list"></div>
-            </section>
-
-            <section id="reviewView" class="view">
-                <div class="section-head">
-                    <h2>高频背诵</h2>
-                    <span class="muted">考前先背这部分</span>
-                </div>
-                <div id="reviewList" class="review-grid"></div>
-            </section>
-
-            <section id="codeView" class="view">
-                <div class="section-head">
-                    <h2>设计题</h2>
-                    <span class="muted">每题包含题目、流程、包/文件位置和标准答案</span>
-                </div>
-                <div id="codeList" class="code-list"></div>
-            </section>
-
-            <section id="sourceView" class="view">
-                <div class="section-head">
-                    <h2>原图放大</h2>
-                    <span class="muted">点击图片可打开全屏，鼠标滚轮或触控板缩放</span>
-                </div>
-                <div class="source-grid">
-                    <button class="source-card" data-img="assets/screenshot-register.jpg">
-                        <img src="assets/screenshot-register.jpg" alt="RegisterServlet 真题截图">
-                        <span>RegisterServlet 编程题截图</span>
-                    </button>
-                    <button class="source-card" data-img="assets/screenshot-long.jpg">
-                        <img src="assets/source-crops/long-06.png" alt="长图主观题截图">
-                        <span>长图真题完整截图</span>
-                    </button>
-                </div>
-            </section>
-
-            <section id="computerView" class="view">
-                <div class="placeholder-page">
-                    <h2>计算机组成原理</h2>
-                    <p>alec正在拷打codex中......</p>
-                </div>
-            </section>
-
-            <section id="bigdataView" class="view">
-                <div class="placeholder-page">
-                    <h2>大数据原理和应用</h2>
-                    <p>alec正在拷打codex中......</p>
-                </div>
-            </section>
+        <section class="subject-grid" aria-label="科目入口">
+            <a class="subject-card" href="quiz.html?subject=javaweb">
+                <span>Java Web</span>
+                <strong>JavaWeb 期末刷题</strong>
+                <small>选择、判断、填空、简答、设计题、错题本、原图</small>
+            </a>
+            <a class="subject-card" href="quiz.html?subject=os">
+                <span>计算机组成原理</span>
+                <strong>计算机组成原理</strong>
+                <small>题库预留中</small>
+            </a>
+            <a class="subject-card" href="quiz.html?subject=bigdata">
+                <span>大数据原理与应用</span>
+                <strong>大数据原理与应用</strong>
+                <small>题库预留中</small>
+            </a>
+            <a class="subject-card" href="quiz.html?subject=se">
+                <span>软件工程</span>
+                <strong>软件工程</strong>
+                <small>题库预留中</small>
+            </a>
         </section>
     </main>
 
-    <div id="imageModal" class="modal" hidden>
-        <div class="modal-tools">
-            <button id="zoomOutBtn">-</button>
-            <span id="zoomText">100%</span>
-            <button id="zoomInBtn">+</button>
-            <button id="closeModalBtn">关闭</button>
-        </div>
-        <div class="image-stage">
-            <img id="modalImage" alt="放大原图">
-        </div>
-    </div>
-
-    <script src="app.js?v=20260617-2335"></script>
+    <script src="js/quiz-engine.js?v=20260617-modular"></script>
 </body>
 </html>
