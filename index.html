@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaWeb 期末刷题</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="topbar">
+        <div>
+            <h1>JavaWeb 期末刷题</h1>
+            <p>选择、判断、填空、简答、编程题一站复习</p>
+        </div>
+        <div class="score-box">
+            <span id="scoreText">0 / 0</span>
+            <small>已掌握</small>
+        </div>
+    </header>
+
+    <main class="layout">
+        <aside class="sidebar">
+            <button class="nav-btn active" data-view="practice">练习</button>
+            <button class="nav-btn" data-view="wrong">错题</button>
+            <button class="nav-btn" data-view="review">背诵</button>
+            <button class="nav-btn" data-view="code">代码题</button>
+            <button class="nav-btn" data-view="source">原图</button>
+        </aside>
+
+        <section class="content">
+            <div id="statsBar" class="stats-bar"></div>
+
+            <section id="practiceView" class="view active">
+                <div class="toolbar">
+                    <div class="filters">
+                        <button class="chip active" data-type="all">全部</button>
+                        <button class="chip" data-type="single">选择</button>
+                        <button class="chip" data-type="judge">判断</button>
+                        <button class="chip" data-type="blank">填空</button>
+                        <button class="chip" data-type="short">简答</button>
+                    </div>
+                    <div class="actions">
+                        <button id="randomBtn" class="icon-btn" title="随机一题">⟳</button>
+                        <button id="resetBtn" class="icon-btn" title="清空进度">⌫</button>
+                    </div>
+                </div>
+                <div id="questionList" class="question-list"></div>
+            </section>
+
+            <section id="wrongView" class="view">
+                <div class="section-head">
+                    <h2>错题本</h2>
+                    <button id="clearWrongBtn" class="secondary">清空错题</button>
+                </div>
+                <div id="wrongList" class="question-list"></div>
+            </section>
+
+            <section id="reviewView" class="view">
+                <div class="section-head">
+                    <h2>高频背诵</h2>
+                    <span class="muted">考前先背这部分</span>
+                </div>
+                <div id="reviewList" class="review-grid"></div>
+            </section>
+
+            <section id="codeView" class="view">
+                <div class="section-head">
+                    <h2>编程题模板</h2>
+                    <span class="muted">已按标准答案格式整理；无原答案的题已标注 AI 整理</span>
+                </div>
+                <div id="codeList" class="code-list"></div>
+            </section>
+
+            <section id="sourceView" class="view">
+                <div class="section-head">
+                    <h2>原图放大</h2>
+                    <span class="muted">点击图片可打开全屏，鼠标滚轮或触控板缩放</span>
+                </div>
+                <div class="source-grid">
+                    <button class="source-card" data-img="assets/screenshot-register.jpg">
+                        <img src="assets/screenshot-register.jpg" alt="RegisterServlet 真题截图">
+                        <span>RegisterServlet 编程题截图</span>
+                    </button>
+                    <button class="source-card" data-img="assets/screenshot-long.jpg">
+                        <img src="assets/source-crops/long-06.png" alt="长图主观题截图">
+                        <span>长图真题完整截图</span>
+                    </button>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <div id="imageModal" class="modal" hidden>
+        <div class="modal-tools">
+            <button id="zoomOutBtn">-</button>
+            <span id="zoomText">100%</span>
+            <button id="zoomInBtn">+</button>
+            <button id="closeModalBtn">关闭</button>
+        </div>
+        <div class="image-stage">
+            <img id="modalImage" alt="放大原图">
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
