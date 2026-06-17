@@ -6,7 +6,6 @@ const SUBJECTS = {
 };
 
 const INVITE_CODE = "050317";
-const ACCESS_KEY = "effort_site_invite_ok";
 const typeNames = { single: "选择题", judge: "判断题", blank: "填空题", short: "简答题" };
 
 const appState = {
