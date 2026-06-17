@@ -77,6 +77,7 @@ const questions = [
     { id: "b23", type: "blank", title: "Servlet 三大作用域对象分别是 request、application 和 ____。", answer: "session", explain: "三大域对象：request、session、application。" },
     { id: "b24", type: "blank", title: "____ 是一个核心标签库，它包含了实现 Web 应用中通用操作的标签。", answer: "Core", alt: ["core"], explain: "JSTL 的 Core 标签库是核心标签库。" },
     { id: "b25", type: "blank", title: "用户第一次访问 JSP 页面时，JSP 会被翻译成 Servlet 源文件，再编译为后缀名为 ____ 的文件。", answer: ".class", alt: ["class"], explain: "JSP 最终会被编译为 .class 字节码文件。" },
+    { id: "b26", type: "blank", title: "JSP 中，____ 编译指令可以用于包含其他页面。", answer: "include", alt: ["include指令"], explain: "include 指令用于在 JSP 编译阶段静态包含其他页面。" },
 
     { id: "q1", type: "short", title: "简述 JSP 的执行过程。", answer: "第一次请求 JSP 时，服务器先将 JSP 翻译成 Servlet 源文件，再编译成 class 文件，由 Servlet 容器加载执行，最后把结果响应给浏览器。再次访问且 JSP 未修改时，通常直接执行已编译的 Servlet。", explain: "关键词：翻译、编译、加载、执行、响应。" },
     { id: "q2", type: "short", title: "简述 GET 和 POST 的区别。", answer: "GET 常用于查询，参数显示在 URL 中，长度有限，安全性较低；POST 常用于提交数据，参数放在请求体中，数据量较大，安全性相对更高，不直接显示在地址栏。", explain: "从用途、参数位置、数据量、安全性四点答。" },
@@ -92,6 +93,9 @@ const questions = [
     { id: "q12", type: "short", title: "JSTL 是什么？优点有哪些？", answer: "JSTL 是 JSP 标准标签库，提供条件判断、循环、格式化、国际化等常用标签。优点是减少 JSP 中 Java 脚本代码，使页面更清晰，便于维护，有利于代码复用和提高开发效率。", explain: "关键词：标准标签库、减少 Java 代码、清晰、维护、复用。" },
     { id: "q13", type: "short", title: "简述 JSP 四种作用域对象及作用范围。", answer: "pageContext 是页面作用域，只在当前 JSP 页面有效；request 是请求作用域，在一次请求或请求转发中有效；session 是会话作用域，在同一用户会话中有效；application 是应用作用域，在整个 Web 应用中有效，所有用户共享。", explain: "四个域对象和范围必须对应。" },
     { id: "q14", type: "short", title: "简述 Web 开发中的常见状态码及含义。", answer: "200 表示请求成功；302 表示重定向；404 表示请求资源不存在；500 表示服务器内部错误；403 表示服务器拒绝访问；405 表示请求方法不支持。", explain: "常考状态码：200、302、404、500。" },
+    { id: "q15", type: "short", title: "简述 Servlet 的生命周期。", answer: "Servlet 生命周期包括加载和实例化、初始化、处理请求、销毁四个阶段。服务器第一次访问或启动时创建 Servlet 实例，然后调用 init() 方法初始化；每次请求到来时调用 service() 方法，并根据请求方式分发到 doGet() 或 doPost()；服务器关闭或应用卸载时调用 destroy() 方法释放资源。", explain: "关键词：实例化、init、service/doGet/doPost、destroy。" },
+    { id: "q16", type: "short", title: "简述 JavaBean 的概念及特点。", answer: "JavaBean 是一种可重用的 Java 组件，通常用于封装数据。它的特点是类一般为 public；提供无参构造方法；属性使用 private 修饰；通过 public 的 getter 和 setter 方法访问属性；通常实现序列化，便于在 JSP、Servlet 或框架中传递和复用。", explain: "关键词：可重用组件、无参构造、私有属性、getter/setter。" },
+    { id: "q17", type: "short", title: "JSTL 包含哪些常用标签库？", answer: "JSTL 常用标签库包括 Core 核心标签库，用于变量、条件判断、循环等通用操作；Fmt 格式化标签库，用于日期、数字格式化和国际化；Functions 函数标签库，用于字符串处理；SQL 标签库，用于简单数据库操作；XML 标签库，用于 XML 解析和处理。其中考试最常考 Core 核心标签库。", explain: "常背：Core、Fmt、Functions、SQL、XML。" },
 ];
 
 const reviews = [
@@ -101,8 +105,10 @@ const reviews = [
     ["转发与重定向", "转发用 request.getRequestDispatcher().forward()，地址栏不变，可共享 request；重定向用 response.sendRedirect()，地址栏改变，是新请求。"],
     ["监听器三件套", "ServletContextListener 管应用；HttpSessionListener 管会话；ServletRequestListener 管请求。"],
     ["Filter 生命周期", "init 初始化，doFilter 拦截处理，destroy 销毁。"],
+    ["Servlet 生命周期", "实例化 -> init 初始化 -> service 处理请求，可分发到 doGet/doPost -> destroy 销毁。"],
     ["登录权限拦截", "登录成功存 session；过滤器检查 session 中是否有用户；有用户放行，无用户回登录页。"],
-    ["JavaBean 特点", "public 类、无参构造、属性私有、getter/setter、可复用。"]
+    ["JavaBean 特点", "可重用 Java 组件；public 类、无参构造、属性私有、getter/setter、通常可序列化。"],
+    ["JSTL 标签库", "Core 核心、Fmt 格式化、Functions 函数、SQL 数据库、XML 处理；最常考 Core。"]
 ];
 
 const codeTemplates = [
@@ -763,6 +769,7 @@ function saveState() {
     localStorage.setItem("jw_answered", JSON.stringify(state.answered));
     localStorage.setItem("jw_wrong", JSON.stringify(state.wrong));
     updateScore();
+    updateStats();
 }
 
 function updateScore() {
@@ -778,6 +785,8 @@ function updateStats() {
     }, {});
     document.getElementById("statsBar").innerHTML = [
         `总题量 ${questions.length}`,
+        `已掌握 ${Object.values(state.answered).filter(Boolean).length}`,
+        `错题 ${state.wrong.length}`,
         `选择 ${counts.single || 0}`,
         `判断 ${counts.judge || 0}`,
         `填空 ${counts.blank || 0}`,
@@ -1059,10 +1068,28 @@ function initCopy() {
         if (!btn) return;
         const task = codeTemplates[Number(btn.dataset.task)];
         const code = task.files[Number(btn.dataset.file)].code;
-        await navigator.clipboard.writeText(code);
+        await copyText(code);
         btn.textContent = "已复制";
         setTimeout(() => btn.textContent = "复制这段", 1200);
     });
+}
+
+async function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return;
+    }
+
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.inset = "0 auto auto 0";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    textarea.remove();
 }
 
 function initImageModal() {

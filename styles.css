@@ -582,6 +582,7 @@ button {
     line-height: 1.6;
     font-size: 14px;
     tab-size: 4;
+    max-height: 620px;
 }
 
 .code-pre code {
@@ -704,6 +705,8 @@ button {
 @media (max-width: 760px) {
     .topbar {
         align-items: flex-start;
+        gap: 14px;
+        flex-wrap: wrap;
         padding: 18px;
     }
 
@@ -718,11 +721,14 @@ button {
 
     .sidebar {
         position: static;
-        grid-template-columns: repeat(5, 1fr);
+        display: flex;
+        gap: 8px;
         overflow-x: auto;
+        padding-bottom: 4px;
     }
 
     .nav-btn {
+        flex: 0 0 auto;
         text-align: center;
         padding: 0 10px;
         white-space: nowrap;
@@ -735,5 +741,36 @@ button {
 
     .score-box {
         min-width: 92px;
+    }
+
+    .search-box {
+        grid-template-columns: 1fr;
+    }
+
+    .question-card, .review-card {
+        padding: 18px;
+    }
+
+    .code-card header,
+    .design-body {
+        padding: 18px;
+    }
+
+    .file-head {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .copy-btn {
+        width: 100%;
+    }
+
+    .code-pre {
+        padding: 14px;
+        font-size: 13px;
+    }
+
+    .source-card img {
+        height: 190px;
     }
 }
