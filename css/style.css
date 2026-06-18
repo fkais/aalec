@@ -601,6 +601,13 @@ body:not(.locked) .access-gate {
     font-weight: 700;
 }
 
+.home-return {
+    padding: 8px 13px;
+    border: 1px solid #a9c8df;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.9);
+}
+
 h1, h2, h3, p {
     margin: 0;
 }
