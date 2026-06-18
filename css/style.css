@@ -1,16 +1,16 @@
 :root {
     color-scheme: light;
-    --bg: #f5f4ed;
-    --panel: #fffdf7;
-    --panel-soft: #faf4ea;
-    --ink: #332d2a;
-    --muted: #776b63;
-    --line: #e3d8ca;
-    --blue: #cc785c;
+    --bg: #f4f8fc;
+    --panel: #ffffff;
+    --panel-soft: #edf6fd;
+    --ink: #172a3a;
+    --muted: #5f7182;
+    --line: #ccdae7;
+    --blue: #1677c8;
     --green: #6f8f72;
     --red: #b85b4f;
-    --amber: #b98245;
-    --shadow: 0 18px 45px rgba(80, 61, 45, 0.10);
+    --amber: #397ba8;
+    --shadow: 0 18px 45px rgba(33, 78, 112, 0.11);
     --serif: Georgia, "Times New Roman", "Songti SC", serif;
     --sans: "Microsoft YaHei", "Segoe UI", Arial, sans-serif;
 }
@@ -44,8 +44,8 @@ body.locked .home-shell {
     place-items: center;
     padding: 24px;
     background:
-        radial-gradient(circle at top left, rgba(204, 120, 92, 0.18), transparent 34%),
-        linear-gradient(180deg, #fffaf1 0%, var(--bg) 100%);
+        radial-gradient(circle at top left, rgba(22, 119, 200, 0.16), transparent 34%),
+        linear-gradient(180deg, #fafdff 0%, var(--bg) 100%);
 }
 
 body:not(.locked) .access-gate {
@@ -57,7 +57,7 @@ body:not(.locked) .access-gate {
     padding: 34px;
     border: 1px solid var(--line);
     border-radius: 22px;
-    background: rgba(255, 253, 247, 0.94);
+    background: rgba(255, 255, 255, 0.95);
     box-shadow: var(--shadow);
 }
 
@@ -90,7 +90,7 @@ body:not(.locked) .access-gate {
     padding: 10px 14px;
     border: 1px solid var(--line);
     border-radius: 16px;
-    background: #fffdf7;
+    background: #ffffff;
     color: var(--ink);
     font: inherit;
     outline: none;
@@ -98,7 +98,7 @@ body:not(.locked) .access-gate {
 
 .access-input input:focus {
     border-color: var(--blue);
-    box-shadow: 0 0 0 4px rgba(204, 120, 92, 0.14);
+    box-shadow: 0 0 0 4px rgba(22, 119, 200, 0.14);
 }
 
 .access-btn {
@@ -108,7 +108,7 @@ body:not(.locked) .access-gate {
     border: 0;
     border-radius: 16px;
     background: var(--blue);
-    color: #fffaf1;
+    color: #ffffff;
     cursor: pointer;
     font: inherit;
     font-weight: 700;
@@ -117,7 +117,7 @@ body:not(.locked) .access-gate {
 
 .access-btn:hover {
     transform: translateY(-1px) scale(1.005);
-    background: #bd6c52;
+    background: #0f65ad;
 }
 
 .access-error {
@@ -132,7 +132,7 @@ body:not(.locked) .access-gate {
     justify-content: space-between;
     align-items: center;
     padding: 28px 40px;
-    background: linear-gradient(180deg, #fffaf1 0%, #f5f4ed 100%);
+    background: linear-gradient(180deg, #fafdff 0%, var(--bg) 100%);
     border-bottom: 1px solid var(--line);
 }
 
@@ -144,6 +144,7 @@ body:not(.locked) .access-gate {
 .home-hero {
     max-width: 860px;
     margin: 0 auto 30px;
+    text-align: center;
 }
 
 .eyebrow {
@@ -156,13 +157,6 @@ body:not(.locked) .access-gate {
     font-family: var(--serif);
     font-size: clamp(36px, 6vw, 72px);
     line-height: 1.05;
-}
-
-.home-hero p:last-child {
-    max-width: 720px;
-    margin-top: 18px;
-    color: var(--muted);
-    line-height: 1.8;
 }
 
 .subject-grid {
@@ -189,7 +183,7 @@ body:not(.locked) .access-gate {
 
 .subject-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 24px 52px rgba(80, 61, 45, 0.14);
+    box-shadow: 0 24px 52px rgba(33, 78, 112, 0.16);
 }
 
 .subject-card span {
@@ -237,7 +231,7 @@ h1, h2, h3, p {
     border: 1px solid var(--line);
     border-radius: 16px;
     text-align: center;
-    background: rgba(255, 253, 247, 0.88);
+    background: rgba(255, 255, 255, 0.92);
     box-shadow: var(--shadow);
 }
 
@@ -299,7 +293,7 @@ button {
     background: var(--blue);
     color: #ffffff;
     border-color: var(--blue);
-    box-shadow: 0 10px 24px rgba(204, 120, 92, 0.22);
+    box-shadow: 0 10px 24px rgba(22, 119, 200, 0.24);
 }
 
 .content {
@@ -453,7 +447,7 @@ button {
     padding: 10px 12px;
     border: 1px solid var(--line);
     border-radius: 14px;
-    background: #fffaf1;
+    background: #f3f8fc;
     cursor: pointer;
 }
 
@@ -468,7 +462,7 @@ button {
     border: 1px solid var(--line);
     border-radius: 14px;
     font: inherit;
-    background: #fffdf7;
+    background: #ffffff;
 }
 
 .card-actions {
@@ -490,7 +484,7 @@ button {
 }
 
 .show-answer {
-    background: #6f625b;
+    background: #355f82;
 }
 
 .result {
@@ -499,7 +493,7 @@ button {
     padding: 12px;
     border-radius: 14px;
     line-height: 1.65;
-    background: #fffaf1;
+    background: #f3f8fc;
     border: 1px solid var(--line);
 }
 
@@ -577,33 +571,33 @@ button {
 }
 
 .code-card.theme-blue {
-    --code-accent: #cc785c;
-    --code-soft: #fff0e8;
+    --code-accent: #1677c8;
+    --code-soft: #eaf5fd;
 }
 
 .code-card.theme-green {
-    --code-accent: #7e8f61;
-    --code-soft: #f4f2e3;
+    --code-accent: #3b8dbd;
+    --code-soft: #edf8fc;
 }
 
 .code-card.theme-amber {
-    --code-accent: #b98245;
-    --code-soft: #fff6e5;
+    --code-accent: #397ba8;
+    --code-soft: #edf4fa;
 }
 
 .code-card.theme-rose {
-    --code-accent: #b85b4f;
-    --code-soft: #fff0ec;
+    --code-accent: #4f72b8;
+    --code-soft: #eef2fb;
 }
 
 .code-card.theme-cyan {
-    --code-accent: #7b8b84;
-    --code-soft: #eef2eb;
+    --code-accent: #168ca8;
+    --code-soft: #eaf8fb;
 }
 
 .code-card.theme-violet {
-    --code-accent: #9a715f;
-    --code-soft: #f6eee8;
+    --code-accent: #536fc4;
+    --code-soft: #eef1fc;
 }
 
 .design-body {
@@ -668,8 +662,8 @@ button {
     border-radius: 12px;
     min-height: 34px;
     padding: 0 12px;
-    background: #cc785c;
-    color: #fffaf1;
+    background: #1677c8;
+    color: #ffffff;
     cursor: pointer;
     white-space: nowrap;
     transition: transform 160ms ease, background 160ms ease;
