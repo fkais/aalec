@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>努力抱佛脚</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="css/style.css?v=1.6.0">
+</head>
+<body class="locked home-network-page" data-page="home">
+    <section id="accessGate" class="access-gate">
+        <div class="access-card">
+            <p class="access-kicker">努力抱佛脚</p>
+            <h1>请输入邀请码</h1>
+            <p>通过验证后进入期末复习知识网络。</p>
+            <label class="access-input">
+                <span>邀请码</span>
+                <input id="inviteInput" type="password" inputmode="numeric" autocomplete="off" placeholder="请输入邀请码">
+            </label>
+            <button id="inviteBtn" class="access-btn">进入复习</button>
+            <p id="inviteError" class="access-error" role="alert"></p>
+        </div>
+    </section>
+
+    <main class="knowledge-network" id="knowledgeNetwork">
+        <header class="network-brand">
+            <div>
+                <p>努力抱佛脚</p>
+            </div>
+            <div class="network-actions">
+                <time id="examCountdown" class="exam-countdown"></time>
+                <a href="dashboard.html">学习数据</a>
+            </div>
+        </header>
+
+        <svg id="networkLines" class="network-lines" aria-hidden="true"></svg>
+
+        <button class="study-node central-node" data-node="center" type="button">
+            <span>期末复习</span>
+        </button>
+
+        <div id="subjectNodes" class="subject-node-layer"></div>
+
+        <div id="typeNodes" class="type-node-layer" aria-live="polite"></div>
+
+        <aside class="library-update" aria-label="题库更新记录">
+            <span id="libraryVersion"></span>
+            <p id="libraryUpdate"></p>
+        </aside>
+    </main>
+
+    <script src="js/analytics.js?v=1.6.1"></script>
+    <script src="js/quiz-engine.js?v=1.6.1"></script>
+    <script src="js/knowledge-network.js?v=1.6.3"></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>努力抱佛脚 - 刷题</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="css/style.css?v=1.6.1">
+</head>
+<body class="locked" data-page="quiz">
+    <section id="accessGate" class="access-gate">
+        <div class="access-card">
+            <p class="access-kicker">努力抱佛脚</p>
+            <h1>请输入邀请码</h1>
+            <p>通过验证后进入刷题网站。</p>
+            <label class="access-input">
+                <span>邀请码</span>
+                <input id="inviteInput" type="password" inputmode="numeric" autocomplete="off" placeholder="请输入邀请码">
+            </label>
+            <button id="inviteBtn" class="access-btn">进入刷题</button>
+            <p id="inviteError" class="access-error" role="alert"></p>
+        </div>
+    </section>
+
+    <header class="topbar">
+        <div>
+            <a class="back-link" href="index.html">返回首页</a>
+            <h1 id="subjectTitle">努力抱佛脚</h1>
+            <p id="subjectSubtitle">正在加载题库...</p>
+        </div>
+        <div class="score-box">
+            <span id="scoreText">0 / 0</span>
+            <small>已掌握</small>
+        </div>
+    </header>
+
+    <main class="layout">
+        <aside class="sidebar" id="sidebar">
+            <button class="nav-btn active" data-view="practice">刷题</button>
+            <button class="nav-btn" data-view="wrong">错题</button>
+            <button class="nav-btn" data-view="review">背诵</button>
+            <button class="nav-btn" data-view="code">设计题</button>
+        </aside>
+
+        <section class="content">
+            <div id="statsBar" class="stats-bar"></div>
+
+            <section id="practiceView" class="view active">
+                <div class="toolbar">
+                    <div class="filter-panel">
+                        <div id="typeFilters" class="filters"></div>
+                        <div id="chapterFilters" class="filters chapter-filters"></div>
+                        <label class="search-box">
+                            <span>检索</span>
+                            <input id="searchInput" type="search" placeholder="输入关键词检索题干、选项、答案或章节">
+                        </label>
+                    </div>
+                    <div class="actions">
+                        <button id="randomBtn" class="secondary">随机抽题</button>
+                        <button id="resetBtn" class="secondary reset-data-btn">重置数据</button>
+                    </div>
+                </div>
+                <div id="questionList" class="question-list"></div>
+            </section>
+
+            <section id="wrongView" class="view">
+                <div class="section-head">
+                    <h2>错题本</h2>
+                    <button id="clearWrongBtn" class="secondary">清空错题</button>
+                </div>
+                <div id="wrongList" class="question-list"></div>
+            </section>
+
+            <section id="reviewView" class="view">
+                <div class="section-head">
+                    <h2>高频背诵</h2>
+                    <span class="muted">考前先背这部分</span>
+                </div>
+                <div id="reviewList" class="review-grid"></div>
+            </section>
+
+            <section id="codeView" class="view">
+                <div class="section-head">
+                    <h2>设计题</h2>
+                    <span class="muted">每题包含题目、流程、包/文件位置和标准答案</span>
+                </div>
+                <div id="codeList" class="code-list"></div>
+            </section>
+        </section>
+    </main>
+
+    <script src="js/analytics.js?v=1.6.1"></script>
+    <script src="js/quiz-engine.js?v=1.6.1"></script>
+</body>
+</html>

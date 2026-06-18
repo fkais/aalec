@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>努力抱佛脚 - 学习数据</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="css/style.css?v=1.6.1">
+</head>
+<body class="locked" data-page="dashboard">
+    <section id="accessGate" class="access-gate">
+        <div class="access-card">
+            <p class="access-kicker">努力抱佛脚</p>
+            <h1>请输入邀请码</h1>
+            <p>通过验证后查看匿名学习数据。</p>
+            <label class="access-input">
+                <span>邀请码</span>
+                <input id="inviteInput" type="password" inputmode="numeric" autocomplete="off" placeholder="请输入邀请码">
+            </label>
+            <button id="inviteBtn" class="access-btn">查看数据</button>
+            <p id="inviteError" class="access-error" role="alert"></p>
+        </div>
+    </section>
+
+    <header class="dashboard-header">
+        <a class="back-link" href="index.html">返回知识网络</a>
+        <div>
+            <p class="eyebrow">匿名学习数据</p>
+            <h1>学习数据中心</h1>
+        </div>
+        <label class="dashboard-filter">
+            <span>统计范围</span>
+            <select id="dashboardSubject">
+                <option value="">全部科目</option>
+                <option value="javaweb">Java Web</option>
+                <option value="os">计算机组成原理</option>
+                <option value="bigdata">大数据原理与应用</option>
+                <option value="se">软件工程</option>
+            </select>
+        </label>
+    </header>
+
+    <main class="dashboard-shell">
+        <section class="identity-strip">
+            <div>
+                <span>我的匿名编号</span>
+                <strong id="anonymousId">生成中...</strong>
+            </div>
+            <p>编号只保存在当前浏览器，不关联姓名、邀请码或作答内容。</p>
+        </section>
+
+        <section id="dashboardLoading" class="dashboard-message">正在读取统计数据...</section>
+        <section id="dashboardError" class="dashboard-message dashboard-error" hidden></section>
+
+        <div id="dashboardContent" hidden>
+            <section class="metric-grid">
+                <article><span>当前排名</span><strong id="ownRank">-</strong></article>
+                <article><span>参与人数</span><strong id="participantCount">0</strong></article>
+                <article><span>掌握题数</span><strong id="correctQuestions">0</strong></article>
+                <article><span>个人正确率</span><strong id="ownAccuracy">0%</strong></article>
+            </section>
+
+            <section class="dashboard-band">
+                <div class="dashboard-section-head">
+                    <div>
+                        <p class="eyebrow">题型表现</p>
+                        <h2>正确率玫瑰图</h2>
+                    </div>
+                    <span>花瓣越长，正确率越高</span>
+                </div>
+                <div id="roseChart" class="rose-chart" role="img" aria-label="各题型正确率南丁格尔玫瑰图"></div>
+            </section>
+
+            <section class="dashboard-band">
+                <div class="dashboard-section-head">
+                    <div>
+                        <p class="eyebrow">匿名排行</p>
+                        <h2>掌握题数排行榜</h2>
+                    </div>
+                    <span>仅显示匿名编号</span>
+                </div>
+                <div class="leaderboard-wrap">
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>排名</th>
+                                <th>匿名编号</th>
+                                <th>掌握题数</th>
+                                <th>已答题数</th>
+                                <th>正确率</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboardBody"></tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+    <script src="js/analytics.js?v=1.6.1"></script>
+    <script src="js/quiz-engine.js?v=1.6.1"></script>
+    <script src="js/dashboard.js?v=1.6.1"></script>
+</body>
+</html>

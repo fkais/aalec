@@ -1,0 +1,2755 @@
+{
+  "subject": "bigdata",
+  "title": "大数据原理与应用",
+  "subtitle": "大数据原理与应用期末刷题",
+  "version": "v1.0.0",
+  "updatedAt": "2026-06-18",
+  "updateNotes": "完成 177 道题录入，覆盖 10 个章节测试，并补充单选、多选、判断与填空题型。",
+  "placeholder": "",
+  "questions": [
+    {
+      "id": "bd_c1_s1",
+      "type": "single",
+      "题干": "图灵奖获得者吉姆·格雷提出大数据是科学研究的第几范式？即以大数据为基础的数据密集型科研，通过大量的已知数据计算得出之前未知的理论。",
+      "选项": [
+        "第一范式",
+        "第二范式",
+        "第三范式",
+        "第四范式"
+      ],
+      "正确答案": "D",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试1"
+    },
+    {
+      "id": "bd_c1_s2",
+      "type": "single",
+      "题干": "以下关于云计算、大数据和物联网之间的关系，论述错误的是哪个？",
+      "选项": [
+        "云计算、大数据和物联网三者紧密相关，相辅相成",
+        "物联网可以借助于大数据实现海量数据的分析",
+        "物联网可以借助于云计算实现海量数据的存储",
+        "云计算侧重于数据分析"
+      ],
+      "正确答案": "D",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试1"
+    },
+    {
+      "id": "bd_c1_s3",
+      "type": "single",
+      "题干": "第三次信息化浪潮的标志是什么？",
+      "选项": [
+        "云计算、大数据、物联网技术的普及",
+        "虚拟现实技术的普及",
+        "个人计算机的普及",
+        "互联网的普及"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试1"
+    },
+    {
+      "id": "bd_c1_s4",
+      "type": "single",
+      "题干": "大数据价值密度的高低与数据总量大小成反比，这是大数据4V特征中哪个特征？",
+      "选项": [
+        "Volume（数据量大）",
+        "Variety（数据类型多）",
+        "Velocity（流转速度快）",
+        "Value（价值密度低）"
+      ],
+      "正确答案": "D",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试1"
+    },
+    {
+      "id": "bd_c1_m1",
+      "type": "multiple",
+      "题干": "大数据采集系统主要包括以下哪些类别系统？",
+      "选项": [
+        "系统日志采集系统",
+        "网络数据采集系统",
+        "数据库采集系统",
+        "NoSQL数据库"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试1"
+    },
+    {
+      "id": "bd_c1_m2",
+      "type": "multiple",
+      "题干": "大数据的4V特征包括哪些？",
+      "选项": [
+        "Volume（数据量大）",
+        "Variety（数据类型多）",
+        "Velocity（流转速度快）",
+        "Value（价值密度低）"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试1"
+    },
+    {
+      "id": "bd_c1_m3",
+      "type": "multiple",
+      "题干": "以下哪些数据存储单位比TB大？",
+      "选项": [
+        "GB",
+        "PB",
+        "EB",
+        "ZB"
+      ],
+      "正确答案": [
+        "B",
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试1"
+    },
+    {
+      "id": "bd_c1_m4",
+      "type": "multiple",
+      "题干": "大数据存储与管理的数据主要是什么类型的数据？",
+      "选项": [
+        "结构化数据",
+        "非结构化数据",
+        "半结构化数据",
+        "复杂结构化数据"
+      ],
+      "正确答案": [
+        "B",
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试1"
+    },
+    {
+      "id": "bd_c1_m5",
+      "type": "multiple",
+      "题干": "以下哪些属于大数据的基本处理流程？",
+      "选项": [
+        "数据采集与预处理",
+        "大数据存储与管理",
+        "大数据处理与分析",
+        "数据可视化"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试1"
+    },
+    {
+      "id": "bd_c1_m6",
+      "type": "multiple",
+      "题干": "以下关于大数据、物联网、云计算、人工智能和5G之间的关系，论述正确的有哪些？",
+      "选项": [
+        "物联网、云计算和5G是大数据的底层架构",
+        "大数据依赖云计算来实现大数据",
+        "人工智能是大数据的终极应用",
+        "大数据注重服务，云计算则注重数据的价值化操作"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试1"
+    },
+    {
+      "id": "bd_c2_s1",
+      "type": "single",
+      "题干": "由于Hadoop配置文件繁多，配置过程复杂，而又要求所有配置文件每个节点都一样，所以推荐的快捷方法是在主节点上配置好，然后利用哪个命令将配置好的文件同步到所有从节点上？",
+      "选项": [
+        "cp",
+        "copy",
+        "scp",
+        "以上选项均不正确"
+      ],
+      "正确答案": "C",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_s2",
+      "type": "single",
+      "题干": "伪分布式部署Hadoop集群时，需要修改Hadoop配置文件hdfs-site.xml中的配置项dfs.replication设置为多少？",
+      "选项": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_s3",
+      "type": "single",
+      "题干": "哪种运行模式是使用Hadoop的最佳方式，真实Hadoop集群的运行均采用该模式？",
+      "选项": [
+        "Local（Standalone）Mode——单机模式",
+        "Pseudo-Distributed Mode——伪分布式模式",
+        "Fully-Distributed Mode——全分布式模式",
+        "其它"
+      ],
+      "正确答案": "C",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_s4",
+      "type": "single",
+      "题干": "启动和管理Hadoop的守护进程，只需要在主节点上执行命令即可。全分布式模式下，start-dfs.sh命令会在HDFS主节点上启动以下哪些进程？",
+      "选项": [
+        "NameNode",
+        "DataNode",
+        "ResourceManager",
+        "NodeManager"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_s5",
+      "type": "single",
+      "题干": "哪个Hadoop配置文件指定了运行DataNode和NodeManager进程的从节点主机名列表，而在全分布式模式下必须修改该文件，将所有从节点主机名添加进去，且要求每个主机名占一行？",
+      "选项": [
+        "hdfs-site.xml",
+        "yarn-site.xml",
+        "mapred-site.xml",
+        "slaves"
+      ],
+      "正确答案": "D",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_s6",
+      "type": "single",
+      "题干": "Hadoop的项目创始人是谁？",
+      "选项": [
+        "James Gosling",
+        "Doug Cutting",
+        "Guido van Rossum",
+        "Linus Benedict Torvalds"
+      ],
+      "正确答案": "B",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_s7",
+      "type": "single",
+      "题干": "配置SSH免密登录并不是部署Hadoop集群的必需步骤，配置它仅是为了方便集群测试，达到所有节点之间都能免密登录。配置SSH的关键步骤包括：（1）检查SSH是否安装，若没安装则安装；（2）修改sshd配置文件并重启sshd服务；（3）在家目录生成公钥和私钥，并将公钥内容追加到authorized_key授权密钥中；（4）从主节点共享公钥到从节点上。请问正确的操作顺序是什么？",
+      "选项": [
+        "（1）（2）（4）（3）",
+        "（1）（3）（2）（4）",
+        "（1）（2）（3）（4）",
+        "以上选项均不正确"
+      ],
+      "正确答案": "C",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_s8",
+      "type": "single",
+      "题干": "为了使用无须记住IP地址，从而协助用户便捷地通过主机名访问各个Hadoop节点，需要添加域名映射，具体要修改以下哪个配置文件？",
+      "选项": [
+        "/etc/hosts",
+        "/etc/sysconfig/network",
+        "/etc/hostname",
+        "以上选项均不正确"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_s9",
+      "type": "single",
+      "题干": "以下对Hadoop的说法错误的是哪个？",
+      "选项": [
+        "Hadoop HDFS是针对谷歌GFS的开源实现，用于大规模数据集的分布式存储",
+        "Hadoop MapReduce是针对谷歌MapReduce的开源实现，用于大规模数据集的分布式计算",
+        "Hadoop是基于Java语言开发的，只支持Java语言编程",
+        "Hadoop 2.0针对HDFS增加了HDFS HA和HDFS联邦两个重大特性"
+      ],
+      "正确答案": "C",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_s10",
+      "type": "single",
+      "题干": "以下哪个Hadoop配置文件可以配置HDFS URI？",
+      "选项": [
+        "core-site.xml",
+        "hdfs-site.xml",
+        "yarn-site.xml",
+        "mapred-site.xml"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_s11",
+      "type": "single",
+      "题干": "Hadoop的起源时间是何时？",
+      "选项": [
+        "1998",
+        "1999",
+        "2002",
+        "2008"
+      ],
+      "正确答案": "C",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_s12",
+      "type": "single",
+      "题干": "配置静态IP地址时需要将以下哪个参数选项改为static？",
+      "选项": [
+        "ONBOOT",
+        "BOOTPROTO",
+        "DEVICE",
+        "以上选项均不正确"
+      ],
+      "正确答案": "B",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_s13",
+      "type": "single",
+      "题干": "Hadoop最基础的功能是什么？",
+      "选项": [
+        "存储和处理海量数据的能力",
+        "快速编写程序",
+        "加快数据的读取",
+        "数据挖掘"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_s14",
+      "type": "single",
+      "题干": "Hadoop名字的来源是什么？",
+      "选项": [
+        "由一个大象玩具而来",
+        "由一个汽车玩具而来",
+        "由一篇报纸而来",
+        "由灵感而来"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_s15",
+      "type": "single",
+      "题干": "配置静态IP地址时，下列哪个参数选项指的是静态IP地址？",
+      "选项": [
+        "IPADDR",
+        "NETMASK",
+        "GATEWAY",
+        "DNS1"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_s16",
+      "type": "single",
+      "题干": "启动和管理Hadoop守护进程，只需要在主节点上执行命令即可。全分布式模式下，执行start-yarn.sh命令后会在YARN从节点上启动以下哪些进程？",
+      "选项": [
+        "NameNode",
+        "DataNode",
+        "ResourceManager",
+        "NodeManager"
+      ],
+      "正确答案": "D",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_s17",
+      "type": "single",
+      "题干": "配置Java环境变量时，可以通过修改以下哪个配置文件完成？",
+      "选项": [
+        "/etc/profile",
+        "/etc/hostname",
+        "/etc/hosts",
+        "以上选项均不正确"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_m1",
+      "type": "multiple",
+      "题干": "以下哪些Hadoop的配置文件中可以配置Java的安装路径JAVA_HOME？",
+      "选项": [
+        "hadoop-env.sh",
+        "yarn-env.sh",
+        "mapred-env.sh",
+        "hdfs-site.xml"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_m2",
+      "type": "multiple",
+      "题干": "Google引爆大数据时代的三篇论文是哪些？",
+      "选项": [
+        "The Google File System(2003)",
+        "MapReduce: Simplified Data Processing on Large Clusters(2004)",
+        "Bigtable: A Distributed Storage System for Structured Data(2006)",
+        "Mastering the game of Go with deep neural networks and tree search(2016)"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_m3",
+      "type": "multiple",
+      "题干": "以下哪些是Apache软件基金会旗下的分布式计算框架？",
+      "选项": [
+        "MapReduce",
+        "Spark",
+        "Storm",
+        "Flink"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_m4",
+      "type": "multiple",
+      "题干": "Linux下查看IP地址的命令是哪几个？",
+      "选项": [
+        "ipconfig",
+        "ifconfig",
+        "ping",
+        "ip address"
+      ],
+      "正确答案": [
+        "B",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_m5",
+      "type": "multiple",
+      "题干": "下列不属于Apache中和Hadoop相关的项目有哪些？",
+      "选项": [
+        "Red Hat GlusterFS",
+        "Ambari",
+        "Spark",
+        "Facebook Corona",
+        "ZooKeeper",
+        "Cassandra",
+        "HBase",
+        "MongoDB",
+        "Hive",
+        "Pig",
+        "Cloudera Impala",
+        "Mahout"
+      ],
+      "正确答案": [
+        "A",
+        "D",
+        "H",
+        "K"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_m6",
+      "type": "multiple",
+      "题干": "VMware的网络连接模式有哪些？",
+      "选项": [
+        "bridged networking，桥接模式，将虚拟机直接连接到外部网络",
+        "network address translation（NAT），网络地址转换模式，与虚拟机共享主机的IP地址",
+        "host-only networking，仅主机模式，在专用网络内连接虚拟机",
+        "其它模式"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_m7",
+      "type": "multiple",
+      "题干": "下列对Hadoop生态系统中各组件的理解，正确的有哪些？",
+      "选项": [
+        "Tez：支持DAG作业的计算框架",
+        "Oozie：工作流和协作服务引擎",
+        "Kafka：分布式发布订阅消息系统",
+        "Pig：处理大规模数据的脚本语言"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_m8",
+      "type": "multiple",
+      "题干": "为了在任意目录下都可以方便地使用启动和管理Hadoop集群的命令，需要将Hadoop安装目录下的哪两个目录添加到系统环境变量PATH中？",
+      "选项": [
+        "$HADOOP_HOME/bin",
+        "$HADOOP_HOME/sbin",
+        "$HADOOP_HOME/etc",
+        "$HADOOP_HOME/share"
+      ],
+      "正确答案": [
+        "A",
+        "B"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_m9",
+      "type": "multiple",
+      "题干": "部署Hadoop集群前，Linux操作系统上必须安装两种软件，请问是哪两种？",
+      "选项": [
+        "Spark",
+        "HBase",
+        "Java",
+        "SSH且sshd服务必须运行"
+      ],
+      "正确答案": [
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_m10",
+      "type": "multiple",
+      "题干": "启动和管理Hadoop守护进程，只需要在主节点上执行命令即可。全分布式模式下，执行start-dfs.sh和start-yarn.sh命令后会在从节点上启动以下哪些进程？",
+      "选项": [
+        "NameNode",
+        "DataNode",
+        "ResourceManager",
+        "NodeManager"
+      ],
+      "正确答案": [
+        "B",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_m11",
+      "type": "multiple",
+      "题干": "以下关于Hadoop生态系统中各组件的功能，叙述正确的是哪些？",
+      "选项": [
+        "HDFS：分布式文件系统，是Hadoop项目的两大核心之一，是谷歌GFS的开源实现",
+        "ZooKeeper：针对谷歌Chubby的一个开源实现，是高效可靠的协同工作系统",
+        "HBase：提供高可靠、高性能、分布式的行式数据库，是谷歌BigTable的开源实现",
+        "Hive：一个基于Hadoop的数据仓库工具，用于对Hadoop文件中的数据集进行数据整理、特殊查询和分析存储"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_m12",
+      "type": "multiple",
+      "题干": "Hadoop运行模式有哪几种？",
+      "选项": [
+        "Local（Standalone）Mode——单机模式",
+        "Pseudo-Distributed Mode——伪分布式模式",
+        "Fully-Distributed Mode——全分布式模式",
+        "其它"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_j1",
+      "type": "judge",
+      "题干": "Hadoop运行平台仅支持GNU/Linux，这句话是否正确？",
+      "选项": [],
+      "正确答案": "错",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_j2",
+      "type": "judge",
+      "题干": "Hadoop 1.0支持MapReduce计算框架，也支持Spark计算框架，这句话正确吗？",
+      "选项": [],
+      "正确答案": "错",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_b1",
+      "type": "blank",
+      "题干": "Hadoop有三种运行模式：单机模式、伪分布式和全分布式，____是使用Hadoop的最佳模式。",
+      "选项": [],
+      "正确答案": "全分布式",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_b2",
+      "type": "blank",
+      "题干": "Hadoop集群采用____架构。",
+      "选项": [],
+      "正确答案": "主从",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_b3",
+      "type": "blank",
+      "题干": "部署伪分布式Hadoop集群，其配置文件hdfs-site.xml中配置项dfs.replication的值应设置为____。",
+      "选项": [],
+      "正确答案": "1",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_b4",
+      "type": "blank",
+      "题干": "使用start-yarn.sh启动YARN集群，会在主节点上启动ResourceManager进程，在从节点上启动____进程。",
+      "选项": [],
+      "正确答案": "NodeManager",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c2_b5",
+      "type": "blank",
+      "题干": "使用start-dfs.sh启动HDFS集群，会在主节点上启动____进程，在从节点上启动DataNode进程。",
+      "选项": [],
+      "正确答案": "NameNode",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试2"
+    },
+    {
+      "id": "bd_c3_s1",
+      "type": "single",
+      "题干": "HDFS Shell文件级命令中，创建目录、删除文件、移动文件的命令依次为下述哪个？",
+      "选项": [
+        "hdfs dfs -mkdir …… hdfs dfs -mv …… hdfs dfs -rm ……",
+        "hdfs dfs -ls …… hdfs dfs -mv …… hdfs dfs -rm ……",
+        "hdfs dfs -mkdir …… hdfs dfs -rm …… hdfs dfs -mv ……",
+        "hdfs dfs -mkdir …… hdfs dfs -rm …… hdfs dfs -cp ……"
+      ],
+      "正确答案": "C",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试3"
+    },
+    {
+      "id": "bd_c3_s2",
+      "type": "single",
+      "题干": "通过以下哪个HDFS Java API类，可以方便地像操作本地文件系统一样操作HDFS集群文件？",
+      "选项": [
+        "org.apache.hadoop.fs.FileSystem",
+        "org.apache.hadoop.fs.FSDataInputStream",
+        "org.apache.hadoop.fs.FSDataOutputStream",
+        "org.apache.hadoop.fs.Path"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试3"
+    },
+    {
+      "id": "bd_c3_s3",
+      "type": "single",
+      "题干": "将文件/home/xuluhui/HelloData/file1.txt上传至HDFS根目录的命令是哪个？",
+      "选项": [
+        "hadoop fs -put /home/xuluhui/HelloData/file1.txt",
+        "hadoop fs -put /home/xuluhui/HelloData/file1.txt /",
+        "hadoop fs -mv /home/xuluhui/HelloData/file1.txt /",
+        "hadoop fs -cat /home/xuluhui/HelloData/file1.txt"
+      ],
+      "正确答案": "B",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试3"
+    },
+    {
+      "id": "bd_c3_s4",
+      "type": "single",
+      "题干": "以下关于HDFS的介绍，描述错误的是哪个？",
+      "选项": [
+        "HDFS来源于Google 2003年的GFS论文",
+        "HDFS是Hadoop核心组件之一",
+        "HDFS采用master/slave架构",
+        "HDFS比较适合存储大量零碎的小文件"
+      ],
+      "正确答案": "D",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试3"
+    },
+    {
+      "id": "bd_c3_s5",
+      "type": "single",
+      "题干": "下列哪个HDFS Java API中的类，用于定义HDFS集群中指定目录与文件的绝对或相对路径？",
+      "选项": [
+        "org.apache.hadoop.conf.Configuration",
+        "org.apache.hadoop.fs.FileSystem",
+        "org.apache.hadoop.fs.Path",
+        "org.apache.hadoop.fs.FileStatus"
+      ],
+      "正确答案": "C",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试3"
+    },
+    {
+      "id": "bd_c3_s6",
+      "type": "single",
+      "题干": "Hadoop 2.x中，定义块大小的配置项dfs.blocksize在Hadoop哪个配置文件中？",
+      "选项": [
+        "hdfs-site.xml",
+        "yarn-site.xml",
+        "mapred-site.xml",
+        "以上选项均不正确"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试3"
+    },
+    {
+      "id": "bd_c3_s7",
+      "type": "single",
+      "题干": "Hadoop 2.x中，通过浏览器登录以下哪个地址，可以访问HDFS Web UI界面？",
+      "选项": [
+        "http://[NameNodeIP]:50070",
+        "http://[NameNodeIP]:8088",
+        "http://[NameNodeIP]:19888",
+        "以上选项均不正确"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试3"
+    },
+    {
+      "id": "bd_c3_s8",
+      "type": "single",
+      "题干": "HDFS采用多副本冗余存储的优势不包含哪个？",
+      "选项": [
+        "保证数据可靠性",
+        "容易检查数据错误",
+        "加快数据传输速度",
+        "节约存储空间"
+      ],
+      "正确答案": "D",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试3"
+    },
+    {
+      "id": "bd_c3_s9",
+      "type": "single",
+      "题干": "Hadoop 2.x中，定义HDFS数据块副本数的配置项dfs.replication在Hadoop哪个配置文件中？",
+      "选项": [
+        "core-site.xml",
+        "hdfs-site.xml",
+        "yarn-site.xml",
+        "mapred-site.xml"
+      ],
+      "正确答案": "B",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试3"
+    },
+    {
+      "id": "bd_c3_s10",
+      "type": "single",
+      "题干": "下列关于NameNode和DataNode的介绍，错误的是哪个？",
+      "选项": [
+        "NameNode是主节点，保存着整个系统的元数据",
+        "NameNode管理文件系统的命名空间",
+        "DataNode负责协调整个HDFS存取",
+        "DataNode是从节点，在本地文件系统中存储文件的块数据"
+      ],
+      "正确答案": "C",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试3"
+    },
+    {
+      "id": "bd_c3_s11",
+      "type": "single",
+      "题干": "下列哪个HDFS Java API中的类，封装了HDFS客户端或者HDFS集群的配置？",
+      "选项": [
+        "org.apache.hadoop.conf.Configuration",
+        "org.apache.hadoop.fs.FileSystem",
+        "org.apache.hadoop.fs.Path",
+        "org.apache.hadoop.fs.FileStatus"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试3"
+    },
+    {
+      "id": "bd_c3_s12",
+      "type": "single",
+      "题干": "Hadoop 2.x中，默认的HDFS文件块的大小是多少？",
+      "选项": [
+        "64MB",
+        "128MB",
+        "256MB",
+        "512MB"
+      ],
+      "正确答案": "B",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试3"
+    },
+    {
+      "id": "bd_c3_s13",
+      "type": "single",
+      "题干": "以下关于HDFS数据读写过程的描述，错误的是哪个？",
+      "选项": [
+        "NameNode收到客户端读取文件请求后，查询元数据，返回数据块地址信息，且按照DataNode与客户端的距离从远到近排序",
+        "客户端从DataNode读取数据时，可能会碰上某个DataNode失效的情况，则会自动选择下一个包含此数据块的最近的DataNode去读取",
+        "将数据写入HDFS时，FileSystem用RPC调用NameNode，在文件系统的命名空间中创建一个新的文件，NameNode首先确定文件原来不存在，并且客户端有创建文件的权限，然后创建新文件",
+        "将数据写入HDFS时，客户端将数据分成块，名称节点分配数据节点，分配的数据节点放在数据流管道（pipeline）里，DataStreamer将数据块写入pipeline中的第一个数据节点，一个数据节点将数据块发送给第二个数据节点，第二个数据节点将数据块发送给第三个数据节点"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试3"
+    },
+    {
+      "id": "bd_c3_m1",
+      "type": "multiple",
+      "题干": "以下对数据节点DataNode理解正确的有哪些？",
+      "选项": [
+        "数据节点通常只有一个",
+        "数据节点的数据保存在磁盘中",
+        "数据节点用来存储具体的文件内容",
+        "数据节点在名称节点的统一调度下进行数据块的创建、删除和复制等操作"
+      ],
+      "正确答案": [
+        "B",
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试3"
+    },
+    {
+      "id": "bd_c3_m2",
+      "type": "multiple",
+      "题干": "以下HDFS相关的Shell命令不正确的是哪些？",
+      "选项": [
+        "hadoop fs -copyFromLocal：将路径指定的文件或文件夹移动到路径指定的文件夹中",
+        "hadoop fs -rm：删除路径指定的文件",
+        "hadoop fs -ls：显示指定的文件的详细信息",
+        "hadoop fs -mkdir：创建指定的文件"
+      ],
+      "正确答案": [
+        "A",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试3"
+    },
+    {
+      "id": "bd_c3_m3",
+      "type": "multiple",
+      "题干": "我们可以使用HDFS Java API针对HDFS进行哪些操作？",
+      "选项": [
+        "上传本地文件到HDFS",
+        "读取HDFS文件",
+        "新建HDFS文件并写入内容",
+        "删除HDFS文件"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试3"
+    },
+    {
+      "id": "bd_c3_m4",
+      "type": "multiple",
+      "题干": "以下对名称节点NameNode理解正确的有哪些？",
+      "选项": [
+        "名称节点作为中心服务器，负责管理文件系统的命名空间及客户端对文件的访问",
+        "名称节点的数据保存在内存中",
+        "名称节点通常用来保存元数据",
+        "名称节点用来负责具体用户数据的存储"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试3"
+    },
+    {
+      "id": "bd_c3_m5",
+      "type": "multiple",
+      "题干": "以下哪些命令可以用来操作HDFS文件？",
+      "选项": [
+        "hdfs fs",
+        "hdfs dfs",
+        "hadoop fs",
+        "hadoop dfs"
+      ],
+      "正确答案": [
+        "B",
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试3"
+    },
+    {
+      "id": "bd_c3_b1",
+      "type": "blank",
+      "题干": "查看HDFS根目录结构的HDFS Shell命令是____。（要求：使用hdfs dfs实现）",
+      "选项": [],
+      "正确答案": "hdfs dfs -ls /",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试3"
+    },
+    {
+      "id": "bd_c3_b2",
+      "type": "blank",
+      "题干": "已知某一HDFS非空目录/InputData，那么删除该目录的HDFS Shell命令是____。（要求：使用hadoop fs命令）",
+      "选项": [],
+      "正确答案": "hadoop fs -rm -r /InputData",
+      "备选答案": [
+        "hadoop fs -rm -R /InputData"
+      ],
+      "解析": "",
+      "所属章节": "章节测试3"
+    },
+    {
+      "id": "bd_c3_b3",
+      "type": "blank",
+      "题干": "Hadoop 2.x配置文件hdfs-site.xml中配置项dfs.replication的默认值是____。",
+      "选项": [],
+      "正确答案": "3",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试3"
+    },
+    {
+      "id": "bd_c3_b4",
+      "type": "blank",
+      "题干": "Hadoop 2.x中，HDFS Web UI默认端口号是____。",
+      "选项": [],
+      "正确答案": "50070",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试3"
+    },
+    {
+      "id": "bd_c3_b5",
+      "type": "blank",
+      "题干": "在HDFS根目录下创建目录/xijing的HDFS Shell命令是____。（要求：使用hadoop fs实现）",
+      "选项": [],
+      "正确答案": "hadoop fs -mkdir /xijing",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试3"
+    },
+    {
+      "id": "bd_c4_s1",
+      "type": "single",
+      "题干": "Hadoop 2.x中，编写MR-App前，需要导入mapreduce核心包，例如编写最重要的Map类和Reduce类时需要用到Mapper类和Reducer类，它们在哪个jar包中存放？",
+      "选项": [
+        "commons-cli-x.x.jar",
+        "hadoop-common-x.x.x.jar",
+        "hadoop-hdfs-client-x.x.x.jar",
+        "hadoop-mapreduce-client-core-x.x.x.jar"
+      ],
+      "正确答案": "D",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试4"
+    },
+    {
+      "id": "bd_c4_s2",
+      "type": "single",
+      "题干": "在使用示例MapReduce程序WordCount进行词频统计时，对于文本行“hello hadoop hello world”，经过WordCount程序的Map函数处理后直接输出的中间结果，应该是下面哪种形式？",
+      "选项": [
+        "<hello,1><hadoop,1><hello,1><world,1>",
+        "<hello,[1,1]><hadoop,[1]><world,[1]>",
+        "<hello,2><hadoop,1><world,1>",
+        "以上选项均不正确"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试4"
+    },
+    {
+      "id": "bd_c4_s3",
+      "type": "single",
+      "题干": "Hadoop MapReduce来源于Google哪篇论文？",
+      "选项": [
+        "2003年的Google File System",
+        "2004年的MapReduce",
+        "2006年的BigTable",
+        "以上选项均不正确"
+      ],
+      "正确答案": "B",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试4"
+    },
+    {
+      "id": "bd_c4_s4",
+      "type": "single",
+      "题干": "Shuffle过程是MapReduce整个工作流程的心脏，关于整个框架的性能，Map端的Shuffle过程包括4个步骤：①输入数据和执行Map任务；②写入缓存；③溢写（分区、排序、合并）；④文件归并。请问正确的执行顺序是什么？",
+      "选项": [
+        "②③④①",
+        "①③②④",
+        "①②④③",
+        "①②③④"
+      ],
+      "正确答案": "D",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试4"
+    },
+    {
+      "id": "bd_c4_s5",
+      "type": "single",
+      "题干": "若用键值对的变化来表示Hadoop MapReduce的工作流程，则可以用以下哪个来表示？",
+      "选项": [
+        "<key1,value1>→<key2,List(value2)>→<key3,value3>",
+        "<key1,value1>→<key2,value2>→<key3,List(value3)>",
+        "<key1,List(value1)>→<key2,value2>→<key3,value3>",
+        "以上选项均不正确"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试4"
+    },
+    {
+      "id": "bd_c4_s6",
+      "type": "single",
+      "题干": "关于选择“计算向数据靠拢”或“数据向计算靠拢”，MapReduce设计所遵循的是哪个理念？",
+      "选项": [
+        "计算向数据靠拢",
+        "数据向计算靠拢",
+        "数据、计算不靠拢",
+        "以上选项均不正确"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试4"
+    },
+    {
+      "id": "bd_c4_s7",
+      "type": "single",
+      "题干": "下列关于MapReduce的说法错误的是哪个？",
+      "选项": [
+        "不同的Map任务之间不能互相通信",
+        "Map函数将输入的元素转换成形式的键值对",
+        "MapReduce框架采用了Master/Slave架构，包括一个Master和若干个Slave",
+        "Hadoop框架是用Java实现的，MapReduce应用程序只能使用Java语言来编写"
+      ],
+      "正确答案": "D",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试4"
+    },
+    {
+      "id": "bd_c4_s8",
+      "type": "single",
+      "题干": "MapReduce Shell接口中，哪个命令用于向YARN集群提交MR-App、管理正在运行的MR-App当前执行状态？",
+      "选项": [
+        "bin/mapred pipes",
+        "bin/mapred job",
+        "bin/mapred queue",
+        "bin/mapred classpath"
+      ],
+      "正确答案": "B",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试4"
+    },
+    {
+      "id": "bd_c4_s9",
+      "type": "single",
+      "题干": "Shuffle过程是MapReduce整个工作流程的核心环节，分为Map端的Shuffle过程和Reduce端的Shuffle过程，请问Reduce端的Shuffle过程包括3个步骤：①归并数据；②领取数据；③把数据输入给Reduce任务。请问正确的执行顺序是什么？",
+      "选项": [
+        "①②③",
+        "①③②",
+        "②①③",
+        "②③①"
+      ],
+      "正确答案": "C",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试4"
+    },
+    {
+      "id": "bd_c4_s10",
+      "type": "single",
+      "题干": "在使用MapReduce程序WordCount进行词频统计时，对于文本行“hello hadoop hello world”，经过WordCount程序的Reduce函数处理后的结果，应该是下面哪种形式？",
+      "选项": [
+        "<hello,1><hadoop,1><hello,1><world,1>",
+        "<hello,[1,1]><hadoop,[1]><world,[1]>",
+        "<hello,2><hadoop,1><world,1>",
+        "以上选项均不正确"
+      ],
+      "正确答案": "C",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试4"
+    },
+    {
+      "id": "bd_c4_s11",
+      "type": "single",
+      "题干": "若Hadoop集群的主节点机器名为master，那么MapReduce Web UI的默认地址是哪个？",
+      "选项": [
+        "master:50070",
+        "master:8088",
+        "master:19888",
+        "以上选项均不正确"
+      ],
+      "正确答案": "C",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试4"
+    },
+    {
+      "id": "bd_c4_s12",
+      "type": "single",
+      "题干": "使用Java编写MR-App时，自定义Mapper类需要继承org.apache.hadoop.mapreduce包中的哪个类？",
+      "选项": [
+        "Mapper",
+        "Reducer",
+        "Job",
+        "InputFormat"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试4"
+    },
+    {
+      "id": "bd_c4_s13",
+      "type": "single",
+      "题干": "关于Hadoop MapReduce的执行过程，以下哪个顺序正确？",
+      "选项": [
+        "输入→Reduce→Shuffle→Map→输出",
+        "输入→Map→Reduce→Shuffle→输出",
+        "输入→Map→Shuffle→Reduce→输出",
+        "输入→Shuffle→Map→Reduce→输出"
+      ],
+      "正确答案": "C",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试4"
+    },
+    {
+      "id": "bd_c4_m1",
+      "type": "multiple",
+      "题干": "编写MRApplicationBusinessLogic模块时，大多数时候我们只需要编写哪两个类？",
+      "选项": [
+        "Mapper类",
+        "Reducer类",
+        "InputFormat类",
+        "OutputFormat类"
+      ],
+      "正确答案": [
+        "A",
+        "B"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试4"
+    },
+    {
+      "id": "bd_c4_m2",
+      "type": "multiple",
+      "题干": "MapReduce 1.0体系架构中，以下关于JobTracker和TaskTracker的说法，哪些是正确的？",
+      "选项": [
+        "JobTracker扮演主的角色",
+        "TaskTracker扮演主的角色",
+        "JobTracker不参与具体计算",
+        "TaskTracker参与具体计算"
+      ],
+      "正确答案": [
+        "A",
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试4"
+    },
+    {
+      "id": "bd_c4_m3",
+      "type": "multiple",
+      "题干": "以下哪些计算框架主要针对大规模数据的离线批处理？",
+      "选项": [
+        "Hadoop MapReduce",
+        "Spark Core",
+        "Spark Streaming",
+        "Storm"
+      ],
+      "正确答案": [
+        "A",
+        "B"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试4"
+    },
+    {
+      "id": "bd_c4_b1",
+      "type": "blank",
+      "题干": "Java编程语言中整型为int，但是Hadoop MapReduce编程中，整型为____。",
+      "选项": [],
+      "正确答案": "IntWritable",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试4"
+    },
+    {
+      "id": "bd_c4_b2",
+      "type": "blank",
+      "题干": "MapReduce作业会被拆分成多个Map任务和多个Reduce任务，为了使数据向计算靠拢，其中每个Map任务通常运行在____上。",
+      "选项": [],
+      "正确答案": "DataNode",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试4"
+    },
+    {
+      "id": "bd_c5_s1",
+      "type": "single",
+      "题干": "关于YARN的体系架构的描述，以下选项哪个错误？",
+      "选项": [
+        "YARN采用master/slave架构",
+        "主节点上运行主服务ResourceManager",
+        "从节点上运行从服务NodeManager",
+        "YARN中引入了一个逻辑概念——槽Slot，它将各类资源（如CPU、内存）抽象化"
+      ],
+      "正确答案": "D",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试5"
+    },
+    {
+      "id": "bd_c5_s2",
+      "type": "single",
+      "题干": "YARN Shell命令中，“yarn node”命令的主要功能是什么？",
+      "选项": [
+        "管理集群",
+        "查看集群当前节点信息",
+        "查看集群当前队列运行状况",
+        "以上选项均不正确"
+      ],
+      "正确答案": "B",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试5"
+    },
+    {
+      "id": "bd_c5_s3",
+      "type": "single",
+      "题干": "YARN Shell程序级命令中，下列哪个命令用于向YARN集群提交YARN-App？",
+      "选项": [
+        "yarn jar",
+        "yarn application",
+        "yarn container",
+        "yarn version"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试5"
+    },
+    {
+      "id": "bd_c5_s4",
+      "type": "single",
+      "题干": "关于YARN-App的介绍，错误的是哪些？",
+      "选项": [
+        "YARN上仅能运行MR-App",
+        "ApplicationMaster是Client提交的YARN-App控制单元",
+        "AppExecutor是YARN-App的实际执行者，是Container的实体化",
+        "运行的并行化是通过ApplicationMaster持有一系列的AppExecutor完成的"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试5"
+    },
+    {
+      "id": "bd_c5_m1",
+      "type": "multiple",
+      "题干": "以下关于Container的描述，正确的有哪些？",
+      "选项": [
+        "Container是YARN中引入的一个逻辑概念，是YARN对各类资源（如CPU、内存）的抽象化",
+        "比如集群机器每台标配1个双核CPU、4G内存，可以规定<1核，2G>为1个Container",
+        "引入Container后，方便从节点NodeManager管理本机资源，简化主节点ResourceManager管理集群资源",
+        "Container由ApplicationMaster向NodeManager申请，由NodeManager中的资源调度器异步分配给ApplicationMaster"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试5"
+    },
+    {
+      "id": "bd_c5_m2",
+      "type": "multiple",
+      "题干": "以下关于MapReduce和YARN的说法，哪些是正确的？",
+      "选项": [
+        "MapReduce 1.0既是一个计算框架，又是一个资源管理调度框架",
+        "MapReduce 2.0是一个纯粹的计算框架",
+        "Hadoop 2.0以后，MapReduce 1.0中的资源管理调度功能被单独分离出来形成了YARN",
+        "YARN是一个纯粹的资源管理调度框架"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试5"
+    },
+    {
+      "id": "bd_c5_m3",
+      "type": "multiple",
+      "题干": "ResourceManager存在单点故障问题，一旦出现故障，就会影响到整个集群的正常运行。YARN提供的以下哪些新特性可以解决此问题？",
+      "选项": [
+        "ResourceManager Restart自动重启机制",
+        "ResourceManager HA高可用机制",
+        "YARN Federation联邦机制",
+        "HDFS Snapshots快照机制"
+      ],
+      "正确答案": [
+        "A",
+        "B"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试5"
+    },
+    {
+      "id": "bd_c5_m4",
+      "type": "multiple",
+      "题干": "关于YARN从进程NodeManager功能的描述，正确的有哪些？",
+      "选项": [
+        "YARN集群可有多个NodeManager，负责单节点资源的管理和使用",
+        "执行YARN-App时，NodeManager负责接受来自ApplicationMaster的启动或停止Container请求",
+        "NodeManager以Container形式向ResourceManager汇报本机资源信息",
+        "NodeManager处理来自客户端请求"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试5"
+    },
+    {
+      "id": "bd_c5_m5",
+      "type": "multiple",
+      "题干": "YARN作为一个统一的资源管理调度框架，其目标是实现“一个集群多个框架”，以下哪些计算框架可以部署在YARN上？",
+      "选项": [
+        "离线批处理框架MapReduce",
+        "内存计算框架Spark",
+        "流计算框架Storm",
+        "DAG计算框架Tez"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试5"
+    },
+    {
+      "id": "bd_c5_b1",
+      "type": "blank",
+      "题干": "YARN Web UI默认端口号是____。",
+      "选项": [],
+      "正确答案": "8088",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试5"
+    },
+    {
+      "id": "bd_c6_s1",
+      "type": "single",
+      "题干": "要求ZooKeeper在集群模式下运行，那么在部署ZooKeeper集群时，比较科学的节点数量至少有几个？",
+      "选项": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "正确答案": "C",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试6"
+    },
+    {
+      "id": "bd_c6_s2",
+      "type": "single",
+      "题干": "进入ZooKeeper客户端命令行后，先后执行命令：create /xijing 'xijing university' 和 set /xijing 'xijing university'，ZNode的状态属性dataVersion是什么？",
+      "选项": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "正确答案": "B",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试6"
+    },
+    {
+      "id": "bd_c6_s3",
+      "type": "single",
+      "题干": "在ZooKeeper中，引入了什么机制来实现分布式的通知功能？",
+      "选项": [
+        "版本",
+        "Watcher",
+        "ACL",
+        "以上选项均不正确"
+      ],
+      "正确答案": "B",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试6"
+    },
+    {
+      "id": "bd_c6_s4",
+      "type": "single",
+      "题干": "在进行ZooKeeper集群部署时，必须要修改其数据存储目录，具体是哪个参数？",
+      "选项": [
+        "tickTime",
+        "initLimit",
+        "dataDir",
+        "clientPort"
+      ],
+      "正确答案": "C",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试6"
+    },
+    {
+      "id": "bd_c6_s5",
+      "type": "single",
+      "题干": "若想在ZooKeeper编程中使用类org.apache.zookeeper.ZooKeeper，需要导入哪个jar包？",
+      "选项": [
+        "$ZOOKEEPER_HOME/zookeeper-x.x.xx.jar",
+        "$ZOOKEEPER_HOME/lib/slf4j-api-x.xx.jar",
+        "$HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-core-x.x.x.jar",
+        "$HADOOP_HOME/share/hadoop/hdfs/hadoop-hdfs-x.x.x.jar"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试6"
+    },
+    {
+      "id": "bd_c6_s6",
+      "type": "single",
+      "题干": "查看ZooKeeper服务状态的命令是哪个？",
+      "选项": [
+        "bin/zkServer.sh start",
+        "bin/zkServer.sh stop",
+        "bin/zkServer.sh status",
+        "bin/zkServer.sh restart"
+      ],
+      "正确答案": "C",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试6"
+    },
+    {
+      "id": "bd_c6_s7",
+      "type": "single",
+      "题干": "以下哪个Watcher事件类型是当Watcher监听的对应数据节点被删除时而被触发的？",
+      "选项": [
+        "NodeCreated",
+        "NodeDeleted",
+        "NodeDataChanged",
+        "NodeChildrenChanged"
+      ],
+      "正确答案": "B",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试6"
+    },
+    {
+      "id": "bd_c6_s8",
+      "type": "single",
+      "题干": "Apache ZooKeeper是Google哪个组件的开源实现？",
+      "选项": [
+        "Google File System",
+        "Google MapReduce",
+        "Google BigTable",
+        "Google Chubby"
+      ],
+      "正确答案": "D",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试6"
+    },
+    {
+      "id": "bd_c6_s9",
+      "type": "single",
+      "题干": "ZooKeeper客户端命令行命令中，读取节点数据的命令是哪个？",
+      "选项": [
+        "ls",
+        "create",
+        "get",
+        "set"
+      ],
+      "正确答案": "C",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试6"
+    },
+    {
+      "id": "bd_c6_s10",
+      "type": "single",
+      "题干": "ZNode通过路径引用，路径必须是绝对的，必须以什么开头？",
+      "选项": [
+        "/",
+        ".",
+        "//",
+        "\\\\"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试6"
+    },
+    {
+      "id": "bd_c6_m1",
+      "type": "multiple",
+      "题干": "以下关于ZooKeeper体系架构的描述，正确的是哪些？",
+      "选项": [
+        "ZooKeeper在单机模式下部署时，该服务器提供ZooKeeper一切协调服务",
+        "ZooKeeper在集群模式下部署时，采用master/slave架构",
+        "ZooKeeper在单机模式下运行时，该服务器就是Leader",
+        "ZooKeeper在集群模式下运行时，将采用原子广播协议选取Leader，其余节点均为Follower"
+      ],
+      "正确答案": [
+        "A",
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试6"
+    },
+    {
+      "id": "bd_c6_m2",
+      "type": "multiple",
+      "题干": "以下哪些ZooKeeper Shell的客户端命令可以创建持久性特点的数据节点/xijing？",
+      "选项": [
+        "create /xijing 'xijing university'",
+        "create -s /xijing 'xijing university'",
+        "create -e /xijing 'xijing university'",
+        "create -e -s /xijing 'xijing university'"
+      ],
+      "正确答案": [
+        "A",
+        "B"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试6"
+    },
+    {
+      "id": "bd_c6_m3",
+      "type": "multiple",
+      "题干": "ZooKeeper的数据节点ZNode类型可以分为哪些类别？",
+      "选项": [
+        "持久节点",
+        "持久顺序节点",
+        "临时节点",
+        "临时顺序节点"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试6"
+    },
+    {
+      "id": "bd_c6_b1",
+      "type": "blank",
+      "题干": "在进行ZooKeeper集群部署时，在集群所有机器的ZooKeeper数据存储目录dataDir中，分别创建文件____，其内容为数字，这个数字应于conf/zoo.cfg文件中配置的server.id=host:port:port中的数字id保持一致。",
+      "选项": [],
+      "正确答案": "myid",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试6"
+    },
+    {
+      "id": "bd_c6_b2",
+      "type": "blank",
+      "题干": "ZooKeeper Server启动时，默认读取$ZOOKEEPER_HOME/conf/中的配置文件____，该文件配置了ZooKeeper所有的运行参数。",
+      "选项": [],
+      "正确答案": "zoo.cfg",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试6"
+    },
+    {
+      "id": "bd_c6_b3",
+      "type": "blank",
+      "题干": "ZooKeeper集群模式部署时采用____架构。",
+      "选项": [],
+      "正确答案": "对等",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试6"
+    },
+    {
+      "id": "bd_c6_b4",
+      "type": "blank",
+      "题干": "要求创建一个ZooKeeper临时节点/hello，其数据内容为“Hello ZooKeeper!”，请写出相应的ZooKeeper Shell命令。",
+      "选项": [],
+      "正确答案": "create -e /hello \"Hello ZooKeeper!\"",
+      "备选答案": [
+        "create -e /hello 'Hello ZooKeeper!'"
+      ],
+      "解析": "",
+      "所属章节": "章节测试6"
+    },
+    {
+      "id": "bd_c6_b5",
+      "type": "blank",
+      "题干": "ZooKeeper引入____机制来保障数据安全。",
+      "选项": [],
+      "正确答案": "ACL",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试6"
+    },
+    {
+      "id": "bd_c6_b6",
+      "type": "blank",
+      "题干": "ZooKeeper引入____机制来保证分布式数据的原子性操作。",
+      "选项": [],
+      "正确答案": "版本",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试6"
+    },
+    {
+      "id": "bd_c6_b7",
+      "type": "blank",
+      "题干": "ZooKeeper客户端命令行工具是____。（注意：字符大小写）",
+      "选项": [],
+      "正确答案": "zkCli.sh",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试6"
+    },
+    {
+      "id": "bd_c7_s1",
+      "type": "single",
+      "题干": "以下关于HBase的介绍，错误的是哪个？",
+      "选项": [
+        "HBase是Google BigTable的开源实现",
+        "HBase是一个高可靠性、高性能、列存储、可伸缩、实时读写的分布式数据库系统",
+        "HBase是SQL数据库",
+        "HBase一般使用HDFS作为底层存储，也可以使用其他任何支持Hadoop接口的文件系统作为底层存储"
+      ],
+      "正确答案": "C",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试7"
+    },
+    {
+      "id": "bd_c7_s2",
+      "type": "single",
+      "题干": "以下关于HBase Shell命令的描述，错误的是哪个？",
+      "选项": [
+        "get：通过表名、行、列、时间戳、时间范围和版本号来获得相应单元格的值",
+        "list：显示表的所有数据",
+        "create：创建表",
+        "put：向表、行、列指定的单元格添加数据"
+      ],
+      "正确答案": "B",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试7"
+    },
+    {
+      "id": "bd_c7_s3",
+      "type": "single",
+      "题干": "HBase Shell命令中，以下哪个命令用于创建表？",
+      "选项": [
+        "create",
+        "alter",
+        "describe",
+        "drop"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试7"
+    },
+    {
+      "id": "bd_c7_s4",
+      "type": "single",
+      "题干": "若有一个HBase表student，列族course中有一列math，用于存放数学成绩，那么插入行键值为“01”列course:math的值为80的HBase Shell命令？",
+      "选项": [
+        "put 'student','01','course:math',80",
+        "put 'student','01','course:math','80'",
+        "put 'student','01','math',80",
+        "put 'student','01','math','80'"
+      ],
+      "正确答案": "B",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试7"
+    },
+    {
+      "id": "bd_c7_s5",
+      "type": "single",
+      "题干": "HBase是NoSQL中哪种类型的数据库？",
+      "选项": [
+        "图数据库",
+        "文档数据库",
+        "列式数据库",
+        "键值数据库"
+      ],
+      "正确答案": "C",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试7"
+    },
+    {
+      "id": "bd_c7_s6",
+      "type": "single",
+      "题干": "若有一个HBase表student，拥有列族course，为了使列族course存储3个VERSIONS的版本列数据，应使用哪个HBase Shell命令？",
+      "选项": [
+        "alter 'student', NAME=>'course',VERSIONS=>'3'",
+        "alter 'student',VERSIONS=>'3'",
+        "alter 'student',NAME=>'course',VERSIONS=>3",
+        "alter 'student',VERSIONS=>3"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试7"
+    },
+    {
+      "id": "bd_c7_s7",
+      "type": "single",
+      "题干": "HBase用于保存Region位置信息的三层结构顺序是什么？",
+      "选项": [
+        ".META表、ZooKeeper文件、-ROOT-表",
+        "ZooKeeper文件、-ROOT-表、.META表",
+        "-ROOT-表、ZooKeeper文件、.META表",
+        "ZooKeeper文件、.META表、-ROOT-表"
+      ],
+      "正确答案": "B",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试7"
+    },
+    {
+      "id": "bd_c7_s8",
+      "type": "single",
+      "题干": "HBase的配置文件中，哪个是设置运行HRegionServer进程的机器名列表的？",
+      "选项": [
+        "hbase-env.sh",
+        "hbase-site.xml",
+        "regionservers",
+        "以上选项均不正确"
+      ],
+      "正确答案": "C",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试7"
+    },
+    {
+      "id": "bd_c7_s9",
+      "type": "single",
+      "题干": "启动HBase集群的命令是哪个？",
+      "选项": [
+        "start-dfs.sh",
+        "start-yarn.sh",
+        "zkServer.sh start",
+        "start-hbase.sh"
+      ],
+      "正确答案": "D",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试7"
+    },
+    {
+      "id": "bd_c7_s10",
+      "type": "single",
+      "题干": "若有一个HBase表student，要求查询行键值为“01”的数据，正确的HBase Shell命令为哪个？",
+      "选项": [
+        "scan 'student','01'",
+        "scan student",
+        "get 'student','01'",
+        "get student,01"
+      ],
+      "正确答案": "C",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试7"
+    },
+    {
+      "id": "bd_c7_s11",
+      "type": "single",
+      "题干": "HBase数据模型中，哪个术语是作为数据行在表中的唯一标识，并作为检索记录的主键？",
+      "选项": [
+        "行键（Row key）",
+        "列族（Column Family）",
+        "列限定符（Column Qualifier）",
+        "时间戳（Timestamp）"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试7"
+    },
+    {
+      "id": "bd_c7_m1",
+      "type": "multiple",
+      "题干": "HBase的运行模式有以下哪几种？",
+      "选项": [
+        "单机模式",
+        "伪分布式模式",
+        "全分布式模式",
+        "其它模式"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试7"
+    },
+    {
+      "id": "bd_c7_m2",
+      "type": "multiple",
+      "题干": "下列对HBase数据模型的描述正确的有哪些？",
+      "选项": [
+        "每个HBase表都由若干行组成，每个行由行键（Row key）来标识",
+        "HBase是一个稀疏、多维度、排序的映射表，这张表的索引是行键、列族、列限定符和时间戳",
+        "HBase中执行更新操作时，会删除数据旧的版本，并生成一个新的版本",
+        "HBase列族支持动态扩展，可以很轻松地添加一个列族或列"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试7"
+    },
+    {
+      "id": "bd_c7_m3",
+      "type": "multiple",
+      "题干": "关于HMaster和HRegionServer的描述，正确的有哪些？",
+      "选项": [
+        "HMaster是主进程",
+        "HMaster协调HRegionServer的负载并维护集群状态，负责所有Regions的读写请求",
+        "HRegionServer是从进程",
+        "HRegionServer管理一系列HRegion对象，响应用户I/O请求，向HDFS中读写数据"
+      ],
+      "正确答案": [
+        "A",
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试7"
+    },
+    {
+      "id": "bd_c7_m4",
+      "type": "multiple",
+      "题干": "下列关于HBase体系架构的描述，哪些是正确的？",
+      "选项": [
+        "HBase采用master/slave架构",
+        "主节点运行的服务为HMaster，从节点运行的服务为HRegionServer",
+        "HBase底层采用HDFS存储数据",
+        "HBase需要ZooKeeper集群服务"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试7"
+    },
+    {
+      "id": "bd_c7_j1",
+      "type": "judge",
+      "题干": "NoSQL的含义是“No SQL”。这句话正确吗？",
+      "选项": [],
+      "正确答案": "错",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试7"
+    },
+    {
+      "id": "bd_c7_j2",
+      "type": "judge",
+      "题干": "HBase表中元素Cell由行键、列族、列限定符、时间戳唯一确定，元素的数据类型可以像关系型数据库一样，有各种各样的数据类型，这句话正确吗？",
+      "选项": [],
+      "正确答案": "错",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试7"
+    },
+    {
+      "id": "bd_c7_b1",
+      "type": "blank",
+      "题干": "分布式模式部署HBase时，需要将配置文件hbase-site.xml中参数hbase.cluster.distributed设置为____。（注意：区分大小写）",
+      "选项": [],
+      "正确答案": "true",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试7"
+    },
+    {
+      "id": "bd_c7_b2",
+      "type": "blank",
+      "题干": "当HBase表处于____状态时，才可以删除。",
+      "选项": [],
+      "正确答案": "disabled",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试7"
+    },
+    {
+      "id": "bd_c7_b3",
+      "type": "blank",
+      "题干": "单机模式部署HBase时，需要将配置文件hbase-site.xml中参数hbase.cluster.distributed设置为____。（注意：区分大小写）",
+      "选项": [],
+      "正确答案": "false",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试7"
+    },
+    {
+      "id": "bd_c8_s1",
+      "type": "single",
+      "题干": "Hive元数据metastore存在数据库Derby中属于哪种部署模式？",
+      "选项": [
+        "内嵌模式（Embedded Metastore）",
+        "本地模式（Local Metastore）",
+        "远程模式（Remote Metastore）",
+        "以上选项均不正确"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试8"
+    },
+    {
+      "id": "bd_c8_s2",
+      "type": "single",
+      "题干": "HiveQL DDL中，用于创建表的命令是什么？",
+      "选项": [
+        "CREATE TABLE",
+        "SHOW TABLES",
+        "ALTER TABLE",
+        "DROP TABLE"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试8"
+    },
+    {
+      "id": "bd_c8_s3",
+      "type": "single",
+      "题干": "下列有关Hive和Impala的对比，哪个是错误的？",
+      "选项": [
+        "Hive与Impala中对SQL的解释处理比较相似，都是通过词法分析生成执行计划",
+        "Hive与Impala使用相同的元数据",
+        "Hive适合于长时间的批处理查询分析，而Impala适合于实时交互式SQL查询",
+        "Hive在内存不足以存储所有数据时，会使用外存，而Impala也是如此"
+      ],
+      "正确答案": "D",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试8"
+    },
+    {
+      "id": "bd_c8_s4",
+      "type": "single",
+      "题干": "本地模式部署Hive时，需要修改hive-site.xml文件中的几个参数，其中以下哪个参数指定了metastore数据库的连接URL？",
+      "选项": [
+        "javax.jdo.option.ConnectionDriverName",
+        "javax.jdo.option.ConnectionURL",
+        "javax.jdo.option.ConnectionUserName",
+        "javax.jdo.option.ConnectionPassword"
+      ],
+      "正确答案": "B",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试8"
+    },
+    {
+      "id": "bd_c8_s5",
+      "type": "single",
+      "题干": "以下关于HiveQL的介绍，错误的是哪个？",
+      "选项": [
+        "Hive的SQL称为HiveQL",
+        "HiveQL与大部分SQL语法兼容",
+        "HiveQL支持更新操作",
+        "HiveQL中有MAP和REDUCE子句"
+      ],
+      "正确答案": "C",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试8"
+    },
+    {
+      "id": "bd_c8_s6",
+      "type": "single",
+      "题干": "HiveQL命令中，将查询的结果集存入HDFS中的命令是哪个？",
+      "选项": [
+        "INSERT OVERWRITE TABLE",
+        "INSERT OVERWRITE DIRECTORY",
+        "INSERT OVERWRITE LOCAL DIRECTORY",
+        "以上选择均不正确"
+      ],
+      "正确答案": "B",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试8"
+    },
+    {
+      "id": "bd_c8_s7",
+      "type": "single",
+      "题干": "元数据存储在独立的数据库中如MySQL，这种Hive部署模式会在实际生产环境中使用，这种部署模式不可能是以下哪个？",
+      "选项": [
+        "内嵌模式（Embedded Metastore）",
+        "本地模式（Local Metastore）",
+        "远程模式（Remote Metastore）",
+        "以上选项均不正确"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试8"
+    },
+    {
+      "id": "bd_c8_s8",
+      "type": "single",
+      "题干": "在做Hive本地模式或远程模式部署时，若Hive元数据存放在MySQL中，需要将MySQL的JDBC驱动包复制到Hive哪个安装目录下？",
+      "选项": [
+        "$HIVE_HOME/bin",
+        "$HIVE_HOME/conf",
+        "$HIVE_HOME/lib",
+        "$HIVE_HOME/docs"
+      ],
+      "正确答案": "C",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试8"
+    },
+    {
+      "id": "bd_c8_s9",
+      "type": "single",
+      "题干": "Hive配置文件hive-site.xml参数选项javax.jdo.option.ConnectionDriverName指的是什么？",
+      "选项": [
+        "metastore数据库的URL",
+        "metastore数据库的驱动类",
+        "metastore数据库的用户名",
+        "metastore数据库的登录密码"
+      ],
+      "正确答案": "B",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试8"
+    },
+    {
+      "id": "bd_c8_s10",
+      "type": "single",
+      "题干": "关于Hive内部表和外部表的介绍，以下错误的是哪个？",
+      "选项": [
+        "每一个内部表拥有相对应的目录，存储在hive.metastore.warehouse.dir下，以表名为目录",
+        "删除内部表时，表的元数据以及在warehouse目录下的数据都会被删除",
+        "外部表的数据不保存在Hive仓库中，而是指向已在HDFS上存储的数据",
+        "删除外部表时，表的元数据以及数据文件都会被删除"
+      ],
+      "正确答案": "D",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试8"
+    },
+    {
+      "id": "bd_c8_m1",
+      "type": "multiple",
+      "题干": "以下属于Hive的基本数据类型有哪些？",
+      "选项": [
+        "TINYINT",
+        "FLOAT",
+        "STRING",
+        "BINARY"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试8"
+    },
+    {
+      "id": "bd_c8_m2",
+      "type": "multiple",
+      "题干": "Hive支持数据类型与常用函数，类似于SQL语言，下列介绍中正确的是哪些？",
+      "选项": [
+        "Hive支持基本类型，如数值型、布尔型、字符串型",
+        "Hive支持复杂类型，如ARRAY、MAP、STRUCT",
+        "Hive支持关系操作、算术操作、逻辑操作",
+        "Hive提供了数理统计、字符串操作、条件操作等大量内置函数"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试8"
+    },
+    {
+      "id": "bd_c8_m3",
+      "type": "multiple",
+      "题干": "Hive的体系架构中，主要包括哪些模块？",
+      "选项": [
+        "用户接口",
+        "元数据库",
+        "Hive Driver：包括解释器、编译器、优化器、执行器",
+        "Hadoop集群"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试8"
+    },
+    {
+      "id": "bd_c8_m4",
+      "type": "multiple",
+      "题干": "以下关于Hive工作原理的介绍，哪些是正确的？",
+      "选项": [
+        "Hive本质上相当于MapReduce的翻译终端",
+        "Hive执行过程为：首先，由HiveCli或者Hive运行时环境提交查询HiveQL；其次，Hive运行时环境将HiveQL翻译成MapReduce操作；再次，Hive运行时环境调用Hadoop命令行接口或程序接口，向Hadoop集群提交翻译后的HiveQL；最后，Hadoop集群执行HiveQL翻译后的MapReduce-App",
+        "Hive的核心是将SQL语句翻译成MapReduce",
+        "Hive的运行时环境能够将类SQL语句翻译成MapReduce"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试8"
+    },
+    {
+      "id": "bd_c8_m5",
+      "type": "multiple",
+      "题干": "下列关于Hive的介绍正确的有哪些？",
+      "选项": [
+        "Hive本身不存储和处理数据，依赖HDFS存储数据，依赖MapReduce处理数据",
+        "Hive是构建在Hadoop之上的一个数据仓库工具",
+        "数据仓库Hive不需要借助于HDFS等就可以完成数据的存储",
+        "Hive起源于Facebook内部信息处理平台"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试8"
+    },
+    {
+      "id": "bd_c8_m6",
+      "type": "multiple",
+      "题干": "下列关于HiveQL操作命令的解释，正确的有哪些？",
+      "选项": [
+        "load data local inpath '/usr/local/data' overwrite into table usr; //把目录'/usr/local/data'下的数据文件中数据以追加的方式装载进usr表",
+        "insert overwrite table student select * from user where age>10; //向表student中插入来自user表的age大于10的数据并覆盖student表中原有数据",
+        "create database userdb; //创建数据库userdb",
+        "create table if not exists usr(id bigint,name string,age int); //如果usr表不存在，创建表usr，含三个属性id,name,age"
+      ],
+      "正确答案": [
+        "B",
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试8"
+    },
+    {
+      "id": "bd_c8_m7",
+      "type": "multiple",
+      "题干": "Hive按metastore存储位置的不同，其部署模式分为哪几种？",
+      "选项": [
+        "内嵌模式（Embedded Metastore）",
+        "本地模式（Local Metastore）",
+        "远程模式（Remote Metastore）",
+        "伪分布模式（Pseudo-Distributed）"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试8"
+    },
+    {
+      "id": "bd_c8_m8",
+      "type": "multiple",
+      "题干": "以下关于Hive的介绍，哪些是正确的？",
+      "选项": [
+        "Hive是一个数据库",
+        "Hive是一个构建在完整Hadoop集群上的框架",
+        "Hive起源于Facebook内部信息处理平台",
+        "Hive提供以表的方式来组织和管理HDFS上的数据、以类SQL的方式来操作表里的数据"
+      ],
+      "正确答案": [
+        "B",
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试8"
+    },
+    {
+      "id": "bd_c8_b1",
+      "type": "blank",
+      "题干": "根据元数据存储位置的不同，Hive部署模式共有三种：内嵌模式、____和远程模式。",
+      "选项": [],
+      "正确答案": "本地模式",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试8"
+    },
+    {
+      "id": "bd_c8_b2",
+      "type": "blank",
+      "题干": "将本地文件/home/xlh/testData/hiveMemberData.txt中的数据以覆盖方式导入到Hive表member中的HiveQL语句是____。",
+      "选项": [],
+      "正确答案": "load data local inpath '/home/xlh/testData/hiveMemberData.txt' overwrite into table member",
+      "备选答案": [
+        "load data local inpath '/home/xlh/testData/hiveMemberData.txt' overwrite into table member;"
+      ],
+      "解析": "",
+      "所属章节": "章节测试8"
+    },
+    {
+      "id": "bd_c9_s1",
+      "type": "single",
+      "题干": "若需要使用Sqoop将数据从关系型数据库MySQL导入到HDFS上，则需要让Sqoop认识MySQL，其方法是将MySQL JDBC驱动jar包文件拷贝至哪个目录下？",
+      "选项": [
+        "$SQOOP_HOME/lib",
+        "$SQOOP_HOME/conf",
+        "$SQOOP_HOME/bin",
+        "$SQOOP_HOME/docs"
+      ],
+      "正确答案": "A",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试9"
+    },
+    {
+      "id": "bd_c9_s2",
+      "type": "single",
+      "题干": "sqoop export命令中，各参数含义介绍错误的是哪个？",
+      "选项": [
+        "--connect指定数据要导出到的数据库",
+        "--target-dir指定待导出的HDFS数据的路径",
+        "--fields-terminated-by指定数据列的分隔符",
+        "--lines-terminated-by指定数据行的分隔符"
+      ],
+      "正确答案": "B",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试9"
+    },
+    {
+      "id": "bd_c9_s3",
+      "type": "single",
+      "题干": "以下关于Sqoop的运行环境，描述错误的是哪个？",
+      "选项": [
+        "Sqoop所需系统环境包括操作系统、Java环境、Hadoop环境三部分",
+        "Sqoop支持不同平台，在当前绝大多数主流的操作系统上都能运行，例如GNU/Linux、Windows、Mac OS X等，官方推荐使用Windows",
+        "Sqoop运行环境需要Java环境的支持",
+        "使用Sqoop前，需要部署好Hadoop集群"
+      ],
+      "正确答案": "B",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试9"
+    },
+    {
+      "id": "bd_c9_s4",
+      "type": "single",
+      "题干": "如何将线上大量的业务系统日志高效地、可靠地迁移到HDFS呢？可以使用以下哪个工具解决？",
+      "选项": [
+        "Sqoop",
+        "Flume",
+        "Kafka",
+        "Kettle"
+      ],
+      "正确答案": "B",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试9"
+    },
+    {
+      "id": "bd_c9_m1",
+      "type": "multiple",
+      "题干": "Flume代理是由持续运行的哪三个Java进程构成？",
+      "选项": [
+        "Source（数据来源）",
+        "Channel（用于连接Source和Sink）",
+        "Sink（数据目标）",
+        "Producer（生产者）"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试9"
+    },
+    {
+      "id": "bd_c9_m2",
+      "type": "multiple",
+      "题干": "sqoop import命令中，各参数含义介绍正确的有哪些？",
+      "选项": [
+        "--connect指定要导入数据的数据库",
+        "--num-mappers指定导入数据的并行度即Map Task个数，Sqoop默认并行度是1",
+        "--target-dir指定HDFS导入路径，使用Sqoop从关系数据库MySQL中导入数据到HDFS时，默认导入路径是/user/用户名/表名",
+        "--columns指定要导入的字段，字段名中间用逗号隔开，但不加空格"
+      ],
+      "正确答案": [
+        "A",
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试9"
+    },
+    {
+      "id": "bd_c9_m3",
+      "type": "multiple",
+      "题干": "以下关于Sqoop的介绍，正确的有哪些？",
+      "选项": [
+        "早期，为了能够和HDFS之外的数据存储库进行交互，必须通过开发MapReduce应用程序使用外部API来访问数据；后来，慢慢就将该工具代码整理出一个框架并逐步完善，最终就有了Sqoop的诞生",
+        "Apache Sqoop是一个开源工具，主要用于在Hadoop和关系数据库、数据仓库、NoSQL之间传递数据",
+        "Sqoop脚本在执行时，只提交一个MapReduce作业，数据的传输和转换都是使用Mapper来完成的，该MapReduce作业既有Mapper又有Reducer",
+        "Sqoop的导入和导出功能是通过MapReduce作业实现的，所以它是一种批处理方式进行数据传输，难以实现实时数据的导入和导出"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试9"
+    },
+    {
+      "id": "bd_c9_m4",
+      "type": "multiple",
+      "题干": "以下关于Sqoop Shell命令的描述中，正确的有哪些？",
+      "选项": [
+        "sqoop import：将数据从HDFS导出到关系数据库某个表",
+        "sqoop export：将数据从关系数据库某个表导入到HDFS",
+        "sqoop help：显示Sqoop帮助信息",
+        "sqoop list-tables：列出某个数据库下的所有表"
+      ],
+      "正确答案": [
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试9"
+    },
+    {
+      "id": "bd_c9_m5",
+      "type": "multiple",
+      "题干": "阅读以下Sqoop Shell命令：sqoop import --connect jdbc:mysql://192.168.18.130:3306/sqoop --username root --password xijing --table student --num-mappers 1，下列关于其功能描述中，错误的有哪些？",
+      "选项": [
+        "该命令将MySQL中表sqoop.student所有数据导入到HDFS文件/user/用户名/student中",
+        "该命令将MySQL中表sqoop.student所有数据导入到HDFS文件/student中",
+        "该命令导入并行度为1，即在HDFS上最终输出的文件个数为1",
+        "该命令导入并行度未指定，即在HDFS上最终输出的文件个数为默认值4"
+      ],
+      "正确答案": [
+        "B",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试9"
+    },
+    {
+      "id": "bd_c9_m6",
+      "type": "multiple",
+      "题干": "阅读以下Sqoop Shell命令：sqoop export --connect jdbc:mysql://192.168.18.130:3306/sqoop --username root --password xijing --table student_export --export-dir /user/xuluhui/student --num-mappers 1，下列关于其功能描述中，错误的有哪些？",
+      "选项": [
+        "该命令将HDFS上/user/xuluhui/student_export数据导出到MySQL中表sqoop.student中",
+        "该命令将HDFS上/user/xuluhui/student数据导出到MySQL中表student_export中",
+        "该命令导入并行度未指定",
+        "该命令导入并行度为1，即Map任务数为1"
+      ],
+      "正确答案": [
+        "A",
+        "C"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试9"
+    },
+    {
+      "id": "bd_c9_m7",
+      "type": "multiple",
+      "题干": "关于以下Sqoop Shell命令的解释，正确的有哪些？sqoop list-databases --connect jdbc:mysql://localhost:3306 --username root --password xijing",
+      "选项": [
+        "该命令用于获取指定URL的数据库中的所有表",
+        "该命令用于获取指定URL的数据库",
+        "从该命令得知，采用的数据库为MySQL",
+        "从该命令得知，采用的数据库为Microsoft SQL Server"
+      ],
+      "正确答案": [
+        "B",
+        "C"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试9"
+    },
+    {
+      "id": "bd_c9_m8",
+      "type": "multiple",
+      "题干": "下列关于Kafka的介绍，正确的有哪些？",
+      "选项": [
+        "Apache Kafka是一个分布式的、支持分区的、多副本的发布订阅消息系统",
+        "Apache Kafka起源于LinkedIn开源出来的分布式消息系统",
+        "Apache Kafka构建在ZooKeeper上",
+        "Apache Kafka中主要有Producer、Broker和Consumer三种角色"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试9"
+    },
+    {
+      "id": "bd_c9_m9",
+      "type": "multiple",
+      "题干": "以下关于大数据迁移和采集工具的介绍，正确的有哪些？",
+      "选项": [
+        "Apache Sqoop是一个基于Hadoop的数据迁移工具，主要用于在Hadoop和结构化存储器之间传递数据",
+        "Apache Flume是一个海量日志的采集、聚合和传输系统",
+        "Apache Kafka是一个分布式流平台，允许发布和订阅记录流，用于在不同系统之间传递数据",
+        "Kettle是一个优秀的开源ETL工具，可以高效稳定地实现数据抽取、数据转换和加工、数据装载"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试9"
+    },
+    {
+      "id": "bd_c9_b1",
+      "type": "blank",
+      "题干": "sqoop import命令中，参数____用于指定要导入数据的数据库。",
+      "选项": [],
+      "正确答案": "--connect",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试9"
+    },
+    {
+      "id": "bd_c9_b2",
+      "type": "blank",
+      "题干": "Sqoop启动时，默认读取配置文件$SQOOP_HOME/conf/____，该文件需要配置Sqoop的运行参数，如Hadoop相关的环境变量。",
+      "选项": [],
+      "正确答案": "sqoop-env.sh",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试9"
+    },
+    {
+      "id": "bd_c10_s1",
+      "type": "single",
+      "题干": "以下哪种图表类型适用于数据趋势比单个数据点更重要的应用场景？",
+      "选项": [
+        "柱状图",
+        "折线图",
+        "散点图",
+        "箱线图"
+      ],
+      "正确答案": "B",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试10"
+    },
+    {
+      "id": "bd_c10_s2",
+      "type": "single",
+      "题干": "以下哪种可视化图表可以分析统计访客在网页的鼠标点击情况，并通过不同颜色的区域展示出来？",
+      "选项": [
+        "散点图",
+        "热力图",
+        "雷达图",
+        "漏斗图"
+      ],
+      "正确答案": "B",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试10"
+    },
+    {
+      "id": "bd_c10_s3",
+      "type": "single",
+      "题干": "以下哪种图表类型适用于回归分析中表示因变量随自变量而变化的大致趋势的应用场景？",
+      "选项": [
+        "折线图",
+        "箱线图",
+        "散点图",
+        "热力图"
+      ],
+      "正确答案": "C",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试10"
+    },
+    {
+      "id": "bd_c10_s4",
+      "type": "single",
+      "题干": "大数据处理的最后一个环节是什么？",
+      "选项": [
+        "数据采集与预处理",
+        "大数据存储与管理",
+        "大数据处理与分析",
+        "数据可视化"
+      ],
+      "正确答案": "D",
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试10"
+    },
+    {
+      "id": "bd_c10_m1",
+      "type": "multiple",
+      "题干": "以下关于常见数据可视化工具的描述，正确的有哪些？",
+      "选项": [
+        "ECharts是一个百度开发的使用JavaScript实现的开源数据可视化库",
+        "为了和Python、ECharts对接，方便在Python中直接使用数据生成图，诞生了用于生成ECharts图表的类库PyEcharts",
+        "Tableau是一款适合商务智能（BI）工程师、数据分析师使用的商务智能可视化工具",
+        "DataV是阿里巴巴集团推出的一款大屏实时可视化工具"
+      ],
+      "正确答案": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "备选答案": [],
+      "解析": "",
+      "所属章节": "章节测试10"
+    }
+  ],
+  "reviews": [],
+  "designs": []
+}
