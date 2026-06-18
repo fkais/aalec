@@ -20,8 +20,6 @@ const appState = {
     wrong: []
 };
 
-const ACCESS_KEY = "effort_site_invite_session";
-
 function initInviteGate() {
     const input = document.getElementById("inviteInput");
     const button = document.getElementById("inviteBtn");
