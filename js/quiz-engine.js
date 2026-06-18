@@ -6,6 +6,7 @@ const SUBJECTS = {
 };
 
 const INVITE_CODE = "050317";
+const ACCESS_KEY = "effort_site_invite_session";
 const typeNames = { single: "选择题", judge: "判断题", blank: "填空题", short: "简答题" };
 
 const appState = {
@@ -19,27 +20,43 @@ const appState = {
     wrong: []
 };
 
+const ACCESS_KEY = "effort_site_invite_session";
+
 function initInviteGate() {
     const input = document.getElementById("inviteInput");
     const button = document.getElementById("inviteBtn");
     const error = document.getElementById("inviteError");
     if (!input || !button) return;
 
-    function unlock() {
+    const navigation = performance.getEntriesByType("navigation")[0];
+    if (navigation && navigation.type === "reload") {
+        sessionStorage.removeItem(ACCESS_KEY);
+    }
+
+    function unlock(remember = false) {
         document.body.classList.remove("locked");
+
+        if (remember) {
+            sessionStorage.setItem(ACCESS_KEY, "1");
+        }
     }
 
     function checkCode() {
         if (input.value.trim() === INVITE_CODE) {
             error.textContent = "";
-            unlock();
+            unlock(true);
             return;
         }
+
         error.textContent = "邀请码不对，再检查一下。";
         input.select();
     }
 
-  
+    if (sessionStorage.getItem(ACCESS_KEY) === "1") {
+        unlock();
+        return;
+    }
+
     input.focus();
     button.addEventListener("click", checkCode);
     input.addEventListener("keydown", event => {
@@ -456,6 +473,6 @@ function highlightCode(code) {
     html += escapeHtml(code.slice(lastIndex));
     return html;
 }
-
+initinvitegate
 initInviteGate();
 if (document.body.dataset.page === "quiz") initQuizPage();
