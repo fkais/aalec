@@ -465,6 +465,39 @@ button {
     background: #ffffff;
 }
 
+.blank-exercise {
+    font-size: 18px;
+    line-height: 2.6;
+    color: var(--ink);
+}
+
+.blank-input {
+    width: clamp(110px, 18vw, 210px);
+    min-height: 40px;
+    margin: 0 6px;
+    padding: 6px 10px;
+    border: 0;
+    border-bottom: 2px solid #79aeda;
+    border-radius: 8px 8px 2px 2px;
+    outline: none;
+    background: #edf6fd;
+    color: var(--ink);
+    font: inherit;
+    text-align: center;
+    transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.blank-input:focus {
+    border-color: var(--blue);
+    background: #ffffff;
+    box-shadow: 0 3px 0 rgba(22, 119, 200, 0.14);
+}
+
+.blank-input::placeholder {
+    color: #7b92a6;
+    font-size: 14px;
+}
+
 .card-actions {
     display: flex;
     gap: 10px;
@@ -802,6 +835,15 @@ button {
     .code-pre {
         padding: 14px;
         font-size: 13px;
+    }
+
+    .blank-exercise {
+        line-height: 2.8;
+    }
+
+    .blank-input {
+        width: min(150px, 45vw);
+        margin: 4px;
     }
 
 }

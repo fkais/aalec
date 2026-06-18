@@ -249,7 +249,7 @@ function renderQuestions(list, targetId) {
                 <span>${typeNames[q.type] || "题目"} · ${index + 1} · ${escapeHtml(q.chapter)}</span>
                 <span>${appState.answered[q.id] ? "已掌握" : "待练习"}</span>
             </div>
-            <div class="q-title">${escapeHtml(q.title)}</div>
+            ${q.type === "blank" ? "" : `<div class="q-title">${escapeHtml(q.title)}</div>`}
             ${renderQuestionImages(q.questionImages, "题目配图")}
             ${renderControls(q)}
             <div class="card-actions">
@@ -271,8 +271,27 @@ function renderControls(q) {
     if (q.type === "judge") {
         return `<div class="options"><label class="option"><input type="radio" name="${escapeHtml(q.id)}" value="对"><span>对</span></label><label class="option"><input type="radio" name="${escapeHtml(q.id)}" value="错"><span>错</span></label></div>`;
     }
+    if (q.type === "blank") return renderBlankControls(q);
     if (q.type === "short") return `<textarea class="answer-input" rows="4" placeholder="先自己默写，再点提交查看参考答案"></textarea>`;
     return `<input class="answer-input" placeholder="输入答案">`;
+}
+
+function renderBlankControls(q) {
+    const markerPattern = /_{2,}|\*{2,}/g;
+    const matches = Array.from(q.title.matchAll(markerPattern));
+    if (!matches.length) {
+        return `<div class="blank-exercise"><p class="q-title">${escapeHtml(q.title)}</p><input class="blank-input" data-blank-index="0" placeholder="填写答案"></div>`;
+    }
+
+    let html = "";
+    let lastIndex = 0;
+    matches.forEach((match, index) => {
+        html += escapeHtml(q.title.slice(lastIndex, match.index));
+        html += `<input class="blank-input" data-blank-index="${index}" aria-label="第 ${index + 1} 个空" placeholder="第${index + 1}空">`;
+        lastIndex = match.index + match[0].length;
+    });
+    html += escapeHtml(q.title.slice(lastIndex));
+    return `<div class="blank-exercise">${html}</div>`;
 }
 
 function bindQuestionEvents() {
@@ -323,12 +342,22 @@ function getUserAnswer(card, q) {
         const checked = card.querySelector("input:checked");
         return checked ? checked.value : "";
     }
+    if (q.type === "blank") {
+        return Array.from(card.querySelectorAll(".blank-input")).map(input => input.value).join("、");
+    }
     return card.querySelector(".answer-input").value;
 }
 
 function isCorrect(q, value) {
     if (q.type === "short") return normalize(value).length >= 8;
+    if (q.type === "blank") {
+        return [q.answer, ...q.alt].map(normalizeBlankAnswer).includes(normalizeBlankAnswer(value));
+    }
     return [q.answer, ...q.alt].map(normalize).includes(normalize(value));
+}
+
+function normalizeBlankAnswer(value) {
+    return normalize(value).replace(/[，,；;、]/g, "|");
 }
 
 function showResult(card, q, correct, forceAnswer = false) {
