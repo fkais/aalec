@@ -7,7 +7,7 @@ const SUBJECTS = {
 
 const INVITE_CODE = "050317";
 const ACCESS_KEY = "effort_site_invite_session";
-const typeNames = { single: "选择题", judge: "判断题", blank: "填空题", short: "简答题" };
+const typeNames = { single: "单选题", multiple: "多选题", judge: "判断题", blank: "填空题", short: "简答题" };
 
 const appState = {
     subject: "javaweb",
@@ -90,6 +90,7 @@ async function initQuizPage() {
         if (!response.ok) throw new Error(`题库加载失败：${response.status}`);
         appState.data = await response.json();
         appState.questions = normalizeQuestions(appState.data.questions || []);
+        applyInitialFilters();
         renderSubjectShell();
         initFilters();
         initNav();
@@ -99,6 +100,12 @@ async function initQuizPage() {
     } catch (error) {
         renderLoadError(error);
     }
+}
+
+function applyInitialFilters() {
+    const requestedType = new URLSearchParams(window.location.search).get("type");
+    const availableTypes = new Set(appState.questions.map(question => question.type));
+    appState.filter = requestedType && availableTypes.has(requestedType) ? requestedType : "all";
 }
 
 function normalizeQuestions(list) {
@@ -141,12 +148,12 @@ function setOptionalNav(view, visible) {
 function initFilters() {
     const typeFilters = document.getElementById("typeFilters");
     const chapterFilters = document.getElementById("chapterFilters");
-    const typeOrder = ["all", "single", "judge", "blank", "short"];
+    const typeOrder = ["all", "single", "multiple", "judge", "blank", "short"];
     const presentTypes = new Set(appState.questions.map(q => q.type));
 
     typeFilters.innerHTML = typeOrder
         .filter(type => type === "all" || presentTypes.has(type))
-        .map(type => `<button class="chip ${type === "all" ? "active" : ""}" data-filter-type="${type}">${type === "all" ? "全部" : typeNames[type]}</button>`)
+        .map(type => `<button class="chip ${type === appState.filter ? "active" : ""}" data-filter-type="${type}">${type === "all" ? "全部" : typeNames[type]}</button>`)
         .join("");
 
     const chapters = ["all", ...Array.from(new Set(appState.questions.map(q => q.chapter))).filter(Boolean)];
@@ -183,7 +190,7 @@ function initNav() {
     });
 
     document.getElementById("resetBtn").addEventListener("click", () => {
-        if (!confirm("确定清空当前科目的练习进度吗？")) return;
+        if (!confirm("确定重置当前科目的答题数据吗？")) return;
         appState.answered = {};
         appState.wrong = [];
         saveState();
@@ -268,6 +275,12 @@ function renderControls(q) {
             return `<label class="option"><input type="radio" name="${escapeHtml(q.id)}" value="${letter}"><span>${letter}. ${escapeHtml(opt)}</span></label>`;
         }).join("")}</div>`;
     }
+    if (q.type === "multiple") {
+        return `<div class="options">${q.options.map((opt, i) => {
+            const letter = String.fromCharCode(65 + i);
+            return `<label class="option"><input type="checkbox" name="${escapeHtml(q.id)}" value="${letter}"><span>${letter}. ${escapeHtml(opt)}</span></label>`;
+        }).join("")}</div>`;
+    }
     if (q.type === "judge") {
         return `<div class="options"><label class="option"><input type="radio" name="${escapeHtml(q.id)}" value="对"><span>对</span></label><label class="option"><input type="radio" name="${escapeHtml(q.id)}" value="错"><span>错</span></label></div>`;
     }
@@ -318,6 +331,7 @@ function bindQuestionEvents() {
         showResult(card, q, correct);
         saveState();
         renderWrong();
+        trackAnswer(q.id, q.type, correct);
     });
 
     document.addEventListener("change", event => {
@@ -334,6 +348,17 @@ function bindQuestionEvents() {
         showResult(card, q, correct);
         saveState();
         renderWrong();
+        trackAnswer(q.id, q.type, correct);
+    });
+}
+
+function trackAnswer(questionId, questionType, correct) {
+    if (!window.quizAnalytics) return;
+    window.quizAnalytics.trackAnswer({
+        subject: appState.subject,
+        questionId,
+        questionType,
+        correct
     });
 }
 
@@ -341,6 +366,9 @@ function getUserAnswer(card, q) {
     if (q.type === "single" || q.type === "judge") {
         const checked = card.querySelector("input:checked");
         return checked ? checked.value : "";
+    }
+    if (q.type === "multiple") {
+        return Array.from(card.querySelectorAll("input:checked")).map(input => input.value).sort().join("");
     }
     if (q.type === "blank") {
         return Array.from(card.querySelectorAll(".blank-input")).map(input => input.value).join("、");
@@ -352,6 +380,12 @@ function isCorrect(q, value) {
     if (q.type === "short") return normalize(value).length >= 8;
     if (q.type === "blank") {
         return [q.answer, ...q.alt].map(normalizeBlankAnswer).includes(normalizeBlankAnswer(value));
+    }
+    if (q.type === "multiple") {
+        const sorted = String(value || "").toUpperCase().replace(/[^A-Z]/g, "").split("").sort().join("");
+        return [q.answer, ...q.alt].some(answer =>
+            String(answer || "").toUpperCase().replace(/[^A-Z]/g, "").split("").sort().join("") === sorted
+        );
     }
     return [q.answer, ...q.alt].map(normalize).includes(normalize(value));
 }
