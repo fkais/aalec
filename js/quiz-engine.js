@@ -31,10 +31,9 @@ function initInviteGate() {
         sessionStorage.removeItem(ACCESS_KEY);
     }
 
-    function unlock(remember = false) {
+    function unlock(rememberForNavigation = false) {
         document.body.classList.remove("locked");
-
-        if (remember) {
+        if (rememberForNavigation) {
             sessionStorage.setItem(ACCESS_KEY, "1");
         }
     }
@@ -45,7 +44,6 @@ function initInviteGate() {
             unlock(true);
             return;
         }
-
         error.textContent = "邀请码不对，再检查一下。";
         input.select();
     }
@@ -112,7 +110,9 @@ function normalizeQuestions(list) {
         answer: item["正确答案"] || item.answer || "",
         alt: item["备选答案"] || item.alt || [],
         explain: item["解析"] || item.explain || "",
-        chapter: item["所属章节"] || item.chapter || "综合"
+        chapter: item["所属章节"] || item.chapter || "综合",
+        questionImages: item["题目图片"] || item.questionImages || [],
+        answerImages: item["答案图片"] || item.answerImages || []
     }));
 }
 
@@ -250,6 +250,7 @@ function renderQuestions(list, targetId) {
                 <span>${appState.answered[q.id] ? "已掌握" : "待练习"}</span>
             </div>
             <div class="q-title">${escapeHtml(q.title)}</div>
+            ${renderQuestionImages(q.questionImages, "题目配图")}
             ${renderControls(q)}
             <div class="card-actions">
                 ${q.type === "single" || q.type === "judge" ? "" : `<button class="primary check-btn">提交答案</button>`}
@@ -335,7 +336,14 @@ function showResult(card, q, correct, forceAnswer = false) {
     result.className = `result visible ${correct ? "correct" : "wrong"}`;
     const label = correct ? "答对了" : "再背一下";
     const answerLabel = q.type === "short" || forceAnswer ? "参考答案" : "正确答案";
-    result.innerHTML = `<strong>${label}</strong><br><strong>${answerLabel}：</strong>${escapeHtml(q.answer)}<br><strong>解析：</strong>${escapeHtml(q.explain || "")}`;
+    result.innerHTML = `<strong>${label}</strong><br><strong>${answerLabel}：</strong>${escapeHtml(q.answer)}<br><strong>解析：</strong>${escapeHtml(q.explain || "")}${renderQuestionImages(q.answerImages, "参考答案图")}`;
+}
+
+function renderQuestionImages(images, altPrefix) {
+    if (!images || !images.length) return "";
+    return `<div class="question-images">${images.map((src, index) => `
+        <img src="${escapeHtml(src)}" alt="${escapeHtml(altPrefix)} ${index + 1}" loading="lazy">
+    `).join("")}</div>`;
 }
 
 function markWrong(id, wrong) {
@@ -471,6 +479,6 @@ function highlightCode(code) {
     html += escapeHtml(code.slice(lastIndex));
     return html;
 }
-initinvitegate
+
 initInviteGate();
 if (document.body.dataset.page === "quiz") initQuizPage();
