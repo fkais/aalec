@@ -2,6 +2,27 @@ const SUPABASE_URL = "https://jdnlerckpwdngbhokbzi.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_cqh6u1atYzGWMkKy83-lZg_cNu5Dnqr";
 const VISITOR_KEY = "aalec_anonymous_visitor_id";
 
+function supabaseHeaders() {
+    return {
+        apikey: SUPABASE_PUBLISHABLE_KEY,
+        Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
+        "Content-Type": "application/json"
+    };
+}
+
+async function callRpc(name, payload) {
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${name}`, {
+        method: "POST",
+        headers: supabaseHeaders(),
+        body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+        throw new Error(`${name} 接口请求失败：${response.status}`);
+    }
+    return response.json();
+}
+
 function getAnonymousVisitorId() {
     let visitorId = localStorage.getItem(VISITOR_KEY);
     if (visitorId) return visitorId;
@@ -41,27 +62,35 @@ async function trackQuizAnswer({ subject, questionId, questionType, correct }) {
 }
 
 async function getQuizDashboard(subject = null) {
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/get_quiz_dashboard`, {
-        method: "POST",
-        headers: {
-            apikey: SUPABASE_PUBLISHABLE_KEY,
-            Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            p_visitor_id: getAnonymousVisitorId(),
-            p_subject: subject || null
-        })
+    return callRpc("get_quiz_dashboard", {
+        p_visitor_id: getAnonymousVisitorId(),
+        p_subject: subject || null
     });
+}
 
-    if (!response.ok) {
-        throw new Error(`统计数据读取失败：${response.status}`);
-    }
-    return response.json();
+async function registerReviewUser() {
+    return callRpc("register_review_user", {
+        p_visitor_id: getAnonymousVisitorId()
+    });
+}
+
+async function getReviewSubjects() {
+    return callRpc("get_review_subjects", {
+        p_visitor_id: getAnonymousVisitorId()
+    });
+}
+
+async function getReviewUsers() {
+    return callRpc("get_review_users", {
+        p_visitor_id: getAnonymousVisitorId()
+    });
 }
 
 window.quizAnalytics = {
     getVisitorId: getAnonymousVisitorId,
     trackAnswer: trackQuizAnswer,
-    getDashboard: getQuizDashboard
+    getDashboard: getQuizDashboard,
+    registerReviewUser,
+    getReviewSubjects,
+    getReviewUsers
 };

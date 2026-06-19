@@ -8,7 +8,7 @@
     <meta http-equiv="Expires" content="0">
     <title>努力抱佛脚</title>
     <link rel="icon" href="data:,">
-    <link rel="stylesheet" href="css/style.css?v=1.6.4">
+    <link rel="stylesheet" href="css/style.css?v=1.7.0">
 </head>
 <body class="locked home-network-page" data-page="home">
     <section id="accessGate" class="access-gate">
@@ -43,8 +43,14 @@
         </button>
 
         <div id="subjectNodes" class="subject-node-layer"></div>
+        <div id="userCells" class="user-cell-layer" aria-label="复习用户"></div>
 
         <div id="typeNodes" class="type-node-layer" aria-live="polite"></div>
+
+        <div id="networkDataState" class="network-data-state" role="status" aria-live="polite" hidden>
+            <span id="networkDataMessage"></span>
+            <button id="networkRetryBtn" type="button" hidden>重试</button>
+        </div>
 
         <aside class="library-update" aria-label="题库更新记录">
             <span id="libraryVersion"></span>
@@ -52,8 +58,8 @@
         </aside>
     </main>
 
-    <script src="js/analytics.js?v=1.6.4"></script>
-    <script src="js/quiz-engine.js?v=1.6.4"></script>
-    <script src="js/knowledge-network.js?v=1.6.4"></script>
+    <script src="js/analytics.js?v=1.7.0"></script>
+    <script src="js/quiz-engine.js?v=1.7.0"></script>
+    <script src="js/knowledge-network.js?v=1.7.0"></script>
 </body>
 </html>

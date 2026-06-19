@@ -1422,6 +1422,7 @@ button {
 
 .network-lines,
 .subject-node-layer,
+.user-cell-layer,
 .type-node-layer {
     position: absolute;
     inset: 0;
@@ -1439,9 +1440,95 @@ button {
     pointer-events: none;
 }
 
+.user-cell-layer {
+    z-index: 3;
+    pointer-events: none;
+}
+
 .type-node-layer {
     z-index: 5;
     pointer-events: none;
+}
+
+.user-cell {
+    position: absolute;
+    width: 24px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    transform: translate(-50%, -50%);
+    border: 1.5px solid var(--line);
+    border-radius: 54% 46% 58% 42% / 48% 57% 43% 52%;
+    background: var(--panel-soft);
+    box-shadow: 0 5px 12px rgba(33, 78, 112, 0.1);
+    cursor: default;
+    pointer-events: auto;
+    touch-action: none;
+}
+
+.user-cell:nth-child(3n) {
+    border-radius: 43% 57% 47% 53% / 59% 42% 58% 41%;
+}
+
+.user-cell:nth-child(4n) {
+    border-radius: 58% 42% 55% 45% / 44% 61% 39% 56%;
+}
+
+.user-cell.is-current-user {
+    border-color: var(--blue);
+    background: var(--panel);
+    box-shadow:
+        0 0 0 3px rgba(22, 119, 200, 0.12),
+        0 0 18px rgba(22, 119, 200, 0.35);
+    cursor: grab;
+}
+
+.user-cell.is-current-user:hover,
+.user-cell.is-current-user:focus-visible {
+    box-shadow:
+        0 0 0 4px rgba(22, 119, 200, 0.16),
+        0 0 24px rgba(22, 119, 200, 0.42);
+    outline: none;
+}
+
+.user-cell.is-dragging {
+    cursor: grabbing;
+    box-shadow:
+        0 0 0 5px rgba(22, 119, 200, 0.18),
+        0 0 30px rgba(22, 119, 200, 0.5);
+}
+
+.network-data-state {
+    position: absolute;
+    right: 32px;
+    bottom: 24px;
+    z-index: 9;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 12px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    color: var(--muted);
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow: 0 8px 20px rgba(33, 78, 112, 0.08);
+    font-size: 12px;
+    backdrop-filter: blur(7px);
+}
+
+.network-data-state[hidden] {
+    display: none;
+}
+
+.network-data-state button {
+    min-height: 28px;
+    padding: 0 10px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    color: var(--blue);
+    background: var(--panel);
+    cursor: pointer;
+    font-weight: 700;
 }
 
 .network-connection {
@@ -1634,6 +1721,7 @@ button {
 
 @media (prefers-reduced-motion: reduce) {
     .study-node,
+    .user-cell,
     .type-node,
     .network-connection {
         transition: none;
@@ -1704,6 +1792,17 @@ button {
         bottom: 14px;
         max-width: calc(100% - 32px);
         padding: 9px 12px;
+    }
+
+    .network-data-state {
+        right: 16px;
+        bottom: 94px;
+        max-width: calc(100% - 32px);
+    }
+
+    .user-cell {
+        width: 20px;
+        height: 17px;
     }
 
     .library-update p {
