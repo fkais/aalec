@@ -22,41 +22,63 @@ const appState = {
 
 function initInviteGate() {
     const input = document.getElementById("inviteInput");
+    const syncInput = document.getElementById("syncInput");
     const button = document.getElementById("inviteBtn");
     const error = document.getElementById("inviteError");
-    if (!input || !button) return;
+    if (!input || !syncInput || !button) return Promise.resolve();
+    const originalButtonText = button.textContent;
 
     const navigation = performance.getEntriesByType("navigation")[0];
     if (navigation && navigation.type === "reload") {
         sessionStorage.removeItem(ACCESS_KEY);
     }
 
-    function unlock(rememberForNavigation = false) {
-        document.body.classList.remove("locked");
-        if (rememberForNavigation) {
-            sessionStorage.setItem(ACCESS_KEY, "1");
+    return new Promise(resolve => {
+        function unlock(rememberForNavigation = false) {
+            document.body.classList.remove("locked");
+            if (rememberForNavigation) {
+                sessionStorage.setItem(ACCESS_KEY, "1");
+            }
+            resolve();
         }
-    }
 
-    function checkCode() {
-        if (input.value.trim() === INVITE_CODE) {
+        async function checkCode() {
+            if (input.value.trim() !== INVITE_CODE) {
+                error.textContent = "邀请码不对，再检查一下。";
+                input.select();
+                return;
+            }
+            if (syncInput.value.trim().length < 4) {
+                error.textContent = "请输入至少 4 位学习同步码。";
+                syncInput.focus();
+                return;
+            }
+
+            button.disabled = true;
+            button.textContent = "正在同步…";
             error.textContent = "";
-            unlock(true);
+            try {
+                await window.quizAnalytics.setSyncIdentity(syncInput.value);
+                unlock(true);
+            } catch (syncError) {
+                console.warn("同步身份设置失败：", syncError);
+                error.textContent = "同步服务暂不可用，请确认已运行最新版数据库脚本。";
+            } finally {
+                button.disabled = false;
+                button.textContent = originalButtonText;
+            }
+        }
+
+        if (sessionStorage.getItem(ACCESS_KEY) === "1" && window.quizAnalytics?.hasSyncIdentity()) {
+            unlock();
             return;
         }
-        error.textContent = "邀请码不对，再检查一下。";
-        input.select();
-    }
 
-    if (sessionStorage.getItem(ACCESS_KEY) === "1") {
-        unlock();
-        return;
-    }
-
-    input.focus();
-    button.addEventListener("click", checkCode);
-    input.addEventListener("keydown", event => {
-        if (event.key === "Enter") checkCode();
+        input.focus();
+        button.addEventListener("click", checkCode);
+        [input, syncInput].forEach(field => field.addEventListener("keydown", event => {
+            if (event.key === "Enter") checkCode();
+        }));
     });
 }
 
@@ -69,9 +91,28 @@ function stateKey(name) {
     return `quiz_${appState.subject}_${name}`;
 }
 
-function loadState() {
+async function loadState() {
     appState.answered = JSON.parse(localStorage.getItem(stateKey("answered")) || "{}");
     appState.wrong = JSON.parse(localStorage.getItem(stateKey("wrong")) || "[]");
+
+    if (!window.quizAnalytics) return;
+    try {
+        const rows = await window.quizAnalytics.getSubjectState(appState.subject);
+        const remoteAnswered = {};
+        const remoteWrong = [];
+        rows.forEach(row => {
+            const questionId = row.question_id || row.questionId;
+            const mastered = Boolean(row.mastered);
+            remoteAnswered[questionId] = mastered;
+            if (!mastered) remoteWrong.push(questionId);
+        });
+        appState.answered = remoteAnswered;
+        appState.wrong = remoteWrong;
+        localStorage.setItem(stateKey("answered"), JSON.stringify(appState.answered));
+        localStorage.setItem(stateKey("wrong"), JSON.stringify(appState.wrong));
+    } catch (error) {
+        console.warn("跨设备进度读取失败，继续使用本机进度：", error);
+    }
 }
 
 function saveState() {
@@ -83,7 +124,7 @@ function saveState() {
 
 async function initQuizPage() {
     appState.subject = getSubjectFromUrl();
-    loadState();
+    await loadState();
 
     try {
         const response = await fetch(SUBJECTS[appState.subject].file, { cache: "no-cache" });
@@ -189,8 +230,13 @@ function initNav() {
         renderQuestions([list[Math.floor(Math.random() * list.length)]], "questionList");
     });
 
-    document.getElementById("resetBtn").addEventListener("click", () => {
+    document.getElementById("resetBtn").addEventListener("click", async () => {
         if (!confirm("确定重置当前科目的答题数据吗？")) return;
+        try {
+            await window.quizAnalytics?.resetSubjectProgress(appState.subject);
+        } catch (error) {
+            console.warn("线上进度重置失败：", error);
+        }
         appState.answered = {};
         appState.wrong = [];
         saveState();
@@ -543,5 +589,7 @@ function highlightCode(code) {
     return html;
 }
 
-initInviteGate();
-if (document.body.dataset.page === "quiz") initQuizPage();
+window.accessReady = initInviteGate();
+if (document.body.dataset.page === "quiz") {
+    window.accessReady.then(initQuizPage);
+}

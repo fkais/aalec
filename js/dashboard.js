@@ -130,4 +130,7 @@ function escapeDashboardHtml(value) {
 window.addEventListener("resize", () => roseChart?.resize());
 document.getElementById("dashboardSubject").addEventListener("change", loadDashboard);
 document.getElementById("anonymousId").textContent = shortAnonymousId(window.quizAnalytics.getVisitorId());
-loadDashboard();
+window.accessReady.then(() => {
+    document.getElementById("anonymousId").textContent = shortAnonymousId(window.quizAnalytics.getVisitorId());
+    loadDashboard();
+});

@@ -1,6 +1,7 @@
 const SUPABASE_URL = "https://jdnlerckpwdngbhokbzi.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_cqh6u1atYzGWMkKy83-lZg_cNu5Dnqr";
 const VISITOR_KEY = "aalec_anonymous_visitor_id";
+const SYNC_ID_KEY = "aalec_sync_identity";
 
 function supabaseHeaders() {
     return {
@@ -24,6 +25,9 @@ async function callRpc(name, payload) {
 }
 
 function getAnonymousVisitorId() {
+    const syncedId = localStorage.getItem(SYNC_ID_KEY);
+    if (syncedId) return syncedId;
+
     let visitorId = localStorage.getItem(VISITOR_KEY);
     if (visitorId) return visitorId;
 
@@ -32,6 +36,32 @@ function getAnonymousVisitorId() {
         : `visitor_${Date.now()}_${Math.random().toString(36).slice(2)}`;
     localStorage.setItem(VISITOR_KEY, visitorId);
     return visitorId;
+}
+
+async function hashSyncCode(syncCode) {
+    const normalized = syncCode.trim().toLowerCase();
+    const bytes = new TextEncoder().encode(`aalec-sync-v1:${normalized}`);
+    const digest = await crypto.subtle.digest("SHA-256", bytes);
+    return `account_${Array.from(new Uint8Array(digest))
+        .map(byte => byte.toString(16).padStart(2, "0"))
+        .join("")}`;
+}
+
+async function setSyncIdentity(syncCode) {
+    const oldVisitorId = getAnonymousVisitorId();
+    const newVisitorId = await hashSyncCode(syncCode);
+    if (oldVisitorId !== newVisitorId) {
+        await callRpc("claim_review_identity", {
+            p_old_visitor_id: oldVisitorId,
+            p_new_visitor_id: newVisitorId
+        });
+    }
+    localStorage.setItem(SYNC_ID_KEY, newVisitorId);
+    return newVisitorId;
+}
+
+function hasSyncIdentity() {
+    return Boolean(localStorage.getItem(SYNC_ID_KEY));
 }
 
 async function trackQuizAnswer({ subject, questionId, questionType, correct }) {
@@ -86,11 +116,29 @@ async function getReviewUsers() {
     });
 }
 
+async function getSubjectState(subject) {
+    return callRpc("get_subject_state", {
+        p_visitor_id: getAnonymousVisitorId(),
+        p_subject: subject
+    });
+}
+
+async function resetSubjectProgress(subject) {
+    return callRpc("reset_subject_progress", {
+        p_visitor_id: getAnonymousVisitorId(),
+        p_subject: subject
+    });
+}
+
 window.quizAnalytics = {
     getVisitorId: getAnonymousVisitorId,
+    setSyncIdentity,
+    hasSyncIdentity,
     trackAnswer: trackQuizAnswer,
     getDashboard: getQuizDashboard,
     registerReviewUser,
     getReviewSubjects,
-    getReviewUsers
+    getReviewUsers,
+    getSubjectState,
+    resetSubjectProgress
 };

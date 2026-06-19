@@ -36,8 +36,8 @@ const localSubjectCatalog = [
 const reviewMap = {
     deadline: "2026-06-30T09:00:00+08:00",
     release: {
-        version: "题库版本 v1.7.0",
-        note: "本次更新：科目进度与用户地图接入数据接口；自己的细胞可拖动并自动回轨。"
+        version: "题库版本 v1.8.0",
+        note: "本次更新：学习进度跨设备同步；细胞随掌握进度成长，点击地图可召唤自己的细胞。"
     },
     subjects: localSubjectCatalog.map(subject => ({ ...subject, answeredCount: 0, progress: 0 })),
     users: []
@@ -60,7 +60,6 @@ let activeSubject = null;
 let frameId = null;
 let layoutState = [];
 let userState = [];
-let dragState = null;
 
 function localAnsweredCount(subjectId) {
     try {
@@ -83,9 +82,15 @@ function localSubjects() {
 }
 
 function currentUserFallback() {
+    const subjects = localSubjects();
+    const masteredCount = subjects.reduce((sum, subject) => sum + subject.answeredCount, 0);
+    const questionCount = subjects.reduce((sum, subject) => sum + subject.questionCount, 0);
     return [{
         id: window.quizAnalytics?.getVisitorId() || "local-user",
-        isCurrentUser: true
+        isCurrentUser: true,
+        masteredCount,
+        answeredCount: masteredCount,
+        progress: questionCount ? masteredCount / questionCount * 100 : 0
     }];
 }
 
@@ -112,7 +117,10 @@ function normalizeSubjects(rows) {
 function normalizeUsers(rows) {
     return (rows || []).map(row => ({
         id: String(row.id || row.user_id || row.visitor_id),
-        isCurrentUser: Boolean(row.is_current_user ?? row.isCurrentUser)
+        isCurrentUser: Boolean(row.is_current_user ?? row.isCurrentUser),
+        masteredCount: Number(row.mastered_count ?? row.masteredCount ?? 0),
+        answeredCount: Number(row.answered_count ?? row.answeredCount ?? 0),
+        progress: Number(row.progress ?? 0)
     })).filter(user => user.id);
 }
 
@@ -186,15 +194,18 @@ function renderSubjectNodes() {
 }
 
 function renderUserCells() {
-    userLayer.innerHTML = reviewMap.users.map((user, index) => `
+    userLayer.innerHTML = reviewMap.users.map((user, index) => {
+        const size = Math.round(18 + Math.min(100, Math.max(0, user.progress)) * 0.22);
+        return `
         <button class="user-cell ${user.isCurrentUser ? "is-current-user" : ""}"
             data-user-index="${index}" type="button"
-            aria-label="${user.isCurrentUser ? "当前用户，可拖动" : "复习用户"}"
-            ${user.isCurrentUser ? "" : 'tabindex="-1"'}>
+            style="--cell-size:${size}px"
+            aria-label="${user.isCurrentUser ? `当前用户，已掌握 ${user.masteredCount} 题` : `复习用户，已掌握 ${user.masteredCount} 题`}"
+            tabindex="-1">
         </button>
-    `).join("");
+    `;
+    }).join("");
     userCells = Array.from(userLayer.querySelectorAll(".user-cell"));
-    bindCellDrag();
 }
 
 function seedMotion() {
@@ -233,11 +244,7 @@ function seedMotion() {
             radiusY: 170 + ring * 32 + (index % 4) * 8,
             speed: 0.000055 + (index % 7) * 0.000004,
             direction: index % 2 ? 1 : -1,
-            dragging: false,
-            returning: false,
-            returnStartedAt: 0,
-            returnFromX: 0,
-            returnFromY: 0
+            excursion: null
         };
     });
 }
@@ -336,17 +343,31 @@ function positionUserCells(time, rect, staticOnly = false) {
         state.orbitX = center.x + Math.cos(angle) * Math.min(state.radiusX, rect.width * 0.36);
         state.orbitY = center.y + Math.sin(angle) * Math.min(state.radiusY, rect.height * 0.30);
 
-        if (!state.dragging) {
-            if (state.returning) {
-                const elapsed = Math.min(1, (time - state.returnStartedAt) / 720);
-                const eased = 1 - Math.pow(1 - elapsed, 3);
-                state.x = state.returnFromX + (state.orbitX - state.returnFromX) * eased;
-                state.y = state.returnFromY + (state.orbitY - state.returnFromY) * eased;
-                if (elapsed >= 1) state.returning = false;
+        if (state.excursion) {
+            const elapsed = time - state.excursion.startedAt;
+            const outwardDuration = 520;
+            const holdDuration = 360;
+            const returnDuration = 760;
+            if (elapsed < outwardDuration) {
+                const eased = 1 - Math.pow(1 - elapsed / outwardDuration, 3);
+                state.x = state.excursion.fromX + (state.excursion.targetX - state.excursion.fromX) * eased;
+                state.y = state.excursion.fromY + (state.excursion.targetY - state.excursion.fromY) * eased;
+            } else if (elapsed < outwardDuration + holdDuration) {
+                state.x = state.excursion.targetX;
+                state.y = state.excursion.targetY;
+            } else if (elapsed < outwardDuration + holdDuration + returnDuration) {
+                const returnElapsed = (elapsed - outwardDuration - holdDuration) / returnDuration;
+                const eased = 1 - Math.pow(1 - returnElapsed, 3);
+                state.x = state.excursion.targetX + (state.orbitX - state.excursion.targetX) * eased;
+                state.y = state.excursion.targetY + (state.orbitY - state.excursion.targetY) * eased;
             } else {
+                state.excursion = null;
                 state.x = state.orbitX;
                 state.y = state.orbitY;
             }
+        } else {
+            state.x = state.orbitX;
+            state.y = state.orbitY;
         }
 
         constrainCell(state, rect);
@@ -394,49 +415,37 @@ function avoidObstacles(state, ownIndex) {
     }
 }
 
-function bindCellDrag() {
-    userCells.forEach((node, index) => {
-        const state = () => userState[index];
-        if (!reviewMap.users[index]?.isCurrentUser) return;
+function summonCurrentCell(event) {
+    if (event.target.closest("button, a, input, .library-update, .network-data-state")) return;
+    const currentIndex = reviewMap.users.findIndex(user => user.isCurrentUser);
+    const state = userState[currentIndex];
+    if (!state) return;
 
-        node.addEventListener("pointerdown", event => {
-            const current = state();
-            if (!current) return;
-            event.preventDefault();
-            node.setPointerCapture(event.pointerId);
-            current.dragging = true;
-            current.returning = false;
-            node.classList.add("is-dragging");
-            dragState = { pointerId: event.pointerId, state: current };
-            restartAnimation();
-        });
+    const rect = network.getBoundingClientRect();
+    state.excursion = {
+        startedAt: performance.now(),
+        fromX: state.x,
+        fromY: state.y,
+        targetX: event.clientX - rect.left,
+        targetY: event.clientY - rect.top
+    };
+    state.x = state.excursion.targetX;
+    state.y = state.excursion.targetY;
+    constrainCell(state, rect);
+    avoidObstacles(state, currentIndex);
+    state.excursion.targetX = state.x;
+    state.excursion.targetY = state.y;
+    createRipple(event.clientX - rect.left, event.clientY - rect.top);
+    restartAnimation();
+}
 
-        node.addEventListener("pointermove", event => {
-            if (!dragState || dragState.pointerId !== event.pointerId || dragState.state !== state()) return;
-            const rect = network.getBoundingClientRect();
-            dragState.state.x = event.clientX - rect.left;
-            dragState.state.y = event.clientY - rect.top;
-            constrainCell(dragState.state, rect);
-            avoidObstacles(dragState.state, index);
-            node.style.left = `${dragState.state.x}px`;
-            node.style.top = `${dragState.state.y}px`;
-        });
-
-        const release = event => {
-            if (!dragState || dragState.pointerId !== event.pointerId || dragState.state !== state()) return;
-            const current = dragState.state;
-            current.dragging = false;
-            current.returning = true;
-            current.returnStartedAt = performance.now();
-            current.returnFromX = current.x;
-            current.returnFromY = current.y;
-            node.classList.remove("is-dragging");
-            dragState = null;
-            restartAnimation();
-        };
-        node.addEventListener("pointerup", release);
-        node.addEventListener("pointercancel", release);
-    });
+function createRipple(x, y) {
+    const ripple = document.createElement("span");
+    ripple.className = "map-ripple";
+    ripple.style.left = `${x}px`;
+    ripple.style.top = `${y}px`;
+    network.appendChild(ripple);
+    ripple.addEventListener("animationend", () => ripple.remove(), { once: true });
 }
 
 function ellipseEdge(from, to, node) {
@@ -517,7 +526,7 @@ function animate(time) {
     positionUserCells(time, rect);
     positionTypeNodes(rect);
     drawLines(rect);
-    frameId = reduceMotion && !dragState && !userState.some(state => state.returning)
+    frameId = reduceMotion && !userState.some(state => state.excursion)
         ? null
         : requestAnimationFrame(animate);
 }
@@ -534,12 +543,13 @@ centerNode.addEventListener("click", () => {
     subjectNodes.forEach(node => node.classList.remove("is-active"));
 });
 retryButton.addEventListener("click", loadNetworkData);
+network.addEventListener("pointerdown", summonCurrentCell);
 
 updateCountdown();
 document.getElementById("libraryVersion").textContent = reviewMap.release.version;
 document.getElementById("libraryUpdate").textContent = reviewMap.release.note;
 renderDataLayers();
-loadNetworkData();
+window.accessReady.then(loadNetworkData);
 
 window.addEventListener("resize", restartAnimation);
 reducedMotionQuery.addEventListener("change", restartAnimation);

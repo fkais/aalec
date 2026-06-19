@@ -6,6 +6,20 @@
 
 接口通过 `js/analytics.js` 调用 Supabase RPC。
 
+### 跨设备身份
+
+登录门增加“学习同步码”。前端将同步码与固定盐值进行 SHA-256 摘要，生成：
+
+```text
+account_<sha256>
+```
+
+服务端只接收摘要，不接收同步码明文。不同设备输入相同同步码会得到相同匿名用户 ID。
+
+首次设置同步码时调用 `claim_review_identity`，把当前浏览器原匿名 ID 下的答题事件合并到同步账号。
+
+> 这是轻量同步身份，不是完整密码认证。同步码应设置得足够长且不要分享。
+
 ### `register_review_user`
 
 请求：
@@ -54,11 +68,30 @@
 ```json
 {
   "id": "匿名用户 ID 的不可逆摘要",
-  "is_current_user": true
+  "is_current_user": true,
+  "answered_count": 120,
+  "mastered_count": 100,
+  "progress": 28.7
 }
 ```
 
 接口返回 `review_users` 中的全部用户，不包含在线状态字段。前端不会显示用户姓名，只通过视觉高亮区分当前用户。
+细胞尺寸根据 `progress` 从小到大变化。
+
+### `get_subject_state`
+
+返回当前同步账号在指定科目下每道做过题目的掌握状态，用于不同设备恢复刷题进度：
+
+```json
+{
+  "question_id": "bd_c1_s1",
+  "mastered": true
+}
+```
+
+### `reset_subject_progress`
+
+删除当前同步账号指定科目的线上答题事件，使“重置数据”在所有设备生效。
 
 ## 数据库安装
 

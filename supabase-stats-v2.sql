@@ -70,6 +70,39 @@ begin
 end;
 $$;
 
+create or replace function public.claim_review_identity(
+    p_old_visitor_id text,
+    p_new_visitor_id text
+)
+returns jsonb
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+    if nullif(trim(p_new_visitor_id), '') is null then
+        raise exception 'new visitor_id is required';
+    end if;
+
+    insert into public.review_users (visitor_id)
+    values (p_new_visitor_id)
+    on conflict (visitor_id) do update
+    set last_seen_at = now();
+
+    if nullif(trim(p_old_visitor_id), '') is not null
+        and p_old_visitor_id <> p_new_visitor_id then
+        update public.quiz_events
+        set visitor_id = p_new_visitor_id
+        where visitor_id = p_old_visitor_id;
+
+        delete from public.review_users
+        where visitor_id = p_old_visitor_id;
+    end if;
+
+    return jsonb_build_object('claimed', true);
+end;
+$$;
+
 create or replace function public.get_review_subjects(
     p_visitor_id text
 )
@@ -112,22 +145,98 @@ left join answered on answered.subject = subjects.id
 order by subjects.sort_order, subjects.id;
 $$;
 
-create or replace function public.get_review_users(
+drop function if exists public.get_review_users(text);
+
+create function public.get_review_users(
     p_visitor_id text
 )
 returns table (
     id text,
-    is_current_user boolean
+    is_current_user boolean,
+    answered_count integer,
+    mastered_count integer,
+    progress numeric
+)
+language sql
+security definer
+set search_path = public
+as $$
+with per_question as (
+    select
+        visitor_id,
+        question_id,
+        bool_or(correct) as mastered
+    from public.quiz_events
+    group by visitor_id, question_id
+),
+per_user as (
+    select
+        visitor_id,
+        count(*)::integer as answered_count,
+        count(*) filter (where mastered)::integer as mastered_count
+    from per_question
+    group by visitor_id
+),
+question_total as (
+    select coalesce(sum(question_count), 0)::numeric as total
+    from public.review_subjects
+    where status = 'ready'
+)
+select
+    md5(users.visitor_id) as id,
+    users.visitor_id = p_visitor_id as is_current_user,
+    coalesce(per_user.answered_count, 0),
+    coalesce(per_user.mastered_count, 0),
+    case
+        when question_total.total = 0 then 0
+        else round(100.0 * coalesce(per_user.mastered_count, 0) / question_total.total, 1)
+    end as progress
+from public.review_users users
+left join per_user on per_user.visitor_id = users.visitor_id
+cross join question_total
+order by users.created_at, users.visitor_id;
+$$;
+
+create or replace function public.get_subject_state(
+    p_visitor_id text,
+    p_subject text
+)
+returns table (
+    question_id text,
+    mastered boolean
 )
 language sql
 security definer
 set search_path = public
 as $$
 select
-    md5(users.visitor_id) as id,
-    users.visitor_id = p_visitor_id as is_current_user
-from public.review_users users
-order by users.created_at, users.visitor_id;
+    events.question_id,
+    bool_or(events.correct) as mastered
+from public.quiz_events events
+where events.visitor_id = p_visitor_id
+  and events.subject = p_subject
+group by events.question_id
+order by events.question_id;
+$$;
+
+create or replace function public.reset_subject_progress(
+    p_visitor_id text,
+    p_subject text
+)
+returns jsonb
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+    deleted_count integer;
+begin
+    delete from public.quiz_events
+    where visitor_id = p_visitor_id
+      and subject = p_subject;
+    get diagnostics deleted_count = row_count;
+    return jsonb_build_object('deleted', deleted_count);
+end;
 $$;
 
 create or replace function public.get_quiz_dashboard(
@@ -261,11 +370,17 @@ $$;
 revoke all on function public.get_quiz_dashboard(text, text) from public;
 grant execute on function public.get_quiz_dashboard(text, text) to anon;
 revoke all on function public.register_review_user(text) from public;
+revoke all on function public.claim_review_identity(text, text) from public;
 revoke all on function public.get_review_subjects(text) from public;
 revoke all on function public.get_review_users(text) from public;
+revoke all on function public.get_subject_state(text, text) from public;
+revoke all on function public.reset_subject_progress(text, text) from public;
 grant execute on function public.register_review_user(text) to anon;
+grant execute on function public.claim_review_identity(text, text) to anon;
 grant execute on function public.get_review_subjects(text) to anon;
 grant execute on function public.get_review_users(text) to anon;
+grant execute on function public.get_subject_state(text, text) to anon;
+grant execute on function public.reset_subject_progress(text, text) to anon;
 
 notify pgrst, 'reload schema';
 
@@ -274,3 +389,6 @@ select public.get_quiz_dashboard('installation_check', null);
 select public.register_review_user('installation_check');
 select * from public.get_review_subjects('installation_check');
 select * from public.get_review_users('installation_check');
+select * from public.get_subject_state('installation_check', 'javaweb');
+select public.reset_subject_progress('installation_check', 'javaweb');
+delete from public.review_users where visitor_id = 'installation_check';

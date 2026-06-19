@@ -8,7 +8,7 @@
     <meta http-equiv="Expires" content="0">
     <title>努力抱佛脚 - 刷题</title>
     <link rel="icon" href="data:,">
-    <link rel="stylesheet" href="css/style.css?v=1.6.4">
+    <link rel="stylesheet" href="css/style.css?v=1.8.0">
 </head>
 <body class="locked" data-page="quiz">
     <section id="accessGate" class="access-gate">
@@ -20,6 +20,10 @@
                 <span>邀请码</span>
                 <input id="inviteInput" type="password" inputmode="numeric" autocomplete="off" placeholder="请输入邀请码">
             </label>
+            <label class="access-input access-sync-input">
+                <span>学习同步码</span>
+                <input id="syncInput" type="password" autocomplete="off" placeholder="不同设备输入同一个同步码">
+            </label>
             <button id="inviteBtn" class="access-btn">进入刷题</button>
             <p id="inviteError" class="access-error" role="alert"></p>
         </div>
@@ -27,7 +31,7 @@
 
     <header class="topbar">
         <div>
-            <a class="back-link home-return" href="./index.html?v=1.6.4">返回主页</a>
+            <a class="back-link home-return" href="./index.html?v=1.8.0">返回主页</a>
             <h1 id="subjectTitle">努力抱佛脚</h1>
             <p id="subjectSubtitle">正在加载题库...</p>
         </div>
@@ -92,7 +96,7 @@
         </section>
     </main>
 
-    <script src="js/analytics.js?v=1.6.4"></script>
-    <script src="js/quiz-engine.js?v=1.6.4"></script>
+    <script src="js/analytics.js?v=1.8.0"></script>
+    <script src="js/quiz-engine.js?v=1.8.0"></script>
 </body>
 </html>
