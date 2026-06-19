@@ -132,5 +132,6 @@ document.getElementById("dashboardSubject").addEventListener("change", loadDashb
 document.getElementById("anonymousId").textContent = shortAnonymousId(window.quizAnalytics.getVisitorId());
 window.accessReady.then(() => {
     document.getElementById("anonymousId").textContent = shortAnonymousId(window.quizAnalytics.getVisitorId());
+    document.getElementById("identitySyncCode").textContent = window.quizAnalytics.getSyncCode() || "未设置";
     loadDashboard();
 });

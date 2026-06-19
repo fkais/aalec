@@ -2,6 +2,7 @@ const SUPABASE_URL = "https://jdnlerckpwdngbhokbzi.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_cqh6u1atYzGWMkKy83-lZg_cNu5Dnqr";
 const VISITOR_KEY = "aalec_anonymous_visitor_id";
 const SYNC_ID_KEY = "aalec_sync_identity";
+const SYNC_CODE_KEY = "aalec_sync_code";
 
 function supabaseHeaders() {
     return {
@@ -48,8 +49,9 @@ async function hashSyncCode(syncCode) {
 }
 
 async function setSyncIdentity(syncCode) {
+    const normalizedCode = syncCode.trim();
     const oldVisitorId = getAnonymousVisitorId();
-    const newVisitorId = await hashSyncCode(syncCode);
+    const newVisitorId = await hashSyncCode(normalizedCode);
     if (oldVisitorId !== newVisitorId) {
         await callRpc("claim_review_identity", {
             p_old_visitor_id: oldVisitorId,
@@ -57,11 +59,16 @@ async function setSyncIdentity(syncCode) {
         });
     }
     localStorage.setItem(SYNC_ID_KEY, newVisitorId);
+    localStorage.setItem(SYNC_CODE_KEY, normalizedCode);
     return newVisitorId;
 }
 
 function hasSyncIdentity() {
     return Boolean(localStorage.getItem(SYNC_ID_KEY));
+}
+
+function getSyncCode() {
+    return localStorage.getItem(SYNC_CODE_KEY) || "";
 }
 
 async function trackQuizAnswer({ subject, questionId, questionType, correct }) {
@@ -134,6 +141,7 @@ window.quizAnalytics = {
     getVisitorId: getAnonymousVisitorId,
     setSyncIdentity,
     hasSyncIdentity,
+    getSyncCode,
     trackAnswer: trackQuizAnswer,
     getDashboard: getQuizDashboard,
     registerReviewUser,

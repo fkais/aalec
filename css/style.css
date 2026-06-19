@@ -1461,13 +1461,38 @@ button {
     margin: 0;
     padding: 0;
     transform: translate(-50%, -50%);
-    border: 1.5px solid var(--line);
+    --cell-color: var(--blue);
+    border: 1.5px solid var(--cell-color);
     border-radius: 54% 46% 58% 42% / 48% 57% 43% 52%;
-    background: var(--panel-soft);
-    box-shadow: 0 5px 12px rgba(33, 78, 112, 0.1);
+    background: color-mix(in srgb, var(--cell-color) 14%, var(--panel));
+    box-shadow: 0 5px 12px color-mix(in srgb, var(--cell-color) 16%, transparent);
     cursor: default;
     pointer-events: auto;
     touch-action: none;
+}
+
+.user-cell.cell-tone-0 {
+    --cell-color: var(--blue);
+}
+
+.user-cell.cell-tone-1 {
+    --cell-color: color-mix(in srgb, var(--blue) 78%, var(--ink));
+}
+
+.user-cell.cell-tone-2 {
+    --cell-color: color-mix(in srgb, var(--blue) 72%, var(--panel));
+}
+
+.user-cell.cell-tone-3 {
+    --cell-color: var(--code-accent, #168ca8);
+}
+
+.user-cell.cell-tone-4 {
+    --cell-color: color-mix(in srgb, var(--blue) 62%, #536fc4);
+}
+
+.user-cell.cell-tone-5 {
+    --cell-color: color-mix(in srgb, var(--blue) 54%, #75a8ca);
 }
 
 .user-cell:nth-child(3n) {

@@ -36,8 +36,8 @@ const localSubjectCatalog = [
 const reviewMap = {
     deadline: "2026-06-30T09:00:00+08:00",
     release: {
-        version: "题库版本 v1.8.0",
-        note: "本次更新：学习进度跨设备同步；细胞随掌握进度成长，点击地图可召唤自己的细胞。"
+        version: "题库版本 v1.8.1",
+        note: "本次更新：细胞使用不同蓝色并在新位置继续游动；学习数据页显示身份同步码。"
     },
     subjects: localSubjectCatalog.map(subject => ({ ...subject, answeredCount: 0, progress: 0 })),
     users: []
@@ -197,7 +197,7 @@ function renderUserCells() {
     userLayer.innerHTML = reviewMap.users.map((user, index) => {
         const size = Math.round(18 + Math.min(100, Math.max(0, user.progress)) * 0.22);
         return `
-        <button class="user-cell ${user.isCurrentUser ? "is-current-user" : ""}"
+        <button class="user-cell cell-tone-${index % 6} ${user.isCurrentUser ? "is-current-user" : ""}"
             data-user-index="${index}" type="button"
             style="--cell-size:${size}px"
             aria-label="${user.isCurrentUser ? `当前用户，已掌握 ${user.masteredCount} 题` : `复习用户，已掌握 ${user.masteredCount} 题`}"
@@ -244,6 +244,8 @@ function seedMotion() {
             radiusY: 170 + ring * 32 + (index % 4) * 8,
             speed: 0.000055 + (index % 7) * 0.000004,
             direction: index % 2 ? 1 : -1,
+            orbitShiftX: 0,
+            orbitShiftY: 0,
             excursion: null
         };
     });
@@ -340,27 +342,23 @@ function positionUserCells(time, rect, staticOnly = false) {
 
     userState.forEach((state, index) => {
         const angle = state.angleOffset + (reduceMotion || staticOnly ? 0 : time * state.speed * state.direction);
-        state.orbitX = center.x + Math.cos(angle) * Math.min(state.radiusX, rect.width * 0.36);
-        state.orbitY = center.y + Math.sin(angle) * Math.min(state.radiusY, rect.height * 0.30);
+        const baseOrbitX = center.x + Math.cos(angle) * Math.min(state.radiusX, rect.width * 0.36);
+        const baseOrbitY = center.y + Math.sin(angle) * Math.min(state.radiusY, rect.height * 0.30);
+        state.orbitX = baseOrbitX + state.orbitShiftX;
+        state.orbitY = baseOrbitY + state.orbitShiftY;
 
         if (state.excursion) {
             const elapsed = time - state.excursion.startedAt;
-            const outwardDuration = 520;
-            const holdDuration = 360;
-            const returnDuration = 760;
-            if (elapsed < outwardDuration) {
-                const eased = 1 - Math.pow(1 - elapsed / outwardDuration, 3);
+            const travelDuration = state.excursion.duration;
+            if (elapsed < travelDuration) {
+                const eased = 1 - Math.pow(1 - elapsed / travelDuration, 3);
                 state.x = state.excursion.fromX + (state.excursion.targetX - state.excursion.fromX) * eased;
                 state.y = state.excursion.fromY + (state.excursion.targetY - state.excursion.fromY) * eased;
-            } else if (elapsed < outwardDuration + holdDuration) {
-                state.x = state.excursion.targetX;
-                state.y = state.excursion.targetY;
-            } else if (elapsed < outwardDuration + holdDuration + returnDuration) {
-                const returnElapsed = (elapsed - outwardDuration - holdDuration) / returnDuration;
-                const eased = 1 - Math.pow(1 - returnElapsed, 3);
-                state.x = state.excursion.targetX + (state.orbitX - state.excursion.targetX) * eased;
-                state.y = state.excursion.targetY + (state.orbitY - state.excursion.targetY) * eased;
             } else {
+                state.orbitShiftX += state.excursion.targetX - state.orbitX;
+                state.orbitShiftY += state.excursion.targetY - state.orbitY;
+                state.orbitX = state.excursion.targetX;
+                state.orbitY = state.excursion.targetY;
                 state.excursion = null;
                 state.x = state.orbitX;
                 state.y = state.orbitY;
@@ -427,7 +425,11 @@ function summonCurrentCell(event) {
         fromX: state.x,
         fromY: state.y,
         targetX: event.clientX - rect.left,
-        targetY: event.clientY - rect.top
+        targetY: event.clientY - rect.top,
+        duration: Math.max(900, Math.min(1800, Math.hypot(
+            event.clientX - rect.left - state.x,
+            event.clientY - rect.top - state.y
+        ) * 2.1))
     };
     state.x = state.excursion.targetX;
     state.y = state.excursion.targetY;
