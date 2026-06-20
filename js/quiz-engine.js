@@ -5,8 +5,6 @@ const SUBJECTS = {
     se: { name: "软件工程", file: "data/se.json" }
 };
 
-const INVITE_CODE = "050317";
-const ACCESS_KEY = "effort_site_invite_session";
 const typeNames = { single: "单选题", multiple: "多选题", judge: "判断题", blank: "填空题", short: "简答题" };
 
 const appState = {
@@ -21,33 +19,19 @@ const appState = {
 };
 
 function initInviteGate() {
-    const input = document.getElementById("inviteInput");
     const syncInput = document.getElementById("syncInput");
     const button = document.getElementById("inviteBtn");
     const error = document.getElementById("inviteError");
-    if (!input || !syncInput || !button) return Promise.resolve();
+    if (!syncInput || !button) return Promise.resolve();
     const originalButtonText = button.textContent;
 
-    const navigation = performance.getEntriesByType("navigation")[0];
-    if (navigation && navigation.type === "reload") {
-        sessionStorage.removeItem(ACCESS_KEY);
-    }
-
     return new Promise(resolve => {
-        function unlock(rememberForNavigation = false) {
+        function unlock() {
             document.body.classList.remove("locked");
-            if (rememberForNavigation) {
-                sessionStorage.setItem(ACCESS_KEY, "1");
-            }
             resolve();
         }
 
         async function checkCode() {
-            if (input.value.trim() !== INVITE_CODE) {
-                error.textContent = "邀请码不对，再检查一下。";
-                input.select();
-                return;
-            }
             if (syncInput.value.trim().length < 4) {
                 error.textContent = "请输入至少 4 位学习同步码。";
                 syncInput.focus();
@@ -59,7 +43,7 @@ function initInviteGate() {
             error.textContent = "";
             try {
                 await window.quizAnalytics.setSyncIdentity(syncInput.value);
-                unlock(true);
+                unlock();
             } catch (syncError) {
                 console.warn("同步身份设置失败：", syncError);
                 error.textContent = "同步服务暂不可用，请确认已运行最新版数据库脚本。";
@@ -69,16 +53,16 @@ function initInviteGate() {
             }
         }
 
-        if (sessionStorage.getItem(ACCESS_KEY) === "1" && window.quizAnalytics?.hasSyncIdentity()) {
+        if (window.quizAnalytics?.hasSyncIdentity()) {
             unlock();
             return;
         }
 
-        input.focus();
+        syncInput.focus();
         button.addEventListener("click", checkCode);
-        [input, syncInput].forEach(field => field.addEventListener("keydown", event => {
+        syncInput.addEventListener("keydown", event => {
             if (event.key === "Enter") checkCode();
-        }));
+        });
     });
 }
 
@@ -174,7 +158,7 @@ function inferType(item) {
 
 function renderSubjectShell() {
     const title = appState.data.title || SUBJECTS[appState.subject].name;
-    document.title = `努力抱佛脚 - ${title}`;
+    document.title = `cella - ${title}`;
     document.getElementById("subjectTitle").textContent = title;
     document.getElementById("subjectSubtitle").textContent = appState.data.subtitle || "通用刷题页面";
     setOptionalNav("review", (appState.data.reviews || []).length > 0);
@@ -554,7 +538,7 @@ function renderLoadError(error) {
 }
 
 function placeholderHtml(text) {
-    return `<div class="placeholder-page"><div><h2>努力抱佛脚</h2><p>${escapeHtml(text)}</p></div></div>`;
+    return `<div class="placeholder-page"><div><h2 class="brand-script">cella</h2><p>${escapeHtml(text)}</p></div></div>`;
 }
 
 function normalize(value) {

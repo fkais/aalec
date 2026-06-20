@@ -6,21 +6,17 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>努力抱佛脚 - 学习数据</title>
+    <title>cella - 学习数据</title>
     <link rel="icon" href="data:,">
-    <link rel="stylesheet" href="css/style.css?v=1.8.1">
+    <link rel="stylesheet" href="css/style.css?v=2.0.0">
 </head>
 <body class="locked" data-page="dashboard">
     <section id="accessGate" class="access-gate">
         <div class="access-card">
-            <p class="access-kicker">努力抱佛脚</p>
-            <h1>请输入邀请码</h1>
-            <p>通过验证后查看匿名学习数据。</p>
+            <p class="access-kicker brand-script">cella</p>
+            <h1>同步学习进度</h1>
+            <p>输入学习同步码，查看同一身份下的匿名学习数据。</p>
             <label class="access-input">
-                <span>邀请码</span>
-                <input id="inviteInput" type="password" inputmode="numeric" autocomplete="off" placeholder="请输入邀请码">
-            </label>
-            <label class="access-input access-sync-input">
                 <span>学习同步码</span>
                 <input id="syncInput" type="password" autocomplete="off" placeholder="不同设备输入同一个同步码">
             </label>
@@ -30,7 +26,7 @@
     </section>
 
     <header class="dashboard-header">
-        <a class="back-link home-return" href="./index.html?v=1.8.1">返回主页</a>
+        <a class="back-link home-return" href="./index.html?v=2.0.0">返回主页</a>
         <div>
             <p class="eyebrow">匿名学习数据</p>
             <h1>学习数据中心</h1>
@@ -48,18 +44,6 @@
     </header>
 
     <main class="dashboard-shell">
-        <section class="identity-strip">
-            <div>
-                <span>我的匿名编号</span>
-                <strong id="anonymousId">生成中...</strong>
-            </div>
-            <div>
-                <span>身份同步码</span>
-                <strong id="identitySyncCode">未设置</strong>
-            </div>
-            <p>编号只保存在当前浏览器，不关联姓名、邀请码或作答内容。</p>
-        </section>
-
         <section id="dashboardLoading" class="dashboard-message">正在读取统计数据...</section>
         <section id="dashboardError" class="dashboard-message dashboard-error" hidden></section>
 
@@ -69,17 +53,6 @@
                 <article><span>参与人数</span><strong id="participantCount">0</strong></article>
                 <article><span>掌握题数</span><strong id="correctQuestions">0</strong></article>
                 <article><span>个人正确率</span><strong id="ownAccuracy">0%</strong></article>
-            </section>
-
-            <section class="dashboard-band">
-                <div class="dashboard-section-head">
-                    <div>
-                        <p class="eyebrow">题型表现</p>
-                        <h2>正确率玫瑰图</h2>
-                    </div>
-                    <span>花瓣越长，正确率越高</span>
-                </div>
-                <div id="roseChart" class="rose-chart" role="img" aria-label="各题型正确率南丁格尔玫瑰图"></div>
             </section>
 
             <section class="dashboard-band">
@@ -108,9 +81,8 @@
         </div>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
-    <script src="js/analytics.js?v=1.8.1"></script>
-    <script src="js/quiz-engine.js?v=1.8.1"></script>
-    <script src="js/dashboard.js?v=1.8.1"></script>
+    <script src="js/analytics.js?v=2.0.0"></script>
+    <script src="js/quiz-engine.js?v=2.0.0"></script>
+    <script src="js/dashboard.js?v=2.0.0"></script>
 </body>
 </html>

@@ -123,6 +123,19 @@ async function getReviewUsers() {
     });
 }
 
+async function getCellPreference() {
+    return callRpc("get_review_cell_preference", {
+        p_visitor_id: getAnonymousVisitorId()
+    });
+}
+
+async function setCellPreference(colorId) {
+    return callRpc("set_review_cell_preference", {
+        p_visitor_id: getAnonymousVisitorId(),
+        p_color_id: colorId
+    });
+}
+
 async function getSubjectState(subject) {
     return callRpc("get_subject_state", {
         p_visitor_id: getAnonymousVisitorId(),
@@ -147,6 +160,8 @@ window.quizAnalytics = {
     registerReviewUser,
     getReviewSubjects,
     getReviewUsers,
+    getCellPreference,
+    setCellPreference,
     getSubjectState,
     resetSubjectProgress
 };

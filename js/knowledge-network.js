@@ -34,10 +34,9 @@ const localSubjectCatalog = [
 ];
 
 const reviewMap = {
-    deadline: "2026-06-30T09:00:00+08:00",
     release: {
-        version: "题库版本 v1.8.1",
-        note: "本次更新：细胞使用不同蓝色并在新位置继续游动；学习数据页显示身份同步码。"
+        version: "题库版本 v2.0.0",
+        note: "新增科目联动进度、总体学习细胞、个人细胞配色与匿名排名。"
     },
     subjects: localSubjectCatalog.map(subject => ({ ...subject, answeredCount: 0, progress: 0 })),
     users: []
@@ -46,20 +45,40 @@ const reviewMap = {
 const network = document.getElementById("knowledgeNetwork");
 const lineLayer = document.getElementById("networkLines");
 const subjectLayer = document.getElementById("subjectNodes");
-const userLayer = document.getElementById("userCells");
 const typeLayer = document.getElementById("typeNodes");
 const centerNode = document.querySelector('[data-node="center"]');
 const dataState = document.getElementById("networkDataState");
 const dataMessage = document.getElementById("networkDataMessage");
 const retryButton = document.getElementById("networkRetryBtn");
+const profileCellButton = document.getElementById("profileCellBtn");
+const profileCellPanel = document.getElementById("profileCellPanel");
+const beakerCells = document.getElementById("beakerCells");
+const overallProgressCells = document.getElementById("overallProgressCells");
+const libraryUpdateCard = document.getElementById("libraryUpdateCard");
+const libraryUpdateToggle = document.getElementById("libraryUpdateToggle");
 const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+const cellPalette = [
+    { id: "slate", name: "雾蓝", color: "#7594a3", fill: "#c9d7dc" },
+    { id: "ink", name: "深海", color: "#536f80", fill: "#b8c9d0" },
+    { id: "cloud", name: "云灰", color: "#8ca1aa", fill: "#d5dee1" },
+    { id: "lavender", name: "灰紫", color: "#777d9a", fill: "#c9cad8" },
+    { id: "clay", name: "陶蓝", color: "#6f8794", fill: "#c1d0d5" },
+    { id: "denim", name: "靛灰", color: "#5e788e", fill: "#bdcbd5" },
+    { id: "sage", name: "鼠尾草", color: "#778d84", fill: "#c9d5cf" },
+    { id: "mauve", name: "灰粉", color: "#927d87", fill: "#d9cbd1" },
+    { id: "sand", name: "沙灰", color: "#948b7d", fill: "#d9d3c8" },
+    { id: "plum", name: "灰梅", color: "#7f7184", fill: "#d0c7d2" },
+    { id: "steel", name: "钢蓝", color: "#617f87", fill: "#bfd0d3" },
+    { id: "mist", name: "浅雾", color: "#9aa7a9", fill: "#dde3e2" }
+];
 
 let subjectNodes = [];
-let userCells = [];
 let activeSubject = null;
 let frameId = null;
 let layoutState = [];
-let userState = [];
+let currentCellColorId = cellPalette[0].id;
+let progressSubjectId = "all";
+let libraryUpdateTimer = null;
 
 function localAnsweredCount(subjectId) {
     try {
@@ -143,12 +162,19 @@ async function loadNetworkData() {
 
     try {
         await window.quizAnalytics.registerReviewUser();
-        const [subjects, users] = await Promise.all([
+        const [subjects, users, cellPreference] = await Promise.all([
             window.quizAnalytics.getReviewSubjects(),
-            window.quizAnalytics.getReviewUsers()
+            window.quizAnalytics.getReviewUsers(),
+            window.quizAnalytics.getCellPreference().catch(error => {
+                console.warn("细胞颜色同步接口暂不可用：", error);
+                return { color_id: cellPalette[0].id };
+            })
         ]);
         reviewMap.subjects = normalizeSubjects(subjects);
         reviewMap.users = normalizeUsers(users);
+        if (cellPalette.some(color => color.id === cellPreference?.color_id)) {
+            currentCellColorId = cellPreference.color_id;
+        }
         if (!reviewMap.users.some(user => user.isCurrentUser)) {
             reviewMap.users.push(...currentUserFallback());
         }
@@ -165,7 +191,9 @@ async function loadNetworkData() {
 
 function renderDataLayers() {
     renderSubjectNodes();
-    renderUserCells();
+    renderBeakerCells();
+    renderOverallProgress();
+    renderProfileData();
     seedMotion();
     placeStaticLayout();
     restartAnimation();
@@ -179,12 +207,7 @@ function renderSubjectNodes() {
                 data-node="${subject.id}" data-subject="${subject.id}" type="button"
                 ${reserved ? 'aria-label="' + subject.name + '，题库预留"' : 'aria-label="' + subject.name + '，' + subject.questionCount + '题，已完成' + subject.progress + '%"'}>
                 <span>${subject.name}</span>
-                <small>${reserved ? "题库预留" : `${subject.questionCount} 题 · 已刷 ${subject.answeredCount}`}</small>
-                ${reserved ? "" : `
-                    <span class="node-progress" aria-hidden="true">
-                        <i style="width:${subject.progress}%"></i>
-                    </span>
-                `}
+                <small>${reserved ? "题库预留" : `${subject.questionCount} 题`}</small>
             </button>
         `;
     }).join("");
@@ -193,19 +216,188 @@ function renderSubjectNodes() {
     subjectNodes.forEach(node => node.addEventListener("click", () => openSubject(node.dataset.subject)));
 }
 
-function renderUserCells() {
-    userLayer.innerHTML = reviewMap.users.map((user, index) => {
-        const size = Math.round(18 + Math.min(100, Math.max(0, user.progress)) * 0.22);
-        return `
-        <button class="user-cell cell-tone-${index % 6} ${user.isCurrentUser ? "is-current-user" : ""}"
-            data-user-index="${index}" type="button"
-            style="--cell-size:${size}px"
-            aria-label="${user.isCurrentUser ? `当前用户，已掌握 ${user.masteredCount} 题` : `复习用户，已掌握 ${user.masteredCount} 题`}"
-            tabindex="-1">
-        </button>
-    `;
+function shortAnonymousId(visitorId) {
+    return `A-${String(visitorId || "").replace(/[^a-zA-Z0-9]/g, "").slice(0, 8).toUpperCase()}`;
+}
+
+function getCurrentCellColor() {
+    return cellPalette.find(item => item.id === currentCellColorId) || cellPalette[0];
+}
+
+function currentCellStyle() {
+    const color = getCurrentCellColor();
+    return `;--cell-color:${color.color};--cell-fill:${color.fill}`;
+}
+
+function renderBeakerCells() {
+    if (!beakerCells) return;
+    const users = [...reviewMap.users]
+        .sort((a, b) => b.progress - a.progress)
+        .slice(0, 16);
+    beakerCells.innerHTML = users.map((user, index) => {
+        const size = Math.round(15 + Math.min(100, Math.max(0, user.progress)) * 0.16);
+        const column = index % 5;
+        const row = Math.floor(index / 5);
+        const left = 14 + column * 18 + (row % 2) * 5;
+        const bottom = 8 + row * 18;
+        return `<span class="beaker-cell cell-tone-${index % 6} ${user.isCurrentUser ? "is-current-user" : ""}"
+            style="--beaker-cell-size:${size}px;left:${left}%;bottom:${bottom}px${user.isCurrentUser ? currentCellStyle() : ""}"></span>`;
     }).join("");
-    userCells = Array.from(userLayer.querySelectorAll(".user-cell"));
+}
+
+function progressData(subjectId = "all") {
+    const readySubjects = reviewMap.subjects.filter(subject => subject.status === "ready");
+    const selected = subjectId === "all"
+        ? readySubjects
+        : readySubjects.filter(subject => subject.id === subjectId);
+    const answered = selected.reduce((sum, subject) => sum + subject.answeredCount, 0);
+    const total = selected.reduce((sum, subject) => sum + subject.questionCount, 0);
+    const percent = total ? Math.round(answered / total * 100) : 0;
+    const label = subjectId === "all"
+        ? "总览"
+        : readySubjects.find(subject => subject.id === subjectId)?.name || "总览";
+    return { answered, total, percent, label };
+}
+
+function renderOverallProgress() {
+    if (!overallProgressCells) return;
+    const { answered, total, percent, label } = progressData(progressSubjectId);
+    document.getElementById("overallProgressLabel").textContent = label;
+    document.getElementById("overallProgressCount").textContent = `${answered} / ${total}`;
+    document.getElementById("overallProgressPercent").textContent = `${percent}%`;
+
+    const dotCount = Math.min(180, Math.max(72, total));
+    const filledCount = total ? Math.round(answered / total * dotCount) : 0;
+    overallProgressCells.innerHTML = Array.from({ length: dotCount }, (_, index) => `
+        <span class="${index < filledCount ? "is-filled" : ""}"
+            style="--dot-delay:${(index % 9) * -0.17}s;--dot-tone:${index % 4}"></span>
+    `).join("");
+}
+
+function setProgressSubject(subjectId) {
+    progressSubjectId = subjectId;
+    renderOverallProgress();
+}
+
+function setLibraryUpdateOpen(open) {
+    libraryUpdateCard.classList.toggle("is-open", open);
+    libraryUpdateToggle.setAttribute("aria-expanded", String(open));
+    if (libraryUpdateTimer) clearTimeout(libraryUpdateTimer);
+    if (open) {
+        libraryUpdateTimer = setTimeout(() => setLibraryUpdateOpen(false), 4500);
+    }
+}
+
+function initLibraryUpdate() {
+    libraryUpdateToggle.addEventListener("click", () => {
+        setLibraryUpdateOpen(!libraryUpdateCard.classList.contains("is-open"));
+    });
+    setLibraryUpdateOpen(true);
+}
+
+function renderProfileData() {
+    const visitorId = window.quizAnalytics?.getVisitorId() || "local-user";
+    document.getElementById("profileAnonymousId").textContent = shortAnonymousId(visitorId);
+    document.getElementById("profileSyncCode").textContent = window.quizAnalytics?.getSyncCode() || "未设置";
+
+    const selectedColor = getCurrentCellColor();
+    document.getElementById("cellColorOptions").innerHTML = cellPalette.map(color => `
+        <button class="cell-color-option ${color.id === selectedColor.id ? "is-selected" : ""}"
+            type="button" data-cell-color="${color.id}" aria-label="${color.name}"
+            aria-pressed="${color.id === selectedColor.id}"
+            style="--option-color:${color.color};--option-fill:${color.fill}">
+            <span aria-hidden="true"></span>
+        </button>
+    `).join("");
+
+    const rankedUsers = [...reviewMap.users]
+        .sort((a, b) => b.masteredCount - a.masteredCount || b.answeredCount - a.answeredCount);
+    const rankingList = document.getElementById("profileRankingList");
+    rankingList.innerHTML = rankedUsers.length ? rankedUsers.slice(0, 8).map((user, index) => `
+        <li class="${user.isCurrentUser ? "is-current-user" : ""}">
+            <span class="ranking-position">${index + 1}</span>
+            <span>${user.isCurrentUser ? "我" : shortAnonymousId(user.id)}</span>
+            <strong>${user.masteredCount} 题</strong>
+        </li>
+    `).join("") : "<li class=\"ranking-empty\">暂无排名数据</li>";
+}
+
+async function applyCurrentCellColor(colorId, trigger) {
+    const color = cellPalette.find(item => item.id === colorId);
+    if (!color) return;
+    const previousColorId = currentCellColorId;
+    currentCellColorId = color.id;
+    document.querySelectorAll(".beaker-cell.is-current-user, .profile-cell-btn")
+        .forEach(node => {
+            node.style.setProperty("--cell-color", color.color);
+            node.style.setProperty("--cell-fill", color.fill);
+        });
+    document.querySelectorAll(".cell-color-option").forEach(option => {
+        const selected = option.dataset.cellColor === color.id;
+        option.classList.toggle("is-selected", selected);
+        option.setAttribute("aria-pressed", String(selected));
+    });
+
+    if (trigger) trigger.disabled = true;
+    try {
+        await window.quizAnalytics.setCellPreference(color.id);
+    } catch (error) {
+        console.warn("细胞颜色同步失败：", error);
+        currentCellColorId = previousColorId;
+        const previous = getCurrentCellColor();
+        document.querySelectorAll(".beaker-cell.is-current-user, .profile-cell-btn")
+            .forEach(node => {
+                node.style.setProperty("--cell-color", previous.color);
+                node.style.setProperty("--cell-fill", previous.fill);
+            });
+        renderProfileData();
+        alert("颜色同步失败，请先在 Supabase 执行 cell-preferences-migration.sql。");
+    } finally {
+        if (trigger) trigger.disabled = false;
+    }
+}
+
+function setProfileTab(tabName) {
+    document.querySelectorAll("[data-profile-tab]").forEach(tab => {
+        const active = tab.dataset.profileTab === tabName;
+        tab.classList.toggle("is-active", active);
+        tab.setAttribute("aria-selected", String(active));
+    });
+    document.querySelectorAll("[data-profile-panel]").forEach(panel => {
+        const active = panel.dataset.profilePanel === tabName;
+        panel.classList.toggle("is-active", active);
+        panel.hidden = !active;
+    });
+}
+
+function closeProfilePanel() {
+    profileCellPanel.hidden = true;
+    profileCellButton.setAttribute("aria-expanded", "false");
+}
+
+function initProfileCellMenu() {
+    const color = getCurrentCellColor();
+    profileCellButton.style.setProperty("--cell-color", color.color);
+    profileCellButton.style.setProperty("--cell-fill", color.fill);
+
+    profileCellButton.addEventListener("click", event => {
+        event.stopPropagation();
+        const opening = profileCellPanel.hidden;
+        profileCellPanel.hidden = !opening;
+        profileCellButton.setAttribute("aria-expanded", String(opening));
+        if (opening) renderProfileData();
+    });
+    profileCellPanel.addEventListener("click", event => {
+        event.stopPropagation();
+        const tab = event.target.closest("[data-profile-tab]");
+        if (tab) setProfileTab(tab.dataset.profileTab);
+        const colorOption = event.target.closest("[data-cell-color]");
+        if (colorOption) applyCurrentCellColor(colorOption.dataset.cellColor, colorOption);
+    });
+    document.addEventListener("click", closeProfilePanel);
+    document.addEventListener("keydown", event => {
+        if (event.key === "Escape") closeProfilePanel();
+    });
 }
 
 function seedMotion() {
@@ -229,26 +421,6 @@ function seedMotion() {
         };
     });
 
-    userState = userCells.map((node, index) => {
-        const user = reviewMap.users[index];
-        const ring = Math.floor(index / 10);
-        return {
-            node,
-            user,
-            x: 0,
-            y: 0,
-            orbitX: 0,
-            orbitY: 0,
-            angleOffset: index * 2.39996,
-            radiusX: 250 + ring * 46 + (index % 3) * 12,
-            radiusY: 170 + ring * 32 + (index % 4) * 8,
-            speed: 0.000055 + (index % 7) * 0.000004,
-            direction: index % 2 ? 1 : -1,
-            orbitShiftX: 0,
-            orbitShiftY: 0,
-            excursion: null
-        };
-    });
 }
 
 function openSubject(subjectId) {
@@ -261,18 +433,12 @@ function openSubject(subjectId) {
     }
 
     activeSubject = subjectId;
+    setProgressSubject(subjectId);
     subjectNodes.forEach(node => node.classList.toggle("is-active", node.dataset.subject === subjectId));
-    typeLayer.innerHTML = subject.types.map(([type, label]) =>
-        `<a class="type-node" href="quiz.html?subject=${subjectId}&type=${type}">${label}</a>`
+    typeLayer.innerHTML = subject.types.map(([type, label], index) =>
+        `<a class="type-node type-shape-${index % 5}" href="quiz.html?subject=${subjectId}&type=${type}"
+            style="--type-phase:${index * 1.2}">${label}</a>`
     ).join("");
-}
-
-function updateCountdown() {
-    const target = new Date(reviewMap.deadline).getTime();
-    const days = Math.max(0, Math.ceil((target - Date.now()) / 86400000));
-    const countdown = document.getElementById("examCountdown");
-    countdown.textContent = days ? `期末周倒计时 ${days} 天` : "期末周进行中";
-    countdown.setAttribute("datetime", reviewMap.deadline);
 }
 
 function placeStaticLayout() {
@@ -284,7 +450,6 @@ function placeStaticLayout() {
         state.node.style.top = `${state.y}px`;
     });
     resolveNodeCollisions(rect);
-    positionUserCells(0, rect, true);
     positionTypeNodes(rect);
     drawLines(rect);
 }
@@ -292,7 +457,7 @@ function placeStaticLayout() {
 function resolveNodeCollisions(rect) {
     const padding = rect.width < 720 ? 8 : 18;
     const topSafe = rect.width < 720 ? 100 : 112;
-    const bottomSafe = rect.width < 720 ? 94 : 82;
+    const bottomSafe = rect.width < 720 ? 188 : 190;
 
     for (let pass = 0; pass < 4; pass += 1) {
         for (let i = 0; i < layoutState.length; i += 1) {
@@ -334,120 +499,6 @@ function separateRectangles(a, b, aw, ah, bw, bh) {
         a.y -= push * direction;
         b.y += push * direction;
     }
-}
-
-function positionUserCells(time, rect, staticOnly = false) {
-    const center = layoutState[0] || { x: rect.width / 2, y: rect.height / 2 };
-    const reduceMotion = reducedMotionQuery.matches;
-
-    userState.forEach((state, index) => {
-        const angle = state.angleOffset + (reduceMotion || staticOnly ? 0 : time * state.speed * state.direction);
-        const baseOrbitX = center.x + Math.cos(angle) * Math.min(state.radiusX, rect.width * 0.36);
-        const baseOrbitY = center.y + Math.sin(angle) * Math.min(state.radiusY, rect.height * 0.30);
-        state.orbitX = baseOrbitX + state.orbitShiftX;
-        state.orbitY = baseOrbitY + state.orbitShiftY;
-
-        if (state.excursion) {
-            const elapsed = time - state.excursion.startedAt;
-            const travelDuration = state.excursion.duration;
-            if (elapsed < travelDuration) {
-                const eased = 1 - Math.pow(1 - elapsed / travelDuration, 3);
-                state.x = state.excursion.fromX + (state.excursion.targetX - state.excursion.fromX) * eased;
-                state.y = state.excursion.fromY + (state.excursion.targetY - state.excursion.fromY) * eased;
-            } else {
-                state.orbitShiftX += state.excursion.targetX - state.orbitX;
-                state.orbitShiftY += state.excursion.targetY - state.orbitY;
-                state.orbitX = state.excursion.targetX;
-                state.orbitY = state.excursion.targetY;
-                state.excursion = null;
-                state.x = state.orbitX;
-                state.y = state.orbitY;
-            }
-        } else {
-            state.x = state.orbitX;
-            state.y = state.orbitY;
-        }
-
-        constrainCell(state, rect);
-        avoidObstacles(state, index);
-        state.node.style.left = `${state.x}px`;
-        state.node.style.top = `${state.y}px`;
-    });
-}
-
-function constrainCell(state, rect) {
-    const radius = state.node.offsetWidth / 2 + 4;
-    state.x = Math.max(radius, Math.min(rect.width - radius, state.x));
-    state.y = Math.max(96 + radius, Math.min(rect.height - 72 - radius, state.y));
-}
-
-function avoidObstacles(state, ownIndex) {
-    const cellRadius = state.node.offsetWidth / 2 + 7;
-
-    layoutState.forEach(nodeState => {
-        const rx = nodeState.node.offsetWidth / 2 + cellRadius;
-        const ry = nodeState.node.offsetHeight / 2 + cellRadius;
-        const dx = state.x - nodeState.x;
-        const dy = state.y - nodeState.y;
-        const normalized = (dx * dx) / (rx * rx) + (dy * dy) / (ry * ry);
-        if (normalized >= 1) return;
-
-        const angle = Math.atan2(dy || ownIndex + 1, dx || ownIndex + 1);
-        const scale = 1 / Math.sqrt(Math.max(normalized, 0.0001));
-        state.x = nodeState.x + dx * scale + Math.cos(angle) * 2;
-        state.y = nodeState.y + dy * scale + Math.sin(angle) * 2;
-    });
-
-    for (let index = 0; index < userState.length; index += 1) {
-        if (index === ownIndex) continue;
-        const other = userState[index];
-        if (!Number.isFinite(other.x) || !Number.isFinite(other.y)) continue;
-        const minDistance = cellRadius + other.node.offsetWidth / 2 + 5;
-        const dx = state.x - other.x;
-        const dy = state.y - other.y;
-        const distance = Math.hypot(dx, dy);
-        if (distance >= minDistance) continue;
-        const angle = distance ? Math.atan2(dy, dx) : ownIndex * 1.7;
-        state.x = other.x + Math.cos(angle) * minDistance;
-        state.y = other.y + Math.sin(angle) * minDistance;
-    }
-}
-
-function summonCurrentCell(event) {
-    if (event.target.closest("button, a, input, .library-update, .network-data-state")) return;
-    const currentIndex = reviewMap.users.findIndex(user => user.isCurrentUser);
-    const state = userState[currentIndex];
-    if (!state) return;
-
-    const rect = network.getBoundingClientRect();
-    state.excursion = {
-        startedAt: performance.now(),
-        fromX: state.x,
-        fromY: state.y,
-        targetX: event.clientX - rect.left,
-        targetY: event.clientY - rect.top,
-        duration: Math.max(900, Math.min(1800, Math.hypot(
-            event.clientX - rect.left - state.x,
-            event.clientY - rect.top - state.y
-        ) * 2.1))
-    };
-    state.x = state.excursion.targetX;
-    state.y = state.excursion.targetY;
-    constrainCell(state, rect);
-    avoidObstacles(state, currentIndex);
-    state.excursion.targetX = state.x;
-    state.excursion.targetY = state.y;
-    createRipple(event.clientX - rect.left, event.clientY - rect.top);
-    restartAnimation();
-}
-
-function createRipple(x, y) {
-    const ripple = document.createElement("span");
-    ripple.className = "map-ripple";
-    ripple.style.left = `${x}px`;
-    ripple.style.top = `${y}px`;
-    network.appendChild(ripple);
-    ripple.addEventListener("animationend", () => ripple.remove(), { once: true });
 }
 
 function ellipseEdge(from, to, node) {
@@ -508,8 +559,11 @@ function positionTypeNodes(rect) {
 
     nodes.forEach((node, index) => {
         const angle = startAngle + (nodes.length === 1 ? 0 : index * span / (nodes.length - 1));
-        node.style.left = `${subjectState.x + Math.cos(angle) * radius}px`;
-        node.style.top = `${subjectState.y + Math.sin(angle) * radius}px`;
+        const time = performance.now();
+        const driftX = reducedMotionQuery.matches ? 0 : Math.sin(time * 0.00072 + index * 1.27) * 7;
+        const driftY = reducedMotionQuery.matches ? 0 : Math.cos(time * 0.00061 + index * 0.94) * 6;
+        node.style.left = `${subjectState.x + Math.cos(angle) * radius + driftX}px`;
+        node.style.top = `${subjectState.y + Math.sin(angle) * radius + driftY}px`;
     });
 }
 
@@ -525,12 +579,9 @@ function animate(time) {
     });
 
     resolveNodeCollisions(rect);
-    positionUserCells(time, rect);
     positionTypeNodes(rect);
     drawLines(rect);
-    frameId = reduceMotion && !userState.some(state => state.excursion)
-        ? null
-        : requestAnimationFrame(animate);
+    frameId = reduceMotion ? null : requestAnimationFrame(animate);
 }
 
 function restartAnimation() {
@@ -541,13 +592,14 @@ function restartAnimation() {
 
 centerNode.addEventListener("click", () => {
     activeSubject = null;
+    setProgressSubject("all");
     typeLayer.innerHTML = "";
     subjectNodes.forEach(node => node.classList.remove("is-active"));
 });
 retryButton.addEventListener("click", loadNetworkData);
-network.addEventListener("pointerdown", summonCurrentCell);
 
-updateCountdown();
+initProfileCellMenu();
+initLibraryUpdate();
 document.getElementById("libraryVersion").textContent = reviewMap.release.version;
 document.getElementById("libraryUpdate").textContent = reviewMap.release.note;
 renderDataLayers();
