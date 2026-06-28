@@ -6,25 +6,26 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>努力抱佛脚</title>
+    <title>cella</title>
     <link rel="icon" href="data:,">
-    <link rel="stylesheet" href="css/style.css?v=1.8.1">
+    <link rel="stylesheet" href="css/style.css?v=2.0.0">
 </head>
 <body class="locked home-network-page" data-page="home">
     <section id="accessGate" class="access-gate">
         <div class="access-card">
-            <p class="access-kicker">努力抱佛脚</p>
-            <h1>请输入邀请码</h1>
-            <p>通过验证后进入期末复习知识网络。</p>
+            <p class="access-kicker brand-script">cella</p>
+            <h1>唤醒你的知识生命</h1>
+            <p>每一次练习，都会被 Cella 记住。你可以先进入演示，看看它如何陪你一起生长。</p>
+            <button id="demoBtn" class="access-btn demo-btn" type="button">
+                <span>进入陪伴演示</span>
+                <small>无需同步码，约 30 秒看懂核心体验</small>
+            </button>
+            <div class="access-divider"><span>或继续自己的 Cella</span></div>
             <label class="access-input">
-                <span>邀请码</span>
-                <input id="inviteInput" type="password" inputmode="numeric" autocomplete="off" placeholder="请输入邀请码">
-            </label>
-            <label class="access-input access-sync-input">
                 <span>学习同步码</span>
                 <input id="syncInput" type="password" autocomplete="off" placeholder="不同设备输入同一个同步码">
             </label>
-            <button id="inviteBtn" class="access-btn">进入复习</button>
+            <button id="inviteBtn" class="access-btn access-btn-quiet">继续生长</button>
             <p id="inviteError" class="access-error" role="alert"></p>
         </div>
     </section>
@@ -32,38 +33,100 @@
     <main class="knowledge-network" id="knowledgeNetwork">
         <header class="network-brand">
             <div>
-                <p>努力抱佛脚</p>
+                <p class="brand-script">cella</p>
             </div>
             <div class="network-actions">
-                <time id="examCountdown" class="exam-countdown"></time>
-                <a href="dashboard.html">学习数据</a>
+                <button id="profileCellBtn" class="profile-cell-btn" type="button"
+                    aria-label="打开我的细胞" aria-expanded="false" aria-controls="profileCellPanel">
+                    <span class="profile-cell-core" aria-hidden="true"></span>
+                </button>
+                <section id="profileCellPanel" class="profile-cell-panel" hidden>
+                    <div class="profile-tabs" role="tablist" aria-label="用户信息">
+                        <button class="profile-tab is-active" type="button" role="tab"
+                            aria-selected="true" data-profile-tab="mine">我的</button>
+                        <button class="profile-tab" type="button" role="tab"
+                            aria-selected="false" data-profile-tab="ranking">排名</button>
+                    </div>
+
+                    <div class="profile-tab-panel is-active" data-profile-panel="mine">
+                        <dl class="profile-identity">
+                            <div>
+                                <dt>我的匿名编号</dt>
+                                <dd id="profileAnonymousId">生成中...</dd>
+                            </div>
+                            <div>
+                                <dt>我的身份同步码</dt>
+                                <dd id="profileSyncCode">未设置</dd>
+                            </div>
+                        </dl>
+                        <fieldset class="cell-color-picker">
+                            <legend>我的细胞颜色</legend>
+                            <div id="cellColorOptions" class="cell-color-options"></div>
+                        </fieldset>
+                    </div>
+
+                    <div class="profile-tab-panel" data-profile-panel="ranking" hidden>
+                        <ol id="profileRankingList" class="profile-ranking-list"></ol>
+                        <a class="profile-data-link" href="dashboard.html">查看完整学习数据</a>
+                    </div>
+                </section>
             </div>
         </header>
 
         <svg id="networkLines" class="network-lines" aria-hidden="true"></svg>
 
         <button class="study-node central-node" data-node="center" type="button">
-            <span>期末复习</span>
+            <span>Cella</span>
+            <small>你的知识生命</small>
         </button>
 
         <div id="subjectNodes" class="subject-node-layer"></div>
-        <div id="userCells" class="user-cell-layer" aria-label="复习用户"></div>
 
         <div id="typeNodes" class="type-node-layer" aria-live="polite"></div>
+
+        <aside class="overall-progress" aria-label="总体学习进度">
+            <div class="progress-beaker" aria-label="学习进度细胞烧杯">
+                <span class="beaker-rim" aria-hidden="true"></span>
+                <div id="beakerCells" class="beaker-cells" aria-hidden="true"></div>
+                <span class="beaker-liquid" aria-hidden="true"></span>
+                <span class="beaker-mark beaker-mark-one" aria-hidden="true"></span>
+                <span class="beaker-mark beaker-mark-two" aria-hidden="true"></span>
+            </div>
+            <div class="overall-progress-body">
+                <p class="overall-progress-summary">
+                    <strong id="overallProgressLabel">共同生长</strong>
+                    <span id="overallProgressCount">0 / 348</span>
+                    <span id="overallProgressPercent">0%</span>
+                </p>
+                <p id="habitatMessage" class="habitat-message">培养皿正在苏醒…</p>
+                <div id="overallProgressCells" class="overall-progress-cells" aria-hidden="true"></div>
+            </div>
+        </aside>
+
+        <aside class="cella-manifesto" aria-label="Cella 作品概念">
+            <span class="manifesto-mark" aria-hidden="true"></span>
+            <p><strong>学习不只是数字。</strong>它会呼吸、修复，也会在陪伴里慢慢长大。</p>
+        </aside>
 
         <div id="networkDataState" class="network-data-state" role="status" aria-live="polite" hidden>
             <span id="networkDataMessage"></span>
             <button id="networkRetryBtn" type="button" hidden>重试</button>
         </div>
 
-        <aside class="library-update" aria-label="题库更新记录">
-            <span id="libraryVersion"></span>
-            <p id="libraryUpdate"></p>
+        <aside id="libraryUpdateCard" class="library-update is-open" aria-label="题库更新记录">
+            <button id="libraryUpdateToggle" class="library-update-toggle" type="button" aria-expanded="true">
+                <span class="library-update-dot" aria-hidden="true"></span>
+                <span class="library-update-label">新</span>
+            </button>
+            <div class="library-update-content">
+                <span id="libraryVersion"></span>
+                <p id="libraryUpdate"></p>
+            </div>
         </aside>
     </main>
 
-    <script src="js/analytics.js?v=1.8.1"></script>
-    <script src="js/quiz-engine.js?v=1.8.1"></script>
-    <script src="js/knowledge-network.js?v=1.8.1"></script>
+    <script src="js/analytics.js?v=2.0.0"></script>
+    <script src="js/quiz-engine.js?v=2.0.0"></script>
+    <script src="js/knowledge-network.js?v=2.0.0"></script>
 </body>
 </html>

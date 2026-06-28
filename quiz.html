@@ -6,46 +6,47 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>努力抱佛脚 - 刷题</title>
+    <title>cella - 刷题</title>
     <link rel="icon" href="data:,">
-    <link rel="stylesheet" href="css/style.css?v=1.8.1">
+    <link rel="stylesheet" href="css/style.css?v=2.0.0">
 </head>
 <body class="locked" data-page="quiz">
     <section id="accessGate" class="access-gate">
         <div class="access-card">
-            <p class="access-kicker">努力抱佛脚</p>
-            <h1>请输入邀请码</h1>
-            <p>通过验证后进入刷题网站。</p>
+            <p class="access-kicker brand-script">cella</p>
+            <h1>唤醒你的知识生命</h1>
+            <p>先进入演示，感受 Cella 如何回应每一次练习。</p>
+            <button id="demoBtn" class="access-btn demo-btn" type="button">
+                <span>进入陪伴演示</span>
+                <small>无需同步码</small>
+            </button>
+            <div class="access-divider"><span>或继续自己的 Cella</span></div>
             <label class="access-input">
-                <span>邀请码</span>
-                <input id="inviteInput" type="password" inputmode="numeric" autocomplete="off" placeholder="请输入邀请码">
-            </label>
-            <label class="access-input access-sync-input">
                 <span>学习同步码</span>
                 <input id="syncInput" type="password" autocomplete="off" placeholder="不同设备输入同一个同步码">
             </label>
-            <button id="inviteBtn" class="access-btn">进入刷题</button>
+            <button id="inviteBtn" class="access-btn access-btn-quiet">继续生长</button>
             <p id="inviteError" class="access-error" role="alert"></p>
         </div>
     </section>
 
     <header class="topbar">
         <div>
-            <a class="back-link home-return" href="./index.html?v=1.8.1">返回主页</a>
-            <h1 id="subjectTitle">努力抱佛脚</h1>
+            <a class="back-link home-return" href="./index.html?v=2.0.0">返回主页</a>
+            <h1 id="subjectTitle">cella</h1>
             <p id="subjectSubtitle">正在加载题库...</p>
         </div>
         <div class="score-box">
             <span id="scoreText">0 / 0</span>
-            <small>已掌握</small>
+            <small>已成为记忆</small>
         </div>
     </header>
 
     <main class="layout">
         <aside class="sidebar" id="sidebar">
-            <button class="nav-btn active" data-view="practice">刷题</button>
-            <button class="nav-btn" data-view="wrong">错题</button>
-            <button class="nav-btn" data-view="review">背诵</button>
+            <button class="nav-btn active" data-view="practice">一起练习</button>
+            <button class="nav-btn" data-view="wrong">待修复记忆</button>
+            <button class="nav-btn" data-view="review">高频记忆</button>
             <button class="nav-btn" data-view="code">设计题</button>
         </aside>
 
@@ -63,7 +64,7 @@
                         </label>
                     </div>
                     <div class="actions">
-                        <button id="randomBtn" class="secondary">随机抽题</button>
+                        <button id="randomBtn" class="secondary">陪我选一题</button>
                         <button id="resetBtn" class="secondary reset-data-btn">重置数据</button>
                     </div>
                 </div>
@@ -73,7 +74,7 @@
             <section id="wrongView" class="view">
                 <div class="section-head">
                     <h2>错题本</h2>
-                    <button id="clearWrongBtn" class="secondary">清空错题</button>
+                    <button id="clearWrongBtn" class="secondary">完成修复</button>
                 </div>
                 <div id="wrongList" class="question-list"></div>
             </section>
@@ -96,7 +97,17 @@
         </section>
     </main>
 
-    <script src="js/analytics.js?v=1.8.1"></script>
-    <script src="js/quiz-engine.js?v=1.8.1"></script>
+    <aside id="floatingCompanion" class="floating-companion" data-mood="resting" aria-live="polite">
+        <div id="companionBubble" class="companion-bubble">我醒啦。今天也陪你记住一点点。</div>
+        <button id="companionCell" class="companion-cell" type="button" aria-label="移动 Cella">
+            <span class="companion-nucleus"></span>
+            <span class="companion-eye eye-one"></span>
+            <span class="companion-eye eye-two"></span>
+            <span class="companion-mouth"></span>
+        </button>
+    </aside>
+
+    <script src="js/analytics.js?v=2.0.0"></script>
+    <script src="js/quiz-engine.js?v=2.0.0"></script>
 </body>
 </html>
