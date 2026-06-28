@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1380" height="620" viewBox="0 0 1380 620" role="img" aria-label="WordCount执行过程重绘图">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2f6f9f"/>
+    </marker>
+    <style>
+      .title{font:700 30px Georgia,"Noto Serif SC",serif;fill:#183247}
+      .head{font:700 20px Arial,"Microsoft YaHei",sans-serif;fill:#24465e}
+      .txt{font:16px Consolas,"Microsoft YaHei",monospace;fill:#1f3444}
+      .small{font:14px Arial,"Microsoft YaHei",sans-serif;fill:#496274}
+      .box{fill:#fff;stroke:#7ea8c7;stroke-width:2.2;rx:14}
+      .stage{fill:#eef7fb;stroke:#3c88bb;stroke-width:2.2;rx:12}
+      .reduce{fill:#fff7ed;stroke:#c97942;stroke-width:2.2;rx:12}
+      .line{stroke:#2f6f9f;stroke-width:2.2;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1380" height="620" fill="#f4f8fb"/>
+  <text x="42" y="54" class="title">WordCount 统计 little cat / dog / pig 的执行过程</text>
+  <text x="60" y="112" class="head">Input</text>
+  <text x="300" y="112" class="head">Split</text>
+  <text x="545" y="112" class="head">Map</text>
+  <text x="795" y="112" class="head">Shuffle</text>
+  <text x="1042" y="112" class="head">Reduce</text>
+  <text x="1238" y="112" class="head">Output</text>
+
+  <rect x="42" y="150" width="190" height="260" class="box"/>
+  <text x="62" y="184" class="txt">HDFS文件</text>
+  <text x="62" y="222" class="txt">file1: little cat</text>
+  <text x="62" y="260" class="txt">file2: little dog</text>
+  <text x="62" y="298" class="txt">file3: little pig</text>
+  <text x="62" y="360" class="small">每个文件为1个split</text>
+
+  <rect x="282" y="158" width="205" height="56" class="stage"/>
+  <rect x="282" y="256" width="205" height="56" class="stage"/>
+  <rect x="282" y="354" width="205" height="56" class="stage"/>
+  <text x="302" y="193" class="txt">&lt;0,"little cat"&gt;</text>
+  <text x="302" y="291" class="txt">&lt;1,"little dog"&gt;</text>
+  <text x="302" y="389" class="txt">&lt;2,"little pig"&gt;</text>
+
+  <rect x="535" y="145" width="195" height="82" class="box"/>
+  <rect x="535" y="248" width="195" height="82" class="box"/>
+  <rect x="535" y="351" width="195" height="82" class="box"/>
+  <text x="555" y="178" class="txt">&lt;"little",1&gt;</text>
+  <text x="555" y="205" class="txt">&lt;"cat",1&gt;</text>
+  <text x="555" y="281" class="txt">&lt;"little",1&gt;</text>
+  <text x="555" y="308" class="txt">&lt;"dog",1&gt;</text>
+  <text x="555" y="384" class="txt">&lt;"little",1&gt;</text>
+  <text x="555" y="411" class="txt">&lt;"pig",1&gt;</text>
+
+  <rect x="780" y="176" width="210" height="215" class="stage"/>
+  <text x="805" y="216" class="txt">&lt;"cat",[1]&gt;</text>
+  <text x="805" y="260" class="txt">&lt;"dog",[1]&gt;</text>
+  <text x="805" y="304" class="txt">&lt;"little",[1,1,1]&gt;</text>
+  <text x="805" y="348" class="txt">&lt;"pig",[1]&gt;</text>
+  <text x="805" y="374" class="small">按key分组、排序、归并</text>
+
+  <rect x="1040" y="184" width="170" height="200" class="reduce"/>
+  <text x="1060" y="226" class="txt">&lt;"cat",1&gt;</text>
+  <text x="1060" y="270" class="txt">&lt;"dog",1&gt;</text>
+  <text x="1060" y="314" class="txt">&lt;"little",3&gt;</text>
+  <text x="1060" y="358" class="txt">&lt;"pig",1&gt;</text>
+
+  <rect x="1240" y="235" width="105" height="95" class="box"/>
+  <text x="1260" y="272" class="txt">HDFS</text>
+  <text x="1252" y="303" class="txt">part-r-00000</text>
+
+  <path d="M232 190 L282 186" class="line"/>
+  <path d="M232 280 L282 284" class="line"/>
+  <path d="M232 360 L282 382" class="line"/>
+  <path d="M487 186 L535 186" class="line"/>
+  <path d="M487 284 L535 289" class="line"/>
+  <path d="M487 382 L535 392" class="line"/>
+  <path d="M730 178 C750 185 760 207 780 215" class="line"/>
+  <path d="M730 205 C750 210 760 220 780 218" class="line"/>
+  <path d="M730 281 C750 270 760 270 780 260" class="line"/>
+  <path d="M730 308 C750 300 760 298 780 260" class="line"/>
+  <path d="M730 384 C750 370 760 350 780 348" class="line"/>
+  <path d="M730 411 C750 390 760 365 780 348" class="line"/>
+  <path d="M990 284 L1040 284" class="line"/>
+  <path d="M1210 284 L1240 284" class="line"/>
+</svg>

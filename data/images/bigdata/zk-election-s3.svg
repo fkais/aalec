@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="560" viewBox="0 0 1180 560" role="img" aria-label="ZooKeeper选举过程重绘图一">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2f6f9f"/>
+    </marker>
+    <style>
+      .title{font:700 28px Georgia,"Noto Serif SC",serif;fill:#183247}
+      .txt{font:16px Arial,"Microsoft YaHei",sans-serif;fill:#1f3444}
+      .mono{font:15px Consolas,"Microsoft YaHei",monospace;fill:#1f3444}
+      .line{stroke:#2f6f9f;stroke-width:2.2;marker-end:url(#arrow)}
+      .vote{stroke:#c97942;stroke-width:2;marker-end:url(#arrow);stroke-dasharray:8 7}
+      .server{fill:#fff;stroke:#7ea8c7;stroke-width:2;rx:12}
+      .leader{fill:#fff7ed;stroke:#c97942;stroke-width:2.4;rx:12}
+      .fail{fill:#f2f5f7;stroke:#9cadb8;stroke-width:2;stroke-dasharray:7 6;rx:12}
+    </style>
+  </defs>
+  <rect width="1180" height="560" fill="#f4f8fb"/>
+  <text x="40" y="54" class="title">ZooKeeper Leader 选举：Server1、Server2 故障后</text>
+  <text x="42" y="92" class="txt">示例状态：S1(1,8)、S2(2,3)、S3(3,9)、S4(4,8)、S5(5,8)。S1、S2故障，S3/S4/S5进入选举。</text>
+
+  <rect x="55" y="140" width="120" height="56" class="fail"/><text x="76" y="174" class="mono">S1 (1,8)</text>
+  <rect x="55" y="230" width="120" height="56" class="fail"/><text x="76" y="264" class="mono">S2 (2,3)</text>
+  <rect x="55" y="320" width="120" height="56" class="server"/><text x="76" y="354" class="mono">S3 (3,9)</text>
+  <rect x="55" y="410" width="120" height="56" class="server"/><text x="76" y="444" class="mono">S4 (4,8)</text>
+  <rect x="55" y="500" width="120" height="40" class="server"/><text x="76" y="525" class="mono">S5 (5,8)</text>
+
+  <text x="240" y="130" class="txt">1. 收到对方投票后比较 (ZXID, SID)</text>
+  <path d="M180 348 C300 275 430 275 550 348" class="vote"/>
+  <path d="M180 438 C320 360 430 360 550 348" class="vote"/>
+  <path d="M180 520 C340 452 450 420 550 348" class="vote"/>
+  <text x="282" y="253" class="mono">S3收到：(4,8)、(5,8)</text>
+  <text x="282" y="285" class="mono">S4收到：(3,9)、(5,8)</text>
+  <text x="282" y="317" class="mono">S5收到：(3,9)、(4,8)</text>
+
+  <rect x="560" y="310" width="170" height="76" class="leader"/>
+  <text x="589" y="340" class="mono">最大投票</text>
+  <text x="584" y="368" class="mono">(3,9) belongs S3</text>
+
+  <text x="795" y="250" class="txt">2. ZXID 优先，ZXID 相同再比较 SID。</text>
+  <text x="795" y="288" class="txt">S3 的 ZXID=9 最大，获得多数服务器认可。</text>
+  <text x="795" y="326" class="txt">最终 Server3 成为新的 Leader。</text>
+  <path d="M730 348 L930 348" class="line"/>
+  <rect x="950" y="312" width="170" height="74" class="leader"/>
+  <text x="1004" y="342" class="mono">Leader</text>
+  <text x="998" y="370" class="mono">Server3</text>
+</svg>

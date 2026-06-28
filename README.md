@@ -1,4 +1,4 @@
-# cella 期末复习站
+# aalec 期末复习站
 
 静态前端部署在 GitHub Pages，题库保存在 `data/`，答题事件、科目进度和用户地图数据由 Supabase 提供。
 
@@ -8,7 +8,7 @@
 
 ### 跨设备身份
 
-网站使用“学习同步码”恢复匿名身份，不再要求邀请码。前端将同步码与固定盐值进行 SHA-256 摘要，生成：
+登录门增加“学习同步码”。前端将同步码与固定盐值进行 SHA-256 摘要，生成：
 
 ```text
 account_<sha256>
@@ -77,11 +77,6 @@ account_<sha256>
 
 接口返回 `review_users` 中的全部用户，不包含在线状态字段。前端不会显示用户姓名，只通过视觉高亮区分当前用户。
 细胞尺寸根据 `progress` 从小到大变化。
-
-### 细胞颜色多端同步
-
-首页“我的”面板中的细胞颜色通过独立表 `review_cell_preferences` 保存，并使用当前同步身份作为键。
-首次启用时，在 Supabase SQL Editor 中运行 `cell-preferences-migration.sql`。该迁移不会修改现有答题记录、科目进度或排行榜数据。
 
 ### `get_subject_state`
 

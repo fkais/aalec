@@ -5,6 +5,8 @@ const SUBJECTS = {
     se: { name: "软件工程", file: "data/se.json" }
 };
 
+const INVITE_CODE = "050317";
+const ACCESS_KEY = "effort_site_invite_session";
 const typeNames = { single: "单选题", multiple: "多选题", judge: "判断题", blank: "填空题", short: "简答题" };
 
 const appState = {
@@ -19,19 +21,33 @@ const appState = {
 };
 
 function initInviteGate() {
+    const input = document.getElementById("inviteInput");
     const syncInput = document.getElementById("syncInput");
     const button = document.getElementById("inviteBtn");
     const error = document.getElementById("inviteError");
-    if (!syncInput || !button) return Promise.resolve();
+    if (!input || !syncInput || !button) return Promise.resolve();
     const originalButtonText = button.textContent;
 
+    const navigation = performance.getEntriesByType("navigation")[0];
+    if (navigation && navigation.type === "reload") {
+        sessionStorage.removeItem(ACCESS_KEY);
+    }
+
     return new Promise(resolve => {
-        function unlock() {
+        function unlock(rememberForNavigation = false) {
             document.body.classList.remove("locked");
+            if (rememberForNavigation) {
+                sessionStorage.setItem(ACCESS_KEY, "1");
+            }
             resolve();
         }
 
         async function checkCode() {
+            if (input.value.trim() !== INVITE_CODE) {
+                error.textContent = "邀请码不对，再检查一下。";
+                input.select();
+                return;
+            }
             if (syncInput.value.trim().length < 4) {
                 error.textContent = "请输入至少 4 位学习同步码。";
                 syncInput.focus();
@@ -43,7 +59,7 @@ function initInviteGate() {
             error.textContent = "";
             try {
                 await window.quizAnalytics.setSyncIdentity(syncInput.value);
-                unlock();
+                unlock(true);
             } catch (syncError) {
                 console.warn("同步身份设置失败：", syncError);
                 error.textContent = "同步服务暂不可用，请确认已运行最新版数据库脚本。";
@@ -53,16 +69,16 @@ function initInviteGate() {
             }
         }
 
-        if (window.quizAnalytics?.hasSyncIdentity()) {
+        if (sessionStorage.getItem(ACCESS_KEY) === "1" && window.quizAnalytics?.hasSyncIdentity()) {
             unlock();
             return;
         }
 
-        syncInput.focus();
+        input.focus();
         button.addEventListener("click", checkCode);
-        syncInput.addEventListener("keydown", event => {
+        [input, syncInput].forEach(field => field.addEventListener("keydown", event => {
             if (event.key === "Enter") checkCode();
-        });
+        }));
     });
 }
 
@@ -158,7 +174,7 @@ function inferType(item) {
 
 function renderSubjectShell() {
     const title = appState.data.title || SUBJECTS[appState.subject].name;
-    document.title = `cella - ${title}`;
+    document.title = `努力抱佛脚 - ${title}`;
     document.getElementById("subjectTitle").textContent = title;
     document.getElementById("subjectSubtitle").textContent = appState.data.subtitle || "通用刷题页面";
     setOptionalNav("review", (appState.data.reviews || []).length > 0);
@@ -290,6 +306,7 @@ function renderQuestions(list, targetId) {
             ${renderQuestionImages(q.questionImages, "题目配图")}
             ${renderControls(q)}
             <div class="card-actions">
+                <button class="copy-question-btn" type="button">复制题目</button>
                 ${q.type === "single" || q.type === "judge" ? "" : `<button class="primary check-btn">提交答案</button>`}
                 <button class="show-answer">看答案</button>
             </div>
@@ -315,7 +332,7 @@ function renderControls(q) {
         return `<div class="options"><label class="option"><input type="radio" name="${escapeHtml(q.id)}" value="对"><span>对</span></label><label class="option"><input type="radio" name="${escapeHtml(q.id)}" value="错"><span>错</span></label></div>`;
     }
     if (q.type === "blank") return renderBlankControls(q);
-    if (q.type === "short") return `<textarea class="answer-input" rows="4" placeholder="先自己默写，再点提交查看参考答案"></textarea>`;
+    if (q.type === "short" || q.type === "design") return `<textarea class="answer-input" rows="5" placeholder="先自己默写，再点提交查看参考答案"></textarea>`;
     return `<input class="answer-input" placeholder="输入答案">`;
 }
 
@@ -428,8 +445,19 @@ function showResult(card, q, correct, forceAnswer = false) {
     const result = card.querySelector(".result");
     result.className = `result visible ${correct ? "correct" : "wrong"}`;
     const label = correct ? "答对了" : "再背一下";
-    const answerLabel = q.type === "short" || forceAnswer ? "参考答案" : "正确答案";
-    result.innerHTML = `<strong>${label}</strong><br><strong>${answerLabel}：</strong>${escapeHtml(q.answer)}<br><strong>解析：</strong>${escapeHtml(q.explain || "")}${renderQuestionImages(q.answerImages, "参考答案图")}`;
+    const answerLabel = q.type === "short" || q.type === "design" || forceAnswer ? "参考答案" : "正确答案";
+    result.innerHTML = `
+        <div class="result-head">
+            <strong>${label}</strong>
+            <button class="copy-answer-btn" type="button">复制答案</button>
+        </div>
+        <div class="answer-block">
+            <strong>${answerLabel}：</strong>
+            <div class="result-text">${formatMultiline(q.answer)}</div>
+        </div>
+        ${q.explain ? `<div class="answer-block"><strong>解析：</strong><div class="result-text">${formatMultiline(q.explain)}</div></div>` : ""}
+        ${renderQuestionImages(q.answerImages, "参考答案图")}
+    `;
 }
 
 function renderQuestionImages(images, altPrefix) {
@@ -478,14 +506,52 @@ function renderCode() {
 
 function initCopy() {
     document.addEventListener("click", async event => {
-        const btn = event.target.closest(".copy-btn");
-        if (!btn) return;
+        const questionBtn = event.target.closest(".copy-question-btn");
+        const answerBtn = event.target.closest(".copy-answer-btn");
+        const codeBtn = event.target.closest(".copy-btn");
+
+        if (questionBtn || answerBtn) {
+            const card = event.target.closest(".question-card");
+            const q = appState.questions.find(item => item.id === card.dataset.id);
+            if (!q) return;
+            const text = questionBtn ? buildQuestionCopyText(q) : buildAnswerCopyText(q);
+            const btn = questionBtn || answerBtn;
+            const oldText = btn.textContent;
+            await copyText(text);
+            btn.textContent = "已复制";
+            setTimeout(() => btn.textContent = oldText, 1200);
+            return;
+        }
+
+        if (!codeBtn) return;
+        const btn = codeBtn;
         const task = (appState.data.designs || [])[Number(btn.dataset.task)];
         const code = task.files[Number(btn.dataset.file)].code;
         await copyText(code);
         btn.textContent = "已复制";
         setTimeout(() => btn.textContent = "复制这段", 1200);
     });
+}
+
+function buildQuestionCopyText(q) {
+    const lines = [
+        `【${typeNames[q.type] || "题目"}】${q.chapter}`,
+        q.title
+    ];
+    if (q.options && q.options.length) {
+        q.options.forEach((option, index) => {
+            lines.push(`${String.fromCharCode(65 + index)}. ${option}`);
+        });
+    }
+    return lines.filter(Boolean).join("\n");
+}
+
+function buildAnswerCopyText(q) {
+    return [
+        `【题目】${q.title}`,
+        `【答案】${Array.isArray(q.answer) ? q.answer.join("、") : q.answer}`,
+        q.explain ? `【解析】${q.explain}` : ""
+    ].filter(Boolean).join("\n\n");
 }
 
 async function copyText(text) {
@@ -538,7 +604,7 @@ function renderLoadError(error) {
 }
 
 function placeholderHtml(text) {
-    return `<div class="placeholder-page"><div><h2 class="brand-script">cella</h2><p>${escapeHtml(text)}</p></div></div>`;
+    return `<div class="placeholder-page"><div><h2>努力抱佛脚</h2><p>${escapeHtml(text)}</p></div></div>`;
 }
 
 function normalize(value) {
@@ -553,6 +619,10 @@ function escapeHtml(str) {
         "\"": "&quot;",
         "'": "&#039;"
     }[ch]));
+}
+
+function formatMultiline(str) {
+    return escapeHtml(str).replace(/\n/g, "<br>");
 }
 
 function highlightCode(code) {
